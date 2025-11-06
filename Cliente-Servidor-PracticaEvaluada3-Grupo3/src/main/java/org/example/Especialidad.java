@@ -4,6 +4,5 @@ public enum Especialidad {
     CARDIOLOGIA,
     PEDIATRIA,
     DERMATOLOGIA,
-    NEUROLOGIA,
-    MEDICINA_GENERAL
+    NEUROLOGIA
 }

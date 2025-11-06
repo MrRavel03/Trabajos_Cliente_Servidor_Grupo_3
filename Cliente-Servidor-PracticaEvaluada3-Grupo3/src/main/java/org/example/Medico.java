@@ -8,12 +8,17 @@ public class Medico {
     private String telefono;
     private String email;
 
-    public Medico(String codigo, String nombre, String email, String telefono, Especialidad especialidad) {
+    public Medico(String codigo, String nombre, Especialidad especialidad, String telefono,String email ) {
         this.nombre = nombre;
         this.email = email;
         this.telefono = telefono;
         this.especialidad = especialidad;
         this.codigo = codigo;
+    }
+
+    @Override
+    public String toString(){
+        return "Medico ("+ codigo + ", " +nombre + ", " + especialidad + ", " + telefono + ", " + email + ")";
     }
 
     public String getEmail() {
@@ -56,8 +61,10 @@ public class Medico {
         this.codigo = codigo;
     }
 
-    @Override
-    public String toString(){
-        return "Medico (";
-    }
+
+
 }
+
+
+
+
