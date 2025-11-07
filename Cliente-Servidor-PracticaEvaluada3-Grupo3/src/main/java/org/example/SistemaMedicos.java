@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class SistemaMedicos {
+public class        SistemaMedicos {
 
     private static ArrayList<Medico> listaMedicos = new ArrayList<>();
 
@@ -32,7 +32,7 @@ public class SistemaMedicos {
                     crearMedico();
                     break;
                 case "2":
-                    //editarMedico();
+                    editarMedico();
                     break;
                 case "3":
                     buscarMedico();
@@ -93,6 +93,50 @@ public class SistemaMedicos {
         Medico medicoNuevo = new Medico(codigo,nombre,especialidad,tel,email);
         listaMedicos.add(medicoNuevo);
         JOptionPane.showMessageDialog(null, "Medico agregado exitosamente.");
+
+    }
+
+    private static void editarMedico(){
+        String codigo = JOptionPane.showInputDialog("Digite el codigo del medico a editar");
+
+        if (codigo == null){
+            return;
+        }
+        Medico medico = buscarMedicoPorCodigo(codigo);
+
+        String newCodigo = JOptionPane.showInputDialog("Digite el código nuevo: ");
+        String nombre = JOptionPane.showInputDialog("Digite el nombre nuevo:");
+        String telefono = JOptionPane.showInputDialog("Digite el teléfono nuevo: ");
+        String email = JOptionPane.showInputDialog("Digite el email nuevo:");
+
+        Especialidad especialidad = null;
+
+        while (especialidad == null) {
+            String especialidadTexto = JOptionPane.showInputDialog("Digite la especialidad nueva:");
+
+            if (especialidadTexto == null) {
+                JOptionPane.showMessageDialog(null, "Operación cancelada. No se modificó la especialidad.");
+                break;
+            }
+
+            try {
+                especialidad = Especialidad.valueOf(especialidadTexto.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(null, "Especialidad inválida. Intente nuevamente.");
+            }
+        }
+
+        if (especialidad != null) {
+            medico.setEspecialidad(especialidad);
+        }
+
+        medico.setCodigo(newCodigo);
+        medico.setNombre(nombre);
+        medico.setTelefono(telefono);
+        medico.setEmail(email);
+
+        JOptionPane.showMessageDialog(null, "Datos del médico actualizados correctamente.");
+        JOptionPane.showMessageDialog(null, medico.toString());
 
     }
 
