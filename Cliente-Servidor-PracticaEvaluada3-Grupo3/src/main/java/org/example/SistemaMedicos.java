@@ -2,21 +2,19 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
 
 public class        SistemaMedicos {
 
     private static ArrayList<Medico> listaMedicos = new ArrayList<>();
 
-    private String NOMBRE_ARCHIVO = "medicos.txt";
+    private static String NOMBRE_ARCHIVO = "medicos.txt";
 
     public static void main(){
 
-        //cargarDatos();
+        cargarDatos();
         mostrarMenu();
-
 
     }
 
@@ -26,6 +24,9 @@ public class        SistemaMedicos {
 
             String opcion = String.valueOf(JOptionPane.showInputDialog((Component)null, "-------- Gestion de medicos --------\n1 - Crear medico\n2 - Editar medico\n3 - Buscar medico\n4 - Eliminar medico\n5 - Salir\nDigite una opción para continuar: "));
 
+            if (opcion == null){
+                opcion = "5";
+            }
 
             switch (opcion) {
                 case "1":
@@ -41,7 +42,7 @@ public class        SistemaMedicos {
                     eliminarMedico();
                     break;
                 case "5":
-                    //guardarDatos();
+                    guardarDatos();
                     salir = true;
                     break;
                 default:
@@ -97,22 +98,36 @@ public class        SistemaMedicos {
     }
 
     private static void editarMedico(){
-        String codigo = JOptionPane.showInputDialog("Digite el codigo del medico a editar");
+        String codigo = JOptionPane.showInputDialog("Digite el codigo del medico a editar: ");
 
         if (codigo == null){
             return;
         }
+
         Medico medico = buscarMedicoPorCodigo(codigo);
 
-        String newCodigo = JOptionPane.showInputDialog("Digite el código nuevo: ");
-        String nombre = JOptionPane.showInputDialog("Digite el nombre nuevo:");
-        String telefono = JOptionPane.showInputDialog("Digite el teléfono nuevo: ");
-        String email = JOptionPane.showInputDialog("Digite el email nuevo:");
+        if (medico == null){
+            JOptionPane.showMessageDialog(null, "Error: Medico no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        Especialidad especialidad = null;
+        String nombre = JOptionPane.showInputDialog("Digite el nombre nuevo:", medico.getNombre());
+        if (nombre != null) {
+            medico.setNombre(nombre);
+        }
 
-        while (especialidad == null) {
-            String especialidadTexto = JOptionPane.showInputDialog("Digite la especialidad nueva:");
+        String telefono = JOptionPane.showInputDialog("Digite el teléfono nuevo: ", medico.getTelefono());
+        if (telefono != null) {
+            medico.setTelefono(telefono);
+        }
+
+        String email = JOptionPane.showInputDialog("Digite el email nuevo:", medico.getEmail());
+        if (email != null) {
+            medico.setEmail(email);
+        }
+
+        while (true) {
+            String especialidadTexto = JOptionPane.showInputDialog("Digite la especialidad nueva:", medico.getEspecialidad().name());
 
             if (especialidadTexto == null) {
                 JOptionPane.showMessageDialog(null, "Operación cancelada. No se modificó la especialidad.");
@@ -120,20 +135,13 @@ public class        SistemaMedicos {
             }
 
             try {
-                especialidad = Especialidad.valueOf(especialidadTexto.toUpperCase());
+                Especialidad especialidad = Especialidad.valueOf(especialidadTexto.toUpperCase());
+                medico.setEspecialidad(especialidad);
+                break;
             } catch (IllegalArgumentException e) {
                 JOptionPane.showMessageDialog(null, "Especialidad inválida. Intente nuevamente.");
             }
         }
-
-        if (especialidad != null) {
-            medico.setEspecialidad(especialidad);
-        }
-
-        medico.setCodigo(newCodigo);
-        medico.setNombre(nombre);
-        medico.setTelefono(telefono);
-        medico.setEmail(email);
 
         JOptionPane.showMessageDialog(null, "Datos del médico actualizados correctamente.");
         JOptionPane.showMessageDialog(null, medico.toString());
@@ -172,6 +180,66 @@ public class        SistemaMedicos {
 
         listaMedicos.remove(medico);
         JOptionPane.showMessageDialog(null, "Medico eliminado exitosamente.");
+    }
+
+    private static void cargarDatos(){
+
+        File archivo = new File(NOMBRE_ARCHIVO);
+
+        if(!archivo.exists()){
+            return;
+        }
+
+        try {
+            DataInputStream dataInputStream = new DataInputStream(new FileInputStream(NOMBRE_ARCHIVO));
+
+            while (dataInputStream.available() > 0 ) {
+
+                String codigo = dataInputStream.readUTF();
+                String nombre = dataInputStream.readUTF();
+                Especialidad esp = Especialidad.valueOf(dataInputStream.readUTF());
+                String telefono = dataInputStream.readUTF();
+                String email = dataInputStream.readUTF();
+
+                listaMedicos.add(new Medico(codigo,nombre,esp,telefono,email));
+            }
+
+            dataInputStream.close();
+
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error de lectura/escritura: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general al cargar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+    }
+
+    private static void guardarDatos(){
+
+        try {
+            DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(NOMBRE_ARCHIVO));
+
+            for (Medico medico : listaMedicos){
+
+                dataOutputStream.writeUTF(medico.getCodigo());
+                dataOutputStream.writeUTF(medico.getNombre());
+                dataOutputStream.writeUTF(medico.getEspecialidad().name());
+                dataOutputStream.writeUTF(medico.getTelefono());
+                dataOutputStream.writeUTF(medico.getEmail());
+            }
+
+            dataOutputStream.close();
+
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Error: No se encontró el archivo para guardar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error de lectura/escritura al guardar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general al guardar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
 
