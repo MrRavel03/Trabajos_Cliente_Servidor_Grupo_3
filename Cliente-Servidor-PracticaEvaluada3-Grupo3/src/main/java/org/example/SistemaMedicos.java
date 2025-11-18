@@ -11,7 +11,7 @@ public class        SistemaMedicos {
 
     private static String NOMBRE_ARCHIVO = "medicos.txt";
 
-    public static void main(){
+    public static void main (){
 
         cargarDatos();
         mostrarMenu();
