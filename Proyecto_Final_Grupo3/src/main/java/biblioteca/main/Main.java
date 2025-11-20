@@ -12,7 +12,7 @@ public class Main {
 
         //Libro i = new Libro(1,"Libro viejo","Angie Torres","Hola",true,"Hola");
 
-        //Connection con = ConexionDB.conectar();
+        //Connection con = ConexionDB.conectar();S
 
         PrestamoDAO pDAO= new PrestamoDAO();
         System.out.println(pDAO.listarPrestamosActivos());
