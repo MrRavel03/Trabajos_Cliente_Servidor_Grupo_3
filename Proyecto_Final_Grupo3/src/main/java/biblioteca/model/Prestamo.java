@@ -10,21 +10,26 @@ public class Prestamo {
     private int idLibro;
     private String tituloLibro;
     private Date fechaSalida;
-    private Date fechaEntrada;
+    private Date fechaDevolucion;
     private String estado;
 
     public Prestamo(){
     }
 
-    public Prestamo(int id, int idUsuario, String nombreUsuario, int idLibro, String tituloLibro, Date fechaSalida, Date fechaEntrada, String estado) {
+    public Prestamo(int id, int idUsuario, String nombreUsuario, int idLibro, String tituloLibro, Date fechaSalida, Date fechaDevolucion, String estado) {
         this.id = id;
         this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
         this.idLibro = idLibro;
         this.tituloLibro = tituloLibro;
         this.fechaSalida = fechaSalida;
-        this.fechaEntrada = fechaEntrada;
+        this.fechaDevolucion = fechaDevolucion;
         this.estado = estado;
+    }
+
+    @Override
+    public String toString(){
+        return "Prestamo del libro: " + tituloLibro + " a " + nombreUsuario;
     }
 
     public int getId() {
@@ -75,12 +80,12 @@ public class Prestamo {
         this.fechaSalida = fechaSalida;
     }
 
-    public Date getFechaEntrada() {
-        return fechaEntrada;
+    public Date getFechaDevolucion() {
+        return fechaDevolucion;
     }
 
-    public void setFechaEntrada(Date fechaEntrada) {
-        this.fechaEntrada = fechaEntrada;
+    public void setFechaDevolucion(Date fechaDevolucion) {
+        this.fechaDevolucion = fechaDevolucion;
     }
 
     public String getEstado() {
