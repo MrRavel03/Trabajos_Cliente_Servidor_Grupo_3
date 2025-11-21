@@ -25,7 +25,7 @@ public class Libro {
 
     @Override
     public String toString() {
-        return titulo + " - " + autor;
+        return "Libro: " + id + " | " + titulo;
     }
 
     // getters and setters
