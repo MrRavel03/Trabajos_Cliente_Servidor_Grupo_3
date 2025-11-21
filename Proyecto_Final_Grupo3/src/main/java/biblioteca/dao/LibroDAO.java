@@ -2,7 +2,6 @@ package biblioteca.dao;
 
 import biblioteca.config.ConexionDB;
 import biblioteca.model.Libro;
-import biblioteca.model.Prestamo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +12,7 @@ import java.util.List;
 
 public class LibroDAO {
 
-    public List<Libro> listarLibros(){
+    public List<Libro> listarLibros() {
 
         List<Libro> lista = new ArrayList<>();
 
@@ -23,11 +22,11 @@ public class LibroDAO {
                 "INNER JOIN ESTADO E ON L.ID_ESTADO = E.ID " +
                 "WHERE E.DESCRIPCION = 'ACTIVO'";
 
-        try(Connection con = ConexionDB.conectar();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()){
+        try (Connection con = ConexionDB.conectar();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
-            while(rs.next()){
+            while (rs.next()) {
 
                 Libro l = new Libro();
 
@@ -46,7 +45,7 @@ public class LibroDAO {
         return lista;
     }
 
-    public List<Libro> buscarLibros(String busqueda){
+    public List<Libro> buscarLibros(String busqueda) {
 
         List<Libro> lista = new ArrayList<>();
 
@@ -56,18 +55,18 @@ public class LibroDAO {
                 "WHERE E.DESCRIPCION = 'ACTIVO' " +
                 "AND (L.TITULO LIKE ? OR L.AUTOR LIKE ? OR L.CATEGORIA LIKE ?)";
 
-        try(Connection con = ConexionDB.conectar();
-            PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionDB.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
 
-            String parametro = "%" + busqueda + "%"; //para busquedas parciales
+            String parametro = "%" + busqueda + "%"; // para busquedas parciales
 
             ps.setString(1, parametro);
             ps.setString(2, parametro);
             ps.setString(3, parametro);
 
-            try(ResultSet rs = ps.executeQuery()){
+            try (ResultSet rs = ps.executeQuery()) {
 
-                while(rs.next()){
+                while (rs.next()) {
 
                     Libro l = new Libro();
 

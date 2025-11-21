@@ -1,6 +1,5 @@
 package biblioteca.main;
 
-import biblioteca.config.ConexionDB;
 import biblioteca.dao.LibroDAO;
 import biblioteca.dao.PrestamoDAO;
 import biblioteca.dao.ReservaDAO;
@@ -10,7 +9,6 @@ import biblioteca.model.Prestamo;
 import biblioteca.model.Reserva;
 import biblioteca.model.Usuario;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class Main {
@@ -44,8 +42,10 @@ public class Main {
         String tituloLibroPrueba = "";
 
         for (Libro l : libros) {
-            System.out.println("   -> ID: " + l.getId() + " | Título: " + l.getTitulo() + " | Disponible: " + l.isDisponible());
-            if (l.getId() == idLibroPrueba) tituloLibroPrueba = l.getTitulo();
+            System.out.println(
+                    "   -> ID: " + l.getId() + " | Título: " + l.getTitulo() + " | Disponible: " + l.isDisponible());
+            if (l.getId() == idLibroPrueba)
+                tituloLibroPrueba = l.getTitulo();
         }
 
         // ----------------------------------------------------------------
@@ -86,8 +86,8 @@ public class Main {
         List<Prestamo> activos = prestamoDAO.listarPrestamosActivos();
         int idPrestamoActivo = -1;
 
-        for(Prestamo p : activos) {
-            if(p.getIdLibro() == idLibroPrueba && p.getIdUsuario() == idUsuario) {
+        for (Prestamo p : activos) {
+            if (p.getIdLibro() == idLibroPrueba && p.getIdUsuario() == idUsuario) {
                 idPrestamoActivo = p.getId();
                 break;
             }
@@ -122,8 +122,9 @@ public class Main {
         System.out.println("   RESUMEN DE RESERVAS ACTIVAS");
         System.out.println("=================================================");
         List<Reserva> reservas = reservaDAO.listarReservasActivas();
-        for(Reserva r : reservas) {
-            System.out.println("Reserva ID: " + r.getId() + " | Libro: " + r.getTituloLibro() + " | Usuario: " + r.getNombreUsuario());
+        for (Reserva r : reservas) {
+            System.out.println("Reserva ID: " + r.getId() + " | Libro: " + r.getTituloLibro() + " | Usuario: "
+                    + r.getNombreUsuario());
         }
     }
 }

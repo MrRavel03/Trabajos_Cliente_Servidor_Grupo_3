@@ -12,15 +12,9 @@ import java.util.List;
 
 public class PrestamoDAO {
 
-    //TODO Revisar porque no valida si el libro no esta disponible
+    // Funciones publicas: Operaciones de escritura
+
     public boolean registrarPrestamo(int idUsuario, int idLibro) {
-
-        String sqlInsert = "INSERT INTO PRESTAMO (ID_USUARIO, ID_LIBRO, " +
-                "FECHA_SALIDA, ID_ESTADO) VALUES " +
-                "(?, ?, CURRENT_DATE, 1)";
-
-        String sqlUpdateLibro = "UPDATE LIBRO SET DISPONIBLE = FALSE WHERE " +
-                "ID = ?";
 
         // conectamos con la dase de datos
         Connection conTemp = ConexionDB.conectar();
@@ -32,46 +26,37 @@ public class PrestamoDAO {
 
             con.setAutoCommit(false);
 
-            try (PreparedStatement psInsert = con.prepareStatement(sqlInsert);
-                 PreparedStatement psUpdate = con.prepareStatement(sqlUpdateLibro)) {
+            try {
 
-                //Insertamos el prestamo
-                psInsert.setInt(1, idUsuario);
-                psInsert.setInt(2, idLibro);
-                psInsert.executeUpdate();
+                if (!verificarDisponibilidad(con, idLibro)) {
+                    System.out.println(">> Error: El libro no está disponible <<");
+                    return false;
+                }
 
-                //Marcamos como no disponible el libro
-                psUpdate.setInt(1, idLibro);
-                psUpdate.executeUpdate();
+                insertarPrestamo(con, idUsuario, idLibro);
 
-                //Guardamos
+                bloquearLibro(con, idLibro);
+
+                // Guardamos
                 con.commit();
                 System.out.println(">> Transacción exitosa: Préstamo registrado <<");
 
                 return true;
 
             } catch (SQLException e) {
+
                 System.err.println("Error en transaccion de préstamo:  " + e.getMessage());
-                try {
-                    con.rollback();
-                } catch (SQLException ex) {
-                    System.err.println("Error: rollback falló: " + ex.getMessage());
-                }
+                con.rollback();
+                return false;
             }
         } catch (SQLException e) {
 
             System.err.println("Error de conexion:  " + e.getMessage());
+            return false;
         }
-
-        return false;
-
     }
 
     public boolean registrarDevolucion(int idPrestamo, int idLibro) {
-
-        String sqlClosePrestamo = "UPDATE PRESTAMO SET ID_ESTADO = 2, FECHA_DEVOLUCION = CURRENT_DATE WHERE ID = ?";
-
-        String sqlFreeLibro = "UPDATE LIBRO SET DISPONIBLE = TRUE WHERE ID = ?";
 
         Connection contemp = ConexionDB.conectar();
         if (contemp == null) {
@@ -82,19 +67,19 @@ public class PrestamoDAO {
 
             con.setAutoCommit(false);
 
-            try (PreparedStatement psClose = con.prepareStatement(sqlClosePrestamo);
-                 PreparedStatement psFree = con.prepareStatement(sqlFreeLibro)) {
+            try {
 
-                // Cerramos el prestamo
-                psClose.setInt(1, idPrestamo);
-                psClose.executeUpdate();
+                if (!verificarPrestamoActivo(con, idPrestamo, idLibro)) {
+                    System.out.println(">> Error: El prestamo no está activo o el libro no coincide<<");
+                    return false;
+                }
 
-                // Ponemos el libro como disponible
-                psFree.setInt(1, idLibro);
-                psFree.executeUpdate();
+                cerrarPrestamo(con, idPrestamo);
+
+                liberarLibro(con, idLibro);
 
                 con.commit();
-                System.out.println(">> Transacción exitosa: Préstamo cerrado y libro devuelto <<");
+                System.out.println(">> Transacción exitosa: Devolucion registrada <<");
                 return true;
             } catch (SQLException e) {
                 System.err.println("Error en transaccion de devolucion: " + e.getMessage());
@@ -110,7 +95,9 @@ public class PrestamoDAO {
         return false;
     }
 
-        public List<Prestamo> listarPrestamosActivos(){
+    // Funciones publicas: Operaciones de lectura
+
+    public List<Prestamo> listarPrestamosActivos() {
 
         List<Prestamo> lista = new ArrayList<>();
 
@@ -124,11 +111,11 @@ public class PrestamoDAO {
                 "INNER JOIN ESTADO E ON P.ID_ESTADO = E.ID " +
                 "WHERE E.DESCRIPCION = 'ACTIVO'";
 
-        try(Connection con = ConexionDB.conectar();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()){
+        try (Connection con = ConexionDB.conectar();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
-            while(rs.next()){
+            while (rs.next()) {
 
                 Prestamo p = new Prestamo();
 
@@ -150,9 +137,137 @@ public class PrestamoDAO {
         } catch (SQLException e) {
             System.err.println("Error al listar prestamos: " + e.getMessage());
         }
-
         return lista;
+    }
 
+    public List<Prestamo> listarHistorialPorUsuario(int idUsuario) {
 
+        List<Prestamo> lista = new ArrayList<>();
+
+        String sql = "SELECT P.ID, P.FECHA_SALIDA, P.FECHA_DEVOLUCION, " +
+                "U.ID AS UID, U.NOMBRE AS UNOMBRE, " +
+                "L.ID AS LID, L.TITULO AS LTITULO, " +
+                "E.DESCRIPCION AS ESTATUS " +
+                "FROM PRESTAMO P " +
+                "INNER JOIN USUARIO U ON P.ID_USUARIO = U.ID " +
+                "INNER JOIN LIBRO L ON P.ID_LIBRO = L.ID " +
+                "INNER JOIN ESTADO E ON P.ID_ESTADO = E.ID " +
+                "WHERE U.ID = ? ORDER BY P.FECHA_SALIDA DESC";
+
+        try (Connection con = ConexionDB.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idUsuario);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+
+                    Prestamo p = new Prestamo();
+
+                    p.setId(rs.getInt("ID"));
+                    p.setFechaSalida(rs.getDate("FECHA_SALIDA"));
+                    p.setFechaDevolucion(rs.getDate("FECHA_DEVOLUCION"));
+
+                    p.setIdUsuario(rs.getInt("UID"));
+                    p.setNombreUsuario(rs.getString("UNOMBRE"));
+
+                    p.setIdLibro(rs.getInt("LID"));
+                    p.setTituloLibro(rs.getString("LTITULO"));
+
+                    p.setEstado(rs.getString("ESTATUS"));
+
+                    lista.add(p);
+
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al listar prestamos: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    // Funciones privadas: Validaciones
+
+    private boolean verificarDisponibilidad(Connection con, int idLibro) throws SQLException {
+
+        String sql = "SELECT DISPONIBLE FROM LIBRO WHERE ID = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idLibro);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getBoolean("DISPONIBLE");
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean verificarPrestamoActivo(Connection con, int idPrestamo, int idLibro) throws SQLException {
+
+        String sql = "SELECT ID_LIBRO FROM PRESTAMO WHERE ID = ? AND ID_ESTADO = 1";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idPrestamo);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next()) {
+                    int idLibroRegistrado = rs.getInt("ID_LIBRO");
+
+                    return idLibroRegistrado == idLibro;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Funciones privadas: Operaciones de escritura
+
+    private void insertarPrestamo(Connection con, int idUsuario, int idLibro) throws SQLException {
+
+        String sql = "INSERT INTO PRESTAMO (ID_USUARIO, ID_LIBRO, FECHA_SALIDA, ID_ESTADO) VALUES (?, ?, CURRENT_DATE, 1)";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idUsuario);
+            ps.setInt(2, idLibro);
+            ps.executeUpdate();
+        }
+    }
+
+    private void bloquearLibro(Connection con, int idLibro) throws SQLException {
+
+        String sql = "UPDATE LIBRO SET DISPONIBLE = FALSE WHERE ID = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idLibro);
+            ps.executeUpdate();
+        }
+    }
+
+    private void cerrarPrestamo(Connection con, int idPrestamo) throws SQLException {
+
+        String sql = "UPDATE PRESTAMO SET ID_ESTADO = 2, FECHA_DEVOLUCION = CURRENT_DATE WHERE ID = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idPrestamo);
+            ps.executeUpdate();
+        }
+    }
+
+    private void liberarLibro(Connection con, int idLibro) throws SQLException {
+
+        String sql = "UPDATE LIBRO SET DISPONIBLE = TRUE WHERE ID = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idLibro);
+            ps.executeUpdate();
+        }
     }
 }

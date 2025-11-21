@@ -1,7 +1,5 @@
 package biblioteca.model;
 
-import org.w3c.dom.ls.LSOutput;
-
 public class Libro {
 
     private int id;
@@ -12,11 +10,11 @@ public class Libro {
     private String estado;
 
     // Constructor vacio
-    public Libro(){
+    public Libro() {
     }
 
     // Constructor completo
-    public Libro(int id, String titulo, String autor, String categoria, Boolean disponible, String estado){
+    public Libro(int id, String titulo, String autor, String categoria, Boolean disponible, String estado) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
@@ -26,7 +24,7 @@ public class Libro {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return titulo + " - " + autor;
     }
 
