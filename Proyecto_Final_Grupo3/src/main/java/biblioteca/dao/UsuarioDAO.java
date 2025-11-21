@@ -66,8 +66,8 @@ public class UsuarioDAO {
         try (Connection con = conTemp) {
 
             if (validarEmailExiste(con, u.getEmail())) {
-                System.out.println(">> Error: Correo electronica ya esta registrado. <<");
-                return false;
+                System.out.println(">> Error: Correo electronico: " + u.getEmail() + " ya esta registrado. <<");
+                return false; 
             }
 
             insertarUsuario(con, u);
