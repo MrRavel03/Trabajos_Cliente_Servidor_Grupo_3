@@ -43,9 +43,46 @@ public class LibroDAO {
         } catch (SQLException e) {
             System.err.println("Error al listar libros: " + e.getMessage());
         }
-
         return lista;
+    }
 
+    public List<Libro> buscarLibros(String busqueda){
 
+        List<Libro> lista = new ArrayList<>();
+
+        String sql = "SELECT L.ID, L.TITULO, L.AUTOR, L.CATEGORIA, L.DISPONIBLE, E.DESCRIPCION AS ESTATUS " +
+                "FROM LIBRO L " +
+                "INNER JOIN ESTADO E ON L.ID_ESTADO = E.ID " +
+                "WHERE E.DESCRIPCION = 'ACTIVO' " +
+                "AND (L.TITULO LIKE ? OR L.AUTOR LIKE ? OR L.CATEGORIA LIKE ?)";
+
+        try(Connection con = ConexionDB.conectar();
+            PreparedStatement ps = con.prepareStatement(sql)) {
+
+            String parametro = "%" + busqueda + "%"; //para busquedas parciales
+
+            ps.setString(1, parametro);
+            ps.setString(1, parametro);
+            ps.setString(1, parametro);
+
+            try(ResultSet rs = ps.executeQuery()){
+
+                while(rs.next()){
+
+                    Libro l = new Libro();
+
+                    l.setId(rs.getInt("ID"));
+                    l.setTitulo(rs.getString("TITULO"));
+                    l.setAutor(rs.getString("AUTOR"));
+                    l.setCategoria(rs.getString("CATEGORIA"));
+                    l.setDisponible(rs.getBoolean("DISPONIBLE"));
+                    l.setEstado(rs.getString("ESTATUS"));
+                    lista.add(l);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar libros: " e.getMessage());
+        }
+        return lista;
     }
 }

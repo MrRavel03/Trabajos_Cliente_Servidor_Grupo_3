@@ -66,7 +66,50 @@ public class PrestamoDAO {
 
     }
 
-    public List<Prestamo> listarPrestamosActivos(){
+    public boolean registrarDevolucion(int idPrestamo, int idLibro) {
+
+        String sqlClosePrestamo = "UPDATE PRESTAMO SET ID_ESTADO = 2, FECHA_DEVOLUION = CURRENT_DATE WHERE ID = ?";
+
+        String sqlFreeLibro = "UPDATE LIBRO SET DISPONIBLE = TRUE WHERE ID = ?";
+
+        Connection contemp = ConexionDB.conectar();
+        if (contemp == null) {
+            return false;
+        }
+
+        try (Connection con = contemp) {
+
+            con.setAutoCommit(false);
+
+            try (PreparedStatement psClose = con.prepareStatement(sqlClosePrestamo);
+                 PreparedStatement psFree = con.prepareStatement(sqlFreeLibro)) {
+
+                // Cerramos el prestamo
+                psClose.setInt(1, idPrestamo);
+                psClose.executeUpdate();
+
+                // Ponemos el libro como disponible
+                psFree.setInt(1, idLibro);
+                psFree.executeUpdate();
+
+                con.commit();
+                System.out.println(">> Transacción exitosa: Préstamo cerrado y libro devuelto <<");
+                return true;
+            } catch (SQLException e) {
+                System.err.println("Error en transaccion de devolucion:  " + e.getMessage());
+                try {
+                    con.rollback();
+                } catch (SQLException ex) {
+                    System.err.println("Error: rollback falló: " + ex.getMessage());
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error conexión: " + e.getMessage());
+        }
+        return false;
+    }
+
+        public List<Prestamo> listarPrestamosActivos(){
 
         List<Prestamo> lista = new ArrayList<>();
 
