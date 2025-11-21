@@ -6,125 +6,148 @@ import biblioteca.dao.ReservaDAO;
 import biblioteca.dao.UsuarioDAO;
 import biblioteca.model.Libro;
 import biblioteca.model.Prestamo;
-import biblioteca.model.Reserva;
 import biblioteca.model.Usuario;
 
 import java.util.List;
 
 public class Main {
-    static void main() {
+
+    public static void main(String[] args) {
         System.out.println("=================================================");
-        System.out.println("   PRUEBA INTEGRAL DEL SISTEMA BIBLIOTECARIO");
+        System.out.println("   PRUEBA DE ACEPTACIÓN - BIBLIOTECA DIGITAL MPV");
         System.out.println("=================================================\n");
 
-        // ----------------------------------------------------------------
-        // PASO 1: AUTENTICACIÓN
-        // ----------------------------------------------------------------
-        System.out.println("[PASO 1] Probando Inicio de Sesión...");
+        // --- INSTANCIAS DE DAOS ---
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        Usuario usuarioLogueado = usuarioDAO.validarLogin("gosorio@estudiante.com", "1234");
-
-        if (usuarioLogueado != null) {
-            System.out.println("✅ Login Exitoso. Usuario: " + usuarioLogueado.getNombre());
-        } else {
-            System.err.println("❌ Login Fallido. Revisa tu base de datos.");
-            return; // Si no entra, no seguimos.
-        }
-
-        // ----------------------------------------------------------------
-        // PASO 2: CATÁLOGO Y BÚSQUEDA
-        // ----------------------------------------------------------------
-        System.out.println("\n[PASO 2] Consultando libros disponibles...");
         LibroDAO libroDAO = new LibroDAO();
-        List<Libro> libros = libroDAO.listarLibros();
-
-        int idLibroPrueba = 2; // Usaremos "Cien años de soledad" para las pruebas
-        String tituloLibroPrueba = "";
-
-        for (Libro l : libros) {
-            System.out.println(
-                    "   -> ID: " + l.getId() + " | Título: " + l.getTitulo() + " | Disponible: " + l.isDisponible());
-            if (l.getId() == idLibroPrueba)
-                tituloLibroPrueba = l.getTitulo();
-        }
-
-        // ----------------------------------------------------------------
-        // PASO 3: REALIZAR PRÉSTAMO
-        // ----------------------------------------------------------------
-        System.out.println("\n[PASO 3] Prestando el libro: '" + tituloLibroPrueba + "'...");
         PrestamoDAO prestamoDAO = new PrestamoDAO();
-        int idUsuario = 2; // Gabriel Osorio
-
-        boolean prestamoExitoso = prestamoDAO.registrarPrestamo(idUsuario, idLibroPrueba);
-
-        if (prestamoExitoso) {
-            System.out.println("✅ Préstamo registrado. El libro ahora debería estar NO DISPONIBLE.");
-        } else {
-            System.out.println("⚠️ El préstamo falló (¿Ya estaba prestado?).");
-        }
-
-        // ----------------------------------------------------------------
-        // PASO 4: PRUEBA DE RESTRICCIÓN DE RESERVA (REQUERIMIENTO 12)
-        // Intentamos reservar el libro que ACABAMOS de prestar. Debería fallar.
-        // ----------------------------------------------------------------
-        System.out.println("\n[PASO 4] Intentando RESERVAR el libro ocupado (Debe fallar)...");
         ReservaDAO reservaDAO = new ReservaDAO();
-        boolean reservaFallidaEsperada = reservaDAO.registrarReserva(idUsuario, idLibroPrueba);
 
-        if (!reservaFallidaEsperada) {
-            System.out.println("✅ CORRECTO: El sistema bloqueó la reserva porque el libro no está disponible.");
+        // VARIABLES PARA LA PRUEBA
+        // Usamos un email aleatorio para no chocar con el UNIQUE constraint si corres
+        // esto 2 veces
+        String emailTest = "nuevo" + System.currentTimeMillis() + "@estudiante.com";
+        int idUsuarioNuevo = -1;
+        int idLibroNuevo = -1;
+
+        // =================================================================
+        // REQ 1 y 2: REGISTRO DE USUARIO Y LIBRO
+        // =================================================================
+        System.out.println("[PASO 1] Registrando nuevos datos...");
+
+        // A) Crear Usuario
+        Usuario u = new Usuario();
+        u.setNombre("Estudiante Prueba");
+        u.setEmail(emailTest);
+        u.setPassword("1234");
+        u.setRol("ESTUDIANTE");
+
+        if (usuarioDAO.registrarUsuario(u)) {
+            System.out.println("✅ Usuario registrado: " + u.getNombre());
+            // Truco: Recuperamos el usuario logueando para obtener su ID generado
+            Usuario uRecuperado = usuarioDAO.validarLogin(emailTest, "1234");
+            idUsuarioNuevo = uRecuperado.getId();
         } else {
-            System.err.println("❌ ERROR GRAVE: El sistema permitió reservar un libro prestado.");
+            System.err.println("❌ Error al registrar usuario.");
+            return;
         }
 
-        // ----------------------------------------------------------------
-        // PASO 5: DEVOLUCIÓN DEL LIBRO
-        // ----------------------------------------------------------------
-        System.out.println("\n[PASO 5] Devolviendo el libro...");
+        // B) Crear Libro
+        Libro l = new Libro();
+        l.setTitulo("Estructuras de Datos Avanzadas");
+        l.setAutor("Robert Lafore");
+        l.setCategoria("Tecnologia");
 
-        // Primero buscamos el ID del préstamo activo
-        List<Prestamo> activos = prestamoDAO.listarPrestamosActivos();
+        if (libroDAO.registrarLibro(l)) {
+            System.out.println("✅ Libro registrado: " + l.getTitulo());
+            // Buscamos el libro para obtener su ID
+            List<Libro> busqueda = libroDAO.buscarLibros("Estructuras");
+            if (!busqueda.isEmpty())
+                idLibroNuevo = busqueda.get(0).getId();
+        } else {
+            System.err.println("❌ Error al registrar libro.");
+            return;
+        }
+
+        // =================================================================
+        // REQ 2: LOGIN
+        // =================================================================
+        System.out.println("\n[PASO 2] Probando Login con el nuevo usuario...");
+        Usuario login = usuarioDAO.validarLogin(emailTest, "1234");
+        if (login != null) {
+            System.out.println("✅ Login Exitoso. Rol: " + login.getRol());
+        } else {
+            System.err.println("❌ Login fallido.");
+        }
+
+        // =================================================================
+        // REQ 5: PRÉSTAMO (Prestar el libro nuevo al usuario nuevo)
+        // =================================================================
+        System.out.println("\n[PASO 3] Realizando Préstamo...");
+        boolean prestamoOk = prestamoDAO.registrarPrestamo(idUsuarioNuevo, idLibroNuevo);
+        if (prestamoOk) {
+            System.out.println("✅ Préstamo registrado correctamente.");
+        } else {
+            System.err.println("❌ Falló el préstamo.");
+        }
+
+        // =================================================================
+        // REQ 12: VALIDACIÓN (Intentar reservar lo que ya está prestado)
+        // =================================================================
+        System.out.println("\n[PASO 4] Intentando reservar libro ocupado (Debe fallar)...");
+        boolean reservaOk = reservaDAO.registrarReserva(idUsuarioNuevo, idLibroNuevo);
+        if (!reservaOk) {
+            System.out.println("✅ CORRECTO: El sistema bloqueó la reserva inválida.");
+        } else {
+            System.err.println("❌ ERROR: El sistema permitió reservar un libro ocupado.");
+        }
+
+        // =================================================================
+        // REQ 11: HISTORIAL DE PRÉSTAMOS
+        // =================================================================
+        System.out.println("\n[PASO 5] Consultando Historial del Usuario...");
+        List<Prestamo> historial = prestamoDAO.listarHistorialPorUsuario(idUsuarioNuevo);
+        boolean encontradoEnHistorial = false;
         int idPrestamoActivo = -1;
 
-        for (Prestamo p : activos) {
-            if (p.getIdLibro() == idLibroPrueba && p.getIdUsuario() == idUsuario) {
+        for (Prestamo p : historial) {
+            System.out.println("   -> Libro: " + p.getTituloLibro() + " | Fecha: " + p.getFechaSalida() + " | Estado: "
+                    + p.getEstado());
+            if (p.getIdLibro() == idLibroNuevo) {
+                encontradoEnHistorial = true;
                 idPrestamoActivo = p.getId();
-                break;
             }
         }
 
+        if (encontradoEnHistorial)
+            System.out.println("✅ El préstamo aparece en el historial.");
+        else
+            System.err.println("❌ El préstamo NO aparece en el historial.");
+
+        // =================================================================
+        // DEVOLUCIÓN
+        // =================================================================
+        System.out.println("\n[PASO 6] Devolviendo el libro...");
         if (idPrestamoActivo != -1) {
-            boolean devolucionExitosa = prestamoDAO.registrarDevolucion(idPrestamoActivo, idLibroPrueba);
-            if (devolucionExitosa) {
-                System.out.println("✅ Devolución registrada. El libro ahora está DISPONIBLE.");
+            if (prestamoDAO.registrarDevolucion(idPrestamoActivo, idLibroNuevo)) {
+                System.out.println("✅ Libro devuelto con éxito.");
+            } else {
+                System.err.println("❌ Falló la devolución.");
             }
-        } else {
-            System.out.println("⚠️ No se encontró el préstamo activo para devolver.");
         }
 
-        // ----------------------------------------------------------------
-        // PASO 6: RESERVA EXITOSA
-        // Ahora que el libro fue devuelto, la reserva SÍ debería funcionar.
-        // ----------------------------------------------------------------
-        System.out.println("\n[PASO 6] Intentando RESERVAR nuevamente (Debe funcionar)...");
-        boolean reservaExitosa = reservaDAO.registrarReserva(idUsuario, idLibroPrueba);
-
-        if (reservaExitosa) {
-            System.out.println("✅ CORRECTO: Reserva realizada con éxito.");
+        // =================================================================
+        // REQ 4: RESERVA EXITOSA (Ahora que está libre)
+        // =================================================================
+        System.out.println("\n[PASO 7] Intentando reservar nuevamente (Debe funcionar)...");
+        if (reservaDAO.registrarReserva(idUsuarioNuevo, idLibroNuevo)) {
+            System.out.println("✅ CORRECTO: Reserva realizada.");
         } else {
-            System.err.println("❌ ERROR: Falló la reserva y el libro debería estar libre.");
+            System.err.println("❌ Error al reservar libro disponible.");
         }
 
-        // ----------------------------------------------------------------
-        // RESUMEN FINAL
-        // ----------------------------------------------------------------
         System.out.println("\n=================================================");
-        System.out.println("   RESUMEN DE RESERVAS ACTIVAS");
+        System.out.println("   FIN DE PRUEBAS - BACKEND LISTO");
         System.out.println("=================================================");
-        List<Reserva> reservas = reservaDAO.listarReservasActivas();
-        for (Reserva r : reservas) {
-            System.out.println("Reserva ID: " + r.getId() + " | Libro: " + r.getTituloLibro() + " | Usuario: "
-                    + r.getNombreUsuario());
-        }
     }
 }

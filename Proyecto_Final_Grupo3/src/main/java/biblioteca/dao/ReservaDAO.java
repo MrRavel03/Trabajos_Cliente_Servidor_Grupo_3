@@ -26,7 +26,7 @@ public class ReservaDAO {
             try {
 
                 if (!verificarDisponibilidad(con, idLibro)) {
-                    System.out.println(">> Error: El libro no esta disponible. <<");
+                    System.out.println(">> Error: El libro " + idLibro + " no esta disponible. <<");
                     return false;
                 }
 
@@ -35,7 +35,7 @@ public class ReservaDAO {
                 bloquearLibro(con, idLibro);
 
                 con.commit();
-                System.out.println(">> Reserva completada <<");
+                System.out.println(">> Reserva del libro: " + idLibro + " completada <<");
                 return true;
             } catch (SQLException e) {
                 System.err.println("Error en el proceso de reserva: " + e.getMessage());
@@ -56,13 +56,13 @@ public class ReservaDAO {
 
         String sql = "SELECT DISPONIBLE FROM LIBRO WHERE ID = ?";
 
-        try (PreparedStatement ps = con.prepareStatement(sql)){
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, idLibro);
 
-            try(ResultSet rs = ps.executeQuery()){
+            try (ResultSet rs = ps.executeQuery()) {
 
-                if (rs.next()){
+                if (rs.next()) {
                     return rs.getBoolean("DISPONIBLE");
                 }
             }
@@ -75,26 +75,26 @@ public class ReservaDAO {
         String sql = "INSERT INTO RESERVA (ID_USUARIO, ID_LIBRO, FECHA_RESERVA, ID_ESTADO) " +
                 "VALUES (? , ?, CURRENT_DATE, 1)";
 
-        try (PreparedStatement ps = con.prepareStatement(sql)){
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1,idUsuario);
-            ps.setInt(2,idLibro);
+            ps.setInt(1, idUsuario);
+            ps.setInt(2, idLibro);
             ps.executeUpdate();
         }
     }
 
-    private void bloquearLibro (Connection con, int idLibro) throws SQLException {
+    private void bloquearLibro(Connection con, int idLibro) throws SQLException {
 
         String sql = "UPDATE LIBRO SET DISPONIBLE = FALSE WHERE ID = ?";
 
-        try (PreparedStatement ps = con.prepareStatement(sql)){
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, idLibro);
             ps.executeUpdate();
         }
     }
 
-    public List<Reserva> listarReservasActivas(){
+    public List<Reserva> listarReservasActivas() {
 
         List<Reserva> lista = new ArrayList<>();
 
@@ -109,10 +109,10 @@ public class ReservaDAO {
                 "WHERE E.DESCRIPCION = 'ACTIVO'";
 
         try (Connection con = ConexionDB.conectar();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()){
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()){
+            while (rs.next()) {
 
                 Reserva r = new Reserva();
 

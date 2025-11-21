@@ -39,7 +39,7 @@ public class PrestamoDAO {
 
                 // Guardamos
                 con.commit();
-                System.out.println(">> Transacción exitosa: Préstamo registrado <<");
+                System.out.println(">> Préstamo registrado del libro: " + idLibro + " <<");
 
                 return true;
 
@@ -79,7 +79,8 @@ public class PrestamoDAO {
                 liberarLibro(con, idLibro);
 
                 con.commit();
-                System.out.println(">> Transacción exitosa: Devolucion registrada <<");
+                System.out.println(
+                        ">> Devolucion realizada del prestamo: " + idPrestamo + ", del libro: " + idLibro + " <<");
                 return true;
             } catch (SQLException e) {
                 System.err.println("Error en transaccion de devolucion: " + e.getMessage());

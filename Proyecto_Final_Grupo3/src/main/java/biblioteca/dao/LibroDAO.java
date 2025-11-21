@@ -12,6 +12,8 @@ import java.util.List;
 
 public class LibroDAO {
 
+    // Funciones publicas de lectura
+
     public List<Libro> listarLibros() {
 
         List<Libro> lista = new ArrayList<>();
@@ -83,5 +85,31 @@ public class LibroDAO {
             System.err.println("Error al buscar libros: " + e.getMessage());
         }
         return lista;
+    }
+
+    // Funciones publicas de escritura
+
+    public boolean registrarLibro(Libro l) {
+
+        String sql = "INSERT INTO LIBRO (TITULO, AUTOR, CATEGORIA, DISPONIBLE, ID_ESTADO) VALUES " +
+                "(?, ?, ?, TRUE, 1)";
+
+        try (Connection con = ConexionDB.conectar();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, l.getTitulo());
+            ps.setString(2, l.getAutor());
+            ps.setString(3, l.getCategoria());
+
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                System.out.println(">> Se ha registrado correctamente el libro: " + l.getTitulo());
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            System.err.println("Error al registrar libro: " + e.getMessage());
+            return false;
+        }
     }
 }

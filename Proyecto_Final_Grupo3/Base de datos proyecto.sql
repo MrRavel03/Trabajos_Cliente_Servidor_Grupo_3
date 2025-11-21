@@ -1,80 +1,150 @@
-
 DROP DATABASE IF EXISTS BIBLIOTECA_DB;
+
 CREATE DATABASE BIBLIOTECA_DB;
+
 USE BIBLIOTECA_DB;
 
 CREATE TABLE ESTADO (
-	ID INT PRIMARY KEY,
+    ID INT PRIMARY KEY,
     DESCRIPCION VARCHAR(20) NOT NULL
 );
 
-INSERT INTO ESTADO (ID, DESCRIPCION) VALUES
-(1, 'ACTIVO'),
-(2, 'INACTIVO');
+INSERT INTO
+    ESTADO (ID, DESCRIPCION)
+VALUES (1, 'ACTIVO'),
+    (2, 'INACTIVO');
 
 CREATE TABLE USUARIO (
-	ID INT AUTO_INCREMENT PRIMARY KEY,
-	NOMBRE VARCHAR(100),
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    NOMBRE VARCHAR(100),
     EMAIL VARCHAR(100) UNIQUE,
     PASSWORD VARCHAR(100),
-    ROL ENUM('ESTUDIANTE','BIBLIOTECARIO') DEFAULT 'ESTUDIANTE',
+    ROL ENUM('ESTUDIANTE', 'BIBLIOTECARIO') DEFAULT 'ESTUDIANTE',
     ID_ESTADO INT DEFAULT 1,
-    FOREIGN KEY (ID_ESTADO) REFERENCES ESTADO(ID)
+    FOREIGN KEY (ID_ESTADO) REFERENCES ESTADO (ID)
 );
 
 CREATE TABLE LIBRO (
-	ID INT AUTO_INCREMENT PRIMARY KEY,
+    ID INT AUTO_INCREMENT PRIMARY KEY,
     TITULO VARCHAR(100),
     AUTOR VARCHAR(100),
     CATEGORIA VARCHAR(100),
     DISPONIBLE BOOLEAN DEFAULT TRUE,
     ID_ESTADO INT DEFAULT 1,
-    FOREIGN KEY (ID_ESTADO) REFERENCES ESTADO(ID)
+    FOREIGN KEY (ID_ESTADO) REFERENCES ESTADO (ID)
 );
 
 CREATE TABLE PRESTAMO (
-	ID INT AUTO_INCREMENT PRIMARY KEY,
+    ID INT AUTO_INCREMENT PRIMARY KEY,
     ID_USUARIO INT NOT NULL,
     ID_LIBRO INT NOT NULL,
-    FECHA_SALIDA DATE DEFAULT (CURRENT_DATE),
+    FECHA_SALIDA DATE DEFAULT(CURRENT_DATE),
     FECHA_DEVOLUCION DATE,
     ID_ESTADO INT DEFAULT 1,
-    FOREIGN KEY (ID_USUARIO) REFERENCES USUARIO(ID),
-    FOREIGN KEY (ID_LIBRO) REFERENCES LIBRO(ID),
-    FOREIGN KEY (ID_ESTADO) REFERENCES ESTADO(ID)
+    FOREIGN KEY (ID_USUARIO) REFERENCES USUARIO (ID),
+    FOREIGN KEY (ID_LIBRO) REFERENCES LIBRO (ID),
+    FOREIGN KEY (ID_ESTADO) REFERENCES ESTADO (ID)
 );
 
-CREATE TABLE RESERVA(
-	ID INT AUTO_INCREMENT PRIMARY KEY,
-	ID_USUARIO INT NOT NULL,
+CREATE TABLE RESERVA (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    ID_USUARIO INT NOT NULL,
     ID_LIBRO INT NOT NULL,
-    FECHA_RESERVA DATE DEFAULT (CURRENT_DATE),
+    FECHA_RESERVA DATE DEFAULT(CURRENT_DATE),
     ID_ESTADO INT DEFAULT 1,
-	FOREIGN KEY (ID_USUARIO) REFERENCES USUARIO(ID),
-    FOREIGN KEY (ID_LIBRO) REFERENCES LIBRO(ID),
-    FOREIGN KEY (ID_ESTADO) REFERENCES ESTADO(ID)
+    FOREIGN KEY (ID_USUARIO) REFERENCES USUARIO (ID),
+    FOREIGN KEY (ID_LIBRO) REFERENCES LIBRO (ID),
+    FOREIGN KEY (ID_ESTADO) REFERENCES ESTADO (ID)
 );
 
-INSERT INTO USUARIO (NOMBRE, EMAIL, PASSWORD, ROL, ID_ESTADO) VALUES
-('Admin Bibliotecario', 'admin@biblio.com', '1234', 'BIBLIOTECARIO', 1),
-('Gabriel Osorio', 'gosorio@estudiante.com', '1234', 'ESTUDIANTE', 1),
-('Usuario bloqueado', 'bloqueado@estudiante.com', '1234', 'ESTUDIANTE', 2);
+INSERT INTO
+    USUARIO (
+        NOMBRE,
+        EMAIL,
+        PASSWORD,
+        ROL,
+        ID_ESTADO
+    )
+VALUES (
+        'Admin Bibliotecario',
+        'admin@biblio.com',
+        '1234',
+        'BIBLIOTECARIO',
+        1
+    ),
+    (
+        'Gabriel Osorio',
+        'gosorio@estudiante.com',
+        '1234',
+        'ESTUDIANTE',
+        1
+    ),
+    (
+        'Usuario bloqueado',
+        'bloqueado@estudiante.com',
+        '1234',
+        'ESTUDIANTE',
+        2
+    );
 
-INSERT INTO LIBRO (TITULO, AUTOR, CATEGORIA, DISPONIBLE, ID_ESTADO) VALUES
-('Java para principiantes', 'Gabriel Osorio', 'Tecnologia', '1', 1),
-('Cien años de soledad', 'Gabriel Garcia Marquez', 'Novela', '2', 1),
-('Libro viejo', 'Anonimo', 'Historia', '1', 2);
+INSERT INTO
+    LIBRO (
+        TITULO,
+        AUTOR,
+        CATEGORIA,
+        DISPONIBLE,
+        ID_ESTADO
+    )
+VALUES (
+        'Java para principiantes',
+        'Gabriel Osorio',
+        'Tecnologia',
+        FALSE,
+        2
+    ),
+    (
+        'Cien años de soledad',
+        'Gabriel Garcia Marquez',
+        'Novela',
+        FALSE,
+        2
+    ),
+    (
+        'Java para principiantes',
+        'Gabriel Osorio',
+        'Tecnologia',
+        TRUE,
+        1
+    ),
+    (
+        'Libro viejo',
+        'Anonimo',
+        'Historia',
+        TRUE,
+        2
+    );
 
-INSERT INTO PRESTAMO (ID_USUARIO, ID_LIBRO, FECHA_SALIDA, FECHA_DEVOLUCION, ID_ESTADO) VALUES
-(2, 2, "2025-11-10","2025-11-30",1 ),
-(2, 1, "2025-11-10","2025-11-30",1 );
+INSERT INTO
+    PRESTAMO (
+        ID_USUARIO,
+        ID_LIBRO,
+        FECHA_SALIDA,
+        FECHA_DEVOLUCION,
+        ID_ESTADO
+    )
+VALUES (
+        2,
+        2,
+        "2025-11-10",
+        "2025-11-30",
+        1
+    );
 
-INSERT INTO RESERVA (ID_USUARIO, ID_LIBRO, FECHA_RESERVA, ID_ESTADO) VALUES
-(2,2, CURRENT_DATE, 1);
-
-
-
-
-
-
-
+INSERT INTO
+    RESERVA (
+        ID_USUARIO,
+        ID_LIBRO,
+        FECHA_RESERVA,
+        ID_ESTADO
+    )
+VALUES (2, 1, CURRENT_DATE, 1);
