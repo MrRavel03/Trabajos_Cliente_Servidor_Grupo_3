@@ -17,7 +17,7 @@ public class LibroDAO {
 
         List<Libro> lista = new ArrayList<>();
 
-        String sql = "SELECT L.ID, L.TITULO, L.AUTOR, L.CATEGORIA, L.DISPONIBLE" +
+        String sql = "SELECT L.ID, L.TITULO, L.AUTOR, L.CATEGORIA, L.DISPONIBLE, " +
                 "E.DESCRIPCION " +
                 "FROM LIBRO L " +
                 "INNER JOIN ESTADO E ON L.ID_ESTADO = E.ID " +
@@ -62,8 +62,8 @@ public class LibroDAO {
             String parametro = "%" + busqueda + "%"; //para busquedas parciales
 
             ps.setString(1, parametro);
-            ps.setString(1, parametro);
-            ps.setString(1, parametro);
+            ps.setString(2, parametro);
+            ps.setString(3, parametro);
 
             try(ResultSet rs = ps.executeQuery()){
 
@@ -81,7 +81,7 @@ public class LibroDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error al buscar libros: " e.getMessage());
+            System.err.println("Error al buscar libros: " + e.getMessage());
         }
         return lista;
     }

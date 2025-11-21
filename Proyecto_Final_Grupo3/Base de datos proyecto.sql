@@ -32,16 +32,6 @@ CREATE TABLE LIBRO (
     FOREIGN KEY (ID_ESTADO) REFERENCES ESTADO(ID)
 );
 
-INSERT INTO USUARIO (NOMBRE, EMAIL, PASSWORD, ROL, ID_ESTADO) VALUES
-('Admin Bibliotecario', 'admin@biblio.com', '1234', 'BIBLIOTECARIO', 1),
-('Gabriel Osorio', 'gosorio@estudiante.com', '1234', 'ESTUDIANTE', 1),
-('Usuario bloqueado', 'bloqueado@estudiante.com', '1234', 'ESTUDIANTE', 2);
-
-INSERT INTO LIBRO (TITULO, AUTOR, CATEGORIA, DISPONIBLE, ID_ESTADO) VALUES
-('Java para principiantes', 'Gabriel Osorio', 'Tecnologia', '1', 1),
-('Cien años de soledad', 'Gabriel Garcia Marquez', 'Novela', '2', 1),
-('Libro viejo', 'Anonimo', 'Historia', '1', 2);
-
 CREATE TABLE PRESTAMO (
 	ID INT AUTO_INCREMENT PRIMARY KEY,
     ID_USUARIO INT NOT NULL,
@@ -54,10 +44,33 @@ CREATE TABLE PRESTAMO (
     FOREIGN KEY (ID_ESTADO) REFERENCES ESTADO(ID)
 );
 
+CREATE TABLE RESERVA(
+	ID INT AUTO_INCREMENT PRIMARY KEY,
+	ID_USUARIO INT NOT NULL,
+    ID_LIBRO INT NOT NULL,
+    FECHA_RESERVA DATE DEFAULT (CURRENT_DATE),
+    ID_ESTADO INT DEFAULT 1,
+	FOREIGN KEY (ID_USUARIO) REFERENCES USUARIO(ID),
+    FOREIGN KEY (ID_LIBRO) REFERENCES LIBRO(ID),
+    FOREIGN KEY (ID_ESTADO) REFERENCES ESTADO(ID)
+);
+
+INSERT INTO USUARIO (NOMBRE, EMAIL, PASSWORD, ROL, ID_ESTADO) VALUES
+('Admin Bibliotecario', 'admin@biblio.com', '1234', 'BIBLIOTECARIO', 1),
+('Gabriel Osorio', 'gosorio@estudiante.com', '1234', 'ESTUDIANTE', 1),
+('Usuario bloqueado', 'bloqueado@estudiante.com', '1234', 'ESTUDIANTE', 2);
+
+INSERT INTO LIBRO (TITULO, AUTOR, CATEGORIA, DISPONIBLE, ID_ESTADO) VALUES
+('Java para principiantes', 'Gabriel Osorio', 'Tecnologia', '1', 1),
+('Cien años de soledad', 'Gabriel Garcia Marquez', 'Novela', '2', 1),
+('Libro viejo', 'Anonimo', 'Historia', '1', 2);
+
 INSERT INTO PRESTAMO (ID_USUARIO, ID_LIBRO, FECHA_SALIDA, FECHA_DEVOLUCION, ID_ESTADO) VALUES
 (2, 2, "2025-11-10","2025-11-30",1 ),
 (2, 1, "2025-11-10","2025-11-30",1 );
 
+INSERT INTO RESERVA (ID_USUARIO, ID_LIBRO, FECHA_RESERVA, ID_ESTADO) VALUES
+(2,2, CURRENT_DATE, 1);
 
 
 

@@ -12,6 +12,7 @@ import java.util.List;
 
 public class PrestamoDAO {
 
+    //TODO Revisar porque no valida si el libro no esta disponible
     public boolean registrarPrestamo(int idUsuario, int idLibro) {
 
         String sqlInsert = "INSERT INTO PRESTAMO (ID_USUARIO, ID_LIBRO, " +
@@ -68,7 +69,7 @@ public class PrestamoDAO {
 
     public boolean registrarDevolucion(int idPrestamo, int idLibro) {
 
-        String sqlClosePrestamo = "UPDATE PRESTAMO SET ID_ESTADO = 2, FECHA_DEVOLUION = CURRENT_DATE WHERE ID = ?";
+        String sqlClosePrestamo = "UPDATE PRESTAMO SET ID_ESTADO = 2, FECHA_DEVOLUCION = CURRENT_DATE WHERE ID = ?";
 
         String sqlFreeLibro = "UPDATE LIBRO SET DISPONIBLE = TRUE WHERE ID = ?";
 
@@ -96,7 +97,7 @@ public class PrestamoDAO {
                 System.out.println(">> Transacción exitosa: Préstamo cerrado y libro devuelto <<");
                 return true;
             } catch (SQLException e) {
-                System.err.println("Error en transaccion de devolucion:  " + e.getMessage());
+                System.err.println("Error en transaccion de devolucion: " + e.getMessage());
                 try {
                     con.rollback();
                 } catch (SQLException ex) {

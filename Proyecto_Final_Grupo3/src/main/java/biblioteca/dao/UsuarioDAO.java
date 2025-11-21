@@ -15,9 +15,9 @@ public class UsuarioDAO {
         Usuario u = null;
 
         String sql = "SELECT U.*, " +
-                "E.DESCRIPCION AS ESTATUS" +
-                "FROM USUARIO U" +
-                "INNER JOIN ESTADO E ON U.ID_ESTADO = E.ID" +
+                "E.DESCRIPCION AS ESTATUS " +
+                "FROM USUARIO U " +
+                "INNER JOIN ESTADO E ON U.ID_ESTADO = E.ID " +
                 "WHERE U.EMAIL = ? AND U.PASSWORD = ? AND E.DESCRIPCION = 'ACTIVO'";
 
         try (Connection con = ConexionDB.conectar();
