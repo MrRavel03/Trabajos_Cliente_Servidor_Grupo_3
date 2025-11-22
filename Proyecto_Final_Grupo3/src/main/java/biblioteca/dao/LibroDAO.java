@@ -14,6 +14,32 @@ public class LibroDAO {
 
     // Funciones publicas de lectura
 
+    public List<String> obtenerReporteMasPrestados() {
+        List<String> reporte = new ArrayList<>();
+
+        String sql = "SELECT L.TITULO, COUNT(P.ID) AS TOTAL_PRESTAMOS " +
+                "FROM PRESTAMO P " +
+                "INNER JOIN LIBRO L ON P.ID_LIBRO = L.ID " +
+                "GROUP BY L.TITULO " +
+                "ORDER BY TOTAL_PRESTAMOS DESC";
+
+        try (Connection con = ConexionDB.conectar();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+
+                String titulo = rs.getString("TITULO");
+                int cantidad = rs.getInt("TOTAL_PRESTAMOS");
+                reporte.add(titulo + " (" + cantidad + " préstamos)");
+            }
+        } catch (SQLException e) {
+
+            System.err.println("Error generando reporte: " + e.getMessage());
+        }
+        return reporte;
+    }
+
     public List<Libro> listarLibros() {
 
         List<Libro> lista = new ArrayList<>();
