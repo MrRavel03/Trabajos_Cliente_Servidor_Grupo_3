@@ -28,6 +28,11 @@ public class PrestamoDAO {
 
             try {
 
+                if (!verificarUsuarioActivo(con, idUsuario)) {
+                    System.out.println(">> Error: El usuario " + idUsuario + " no valido. <<");
+                    return false;
+                }
+
                 if (!verificarDisponibilidad(con, idLibro)) {
                     System.out.println(">> Error: El libro no está disponible <<");
                     return false;
@@ -223,6 +228,23 @@ public class PrestamoDAO {
             }
         }
         return false;
+    }
+
+    private boolean verificarUsuarioActivo(Connection con, int idUsuario) throws SQLException {
+
+        String sql = "SELECT U.ID FROM USUARIO U " +
+                "INNER JOIN ESTADO E ON U.ID_ESTADO = E.ID " +
+                "WHERE U.ID = ? AND E.DESCRIPCION = 'ACTIVO'";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idUsuario);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                return rs.next();
+            }
+        }
     }
 
     // Funciones privadas: Operaciones de escritura

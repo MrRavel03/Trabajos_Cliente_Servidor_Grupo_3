@@ -91,6 +91,8 @@ public class LibroDAO {
 
     public boolean registrarLibro(Libro l) {
 
+        if (l == null){return false;}
+
         String sql = "INSERT INTO LIBRO (TITULO, AUTOR, CATEGORIA, DISPONIBLE, ID_ESTADO) VALUES " +
                 "(?, ?, ?, TRUE, 1)";
 
