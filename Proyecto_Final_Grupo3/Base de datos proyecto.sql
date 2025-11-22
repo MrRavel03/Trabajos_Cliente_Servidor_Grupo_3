@@ -61,20 +61,20 @@ INSERT INTO USUARIO (NOMBRE, EMAIL, PASSWORD, ROL, ID_ESTADO) VALUES
 ('Usuario bloqueado', 'bloqueado@estudiante.com', '1234', 'ESTUDIANTE', 2);
 
 INSERT INTO LIBRO (TITULO, AUTOR, CATEGORIA, DISPONIBLE, ID_ESTADO) VALUES
-('Java para principiantes', 'Gabriel Osorio', 'Tecnologia', FALSE, 2),
-('Cien años de soledad', 'Gabriel Garcia Marquez', 'Novela', FALSE, 2),
-('Java para principiantes', 'Gabriel Osorio', 'Tecnologia', TRUE, 1),
-('Libro viejo', 'Anonimo', 'Historia', TRUE, 2);
+('Java para principiantes', 'Gabriel Osorio', 'Tecnologia', FALSE, 1),
+('Cien años de soledad', 'Gabriel Garcia Marquez', 'Novela', FALSE, 1),
+('Libro viejo', 'Anonimo', 'Historia', FALSE, 2);
 
 INSERT INTO PRESTAMO (ID_USUARIO, ID_LIBRO, FECHA_SALIDA, FECHA_DEVOLUCION, ID_ESTADO) VALUES
-(2, 2, "2025-11-10","2025-11-30",1 );
+(2, 2, "2025-11-10","2025-11-30",1 ),
+(2, 1, "2025-11-10","2025-11-30",1 );
 
 INSERT INTO RESERVA (ID_USUARIO, ID_LIBRO, FECHA_RESERVA, ID_ESTADO) VALUES
-(2, 1, CURRENT_DATE, 1);
+(2,2, CURRENT_DATE, 1);
 
 
 
-
+SELECT * FROM LIBRO;
 
 
 
