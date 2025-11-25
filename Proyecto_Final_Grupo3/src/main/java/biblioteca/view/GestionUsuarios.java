@@ -1,4 +1,4 @@
-package biblioteca.vistas;
+package biblioteca.view;
 
 import javax.swing.*;
 import java.awt.*;
@@ -75,7 +75,7 @@ public class GestionUsuarios extends JFrame {
         // Boton regresar
         btnRegresar = new JButton("Regresar al Dashboard");
         btnRegresar.addActionListener(e -> {
-            new AdminDashboard().setVisible(true);
+            new biblioteca.view.AdminDashboard().setVisible(true);
             this.dispose();
         });
 

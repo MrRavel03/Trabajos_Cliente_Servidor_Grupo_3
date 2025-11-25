@@ -43,7 +43,7 @@ public class UsuarioDAO {
             }
         } catch (SQLException e) {
 
-            System.err.println("Error en validarLogin");
+            System.err.println("Error en validar Login");
         }
 
         return u;

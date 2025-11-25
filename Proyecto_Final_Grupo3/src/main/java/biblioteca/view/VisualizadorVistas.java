@@ -1,7 +1,4 @@
-package biblioteca.vistas;
-
-import biblioteca.view.CatalogoLibrosEstudiantesView;
-import biblioteca.view.InicioSesionView;
+package biblioteca.view;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,12 +31,12 @@ public class VisualizadorVistas extends JFrame {
         JButton btnLogin = new JButton("6. Login");
 
         // Action Listeners para abrir vistas
-        btnDashboard.addActionListener(e -> new biblioteca.vistas.AdminDashboard().setVisible(true));
-        btnReservas.addActionListener(e -> new biblioteca.vistas.GestionReservas().setVisible(true));
-        btnLibros.addActionListener(e -> new biblioteca.vistas.GestionLibros().setVisible(true));
-        btnUsuarios.addActionListener(e -> new biblioteca.vistas.GestionUsuarios().setVisible(true));
-        btnPrestamos.addActionListener(e -> new biblioteca.vistas.GestionPrestamos().setVisible(true));
-        btnLogin.addActionListener(e -> new InicioSesionView().setVisible(true));
+        btnDashboard.addActionListener(e -> new biblioteca.view.AdminDashboard().setVisible(true));
+        btnReservas.addActionListener(e -> new biblioteca.view.GestionReservas().setVisible(true));
+        btnLibros.addActionListener(e -> new biblioteca.view.GestionLibros().setVisible(true));
+        btnUsuarios.addActionListener(e -> new biblioteca.view.GestionUsuarios().setVisible(true));
+        btnPrestamos.addActionListener(e -> new biblioteca.view.GestionPrestamos().setVisible(true));
+        btnLogin.addActionListener(e -> new LoginView().setVisible(true));
 
         panel.add(btnDashboard);
         panel.add(btnReservas);

@@ -5,7 +5,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class InicioSesionView extends JFrame{
+public class LoginView extends JFrame{
 
     // solo los atributos necesarios y los que pueden cambiar o ser llamados
     private JTextField txtEmail;
@@ -13,7 +13,7 @@ public class InicioSesionView extends JFrame{
     private JButton btnIngresar;
     private JLabel lblMensajeError;
 
-    public InicioSesionView() {
+    public LoginView() {
         configurarVentana();
         inicializarComponentes();
     }
@@ -73,6 +73,9 @@ public class InicioSesionView extends JFrame{
         // Botón Ingresar
         btnIngresar = new JButton("INGRESAR AL SISTEMA");
         estilizarBotonPrincipal(btnIngresar);
+
+        // para que al dar enter funcione como el boton de ingresar
+        this.getRootPane().setDefaultButton(btnIngresar);
 
         // --- Agregar al panel ---
         panelLogin.add(lblTitulo);
