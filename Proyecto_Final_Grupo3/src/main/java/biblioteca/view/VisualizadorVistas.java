@@ -1,6 +1,7 @@
 package biblioteca.vistas;
 
 import biblioteca.view.CatalogoLibrosEstudiantesView;
+import biblioteca.view.InicioSesionView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +39,7 @@ public class VisualizadorVistas extends JFrame {
         btnLibros.addActionListener(e -> new biblioteca.vistas.GestionLibros().setVisible(true));
         btnUsuarios.addActionListener(e -> new biblioteca.vistas.GestionUsuarios().setVisible(true));
         btnPrestamos.addActionListener(e -> new biblioteca.vistas.GestionPrestamos().setVisible(true));
-        btnLogin.addActionListener(e -> new CatalogoLibrosEstudiantesView().setVisible(true));
+        btnLogin.addActionListener(e -> new InicioSesionView().setVisible(true));
 
         panel.add(btnDashboard);
         panel.add(btnReservas);
