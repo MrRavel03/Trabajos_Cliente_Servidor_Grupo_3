@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 public class InicioSesionView extends JFrame{
 
+    // solo los atributos necesarios y los que pueden cambiar o ser llamados
     private JTextField txtEmail;
     private JPasswordField txtPassword;
     private JButton btnIngresar;
