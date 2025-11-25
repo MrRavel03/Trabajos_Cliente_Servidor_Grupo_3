@@ -15,14 +15,20 @@ public class DetalleLibroEstudianteView extends JFrame {
     private JButton botonReservar;
 
     public DetalleLibroEstudianteView() {
+        configurarVentana();
+        inicializarComponentes();
+        setVisible(true);
+    }
 
+    public void configurarVentana(){
         setTitle("Detalle del Libro");
         setSize(720, 480);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
         setLayout(new BorderLayout());
+    }
 
+    public void inicializarComponentes(){
         //Panel Izquierdo
         JPanel panelIzquierdo = new JPanel(new BorderLayout());
         panelIzquierdo.setPreferredSize(new Dimension(200, 480));
@@ -32,10 +38,9 @@ public class DetalleLibroEstudianteView extends JFrame {
         portadaLibro = new JLabel();
         portadaLibro.setHorizontalAlignment(JLabel.CENTER);
         portadaLibro.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        panelIzquierdo.add(portadaLibro, BorderLayout.CENTER);
-        add(panelIzquierdo, BorderLayout.WEST);
+        portadaLibro.setPreferredSize(new Dimension(160, 220));
 
-        //Panel Derecho
+        //Inicializacion del Panel Derecho
         JPanel panelDerecho = new JPanel();
         panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
         panelDerecho.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -43,7 +48,7 @@ public class DetalleLibroEstudianteView extends JFrame {
         //Titulo
         tituloLibro = new JLabel();
         tituloLibro.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        panelDerecho.add(tituloLibro);
+
 
         //Sinopsis
         sinopsisArea = new JTextArea();
@@ -53,32 +58,52 @@ public class DetalleLibroEstudianteView extends JFrame {
         sinopsisArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         JScrollPane scrolldeSinopsis = new JScrollPane(sinopsisArea);
         scrolldeSinopsis.setPreferredSize(new Dimension(400, 100));
-        panelDerecho.add(scrolldeSinopsis);
 
-        //Panel Derecho bajo sinopsis de informacion del libro
+        //Panel Derecho bajo sinopsis de información del libro
         JPanel panelInfo = new JPanel(new GridLayout(4, 1, 0, 5));
         anioPublicacion = new JLabel();
         categoriasLibro = new JLabel();
         autoresLibro = new JLabel();
         estadoLibro = new JLabel();
+
+        //Boton de reserva
+        botonReservar = new JButton("Reservar Libro");
+        botonReservar.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+
+        //Agregando el panel izquierdo
+        add(panelIzquierdo, BorderLayout.WEST);
+
+        //Agregando al panel izquierdo el panel de la portada
+        panelIzquierdo.add(portadaLibro, BorderLayout.CENTER);
+
+        //Agregando del panel derecho
+        add(panelDerecho, BorderLayout.CENTER);
+
+        //Agregando titulo de libro al panel derecho
+        panelDerecho.add(tituloLibro);
+
+        //Agregando sinopsis a panel derecho
+        panelDerecho.add(scrolldeSinopsis);
+
+        //Agregando Datos del Libro
         panelInfo.add(anioPublicacion);
         panelInfo.add(categoriasLibro);
         panelInfo.add(autoresLibro);
         panelInfo.add(estadoLibro);
         panelDerecho.add(panelInfo);
 
-        //Boton de reserva
-        botonReservar = new JButton("Reservar Libro");
-        botonReservar.setAlignmentX(Component.LEFT_ALIGNMENT);
+        //Agregando boton de reservar
         panelDerecho.add(botonReservar);
-
-        add(panelDerecho, BorderLayout.CENTER);
-
-        setVisible(true);
     }
 
-    public void setPortadaLibro(ImageIcon imagen) {
-        portadaLibro.setIcon(imagen);
+    public void setPortadaLibro(String rutaImagen) {
+
+        ImageIcon iconOriginal = new ImageIcon(rutaImagen);
+        int ancho = portadaLibro.getPreferredSize().width;
+        int alto = portadaLibro.getPreferredSize().height;
+        Image imagenEscalada = iconOriginal.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+        portadaLibro.setIcon(new ImageIcon(imagenEscalada));
     }
 
     public void setTituloLibro(String titulo) {
@@ -109,3 +134,4 @@ public class DetalleLibroEstudianteView extends JFrame {
         return botonReservar;
     }
 }
+
