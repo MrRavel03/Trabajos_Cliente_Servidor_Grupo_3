@@ -110,6 +110,7 @@ public class LoginView extends JFrame{
     }
 
     private void estilizarCampo(JComponent campo) {
+
         campo.setMaximumSize(new Dimension(320, 40));
         campo.setPreferredSize(new Dimension(320, 40));
         campo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -117,6 +118,7 @@ public class LoginView extends JFrame{
     }
 
     private void estilizarBotonPrincipal(JButton btn) {
+
         btn.setMaximumSize(new Dimension(320, 45));
         btn.setBackground(new Color(52, 152, 219));
         btn.setForeground(Color.WHITE);
