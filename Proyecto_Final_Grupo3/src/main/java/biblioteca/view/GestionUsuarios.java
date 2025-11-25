@@ -1,9 +1,11 @@
-package biblioteca.vistas;
+package biblioteca.view;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+//
 
 public class GestionUsuarios extends JFrame {
     private JTextField txtNombre, txtEmail, txtTelefono;
@@ -73,7 +75,7 @@ public class GestionUsuarios extends JFrame {
         // Boton regresar
         btnRegresar = new JButton("Regresar al Dashboard");
         btnRegresar.addActionListener(e -> {
-            new AdminDashboard().setVisible(true);
+            new biblioteca.view.AdminDashboard().setVisible(true);
             this.dispose();
         });
 

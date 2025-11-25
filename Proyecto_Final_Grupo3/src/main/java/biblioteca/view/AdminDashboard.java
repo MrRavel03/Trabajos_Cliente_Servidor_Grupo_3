@@ -1,4 +1,4 @@
-package biblioteca.vistas;
+package biblioteca.view;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,22 +42,22 @@ public class AdminDashboard extends JFrame {
 
         // Action listeners para navegacion entre vistas
         btnReservas.addActionListener(e -> {
-            new GestionReservas().setVisible(true);
+            new biblioteca.view.GestionReservas().setVisible(true);
             this.dispose();
         });
 
         btnPrestamos.addActionListener(e -> {
-            new GestionPrestamos().setVisible(true);
+            new biblioteca.view.GestionPrestamos().setVisible(true);
             this.dispose();
         });
 
         btnUsuarios.addActionListener(e -> {
-            new GestionUsuarios().setVisible(true);
+            new biblioteca.view.GestionUsuarios().setVisible(true);
             this.dispose();
         });
 
         btnLibros.addActionListener(e -> {
-            new GestionLibros().setVisible(true);
+            new biblioteca.view.GestionLibros().setVisible(true);
             this.dispose();
         });
 

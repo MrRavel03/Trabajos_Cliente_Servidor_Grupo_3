@@ -3,14 +3,14 @@ package biblioteca.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class viewCatalogoLibrosEstudiantes extends JFrame{
+public class CatalogoLibrosEstudiantesView extends JFrame{
     private JPanel panelSuperior;
     private JTextField buscador;
     private JComboBox seleccionadorCategorias;
     private JTable tablaLibros;
     private JScrollPane scrollTablaLibros;
 
-    public viewCatalogoLibrosEstudiantes() {
+    public CatalogoLibrosEstudiantesView() {
 
         setTitle("Catálogo de Libros");
         setSize(720, 480);
@@ -41,7 +41,7 @@ public class viewCatalogoLibrosEstudiantes extends JFrame{
         panelSuperior.add(seleccionadorCategorias);
 
         //Libros
-        String[] columnas = {"Portada","Titulo","Autor","Ctegoria","Estado"};
+        String[] columnas = {"Portada","Titulo","Autor","Categoria","Estado"};
         Object[][] libros = new Object[0][5];
         tablaLibros = new JTable(libros, columnas);
         tablaLibros.setRowHeight(50);

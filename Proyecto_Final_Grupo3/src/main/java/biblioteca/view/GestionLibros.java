@@ -1,4 +1,4 @@
-package biblioteca.vistas;
+package biblioteca.view;
 
 import javax.swing.*;
 import java.awt.*;
