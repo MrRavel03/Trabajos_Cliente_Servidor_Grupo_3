@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//
+
 public class GestionUsuarios extends JFrame {
     private JTextField txtNombre, txtEmail, txtTelefono;
     private JComboBox<String> comboTipo;
