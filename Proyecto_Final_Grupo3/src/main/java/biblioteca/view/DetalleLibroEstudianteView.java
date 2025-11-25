@@ -22,7 +22,8 @@ public class DetalleLibroEstudianteView extends JFrame {
 
     public void configurarVentana(){
         setTitle("Detalle del Libro");
-        setSize(720, 480);
+        setSize(800,600);
+        setMinimumSize(new Dimension(400, 500));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
