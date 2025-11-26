@@ -57,5 +57,4 @@ public class CatalogoLibrosEstudiantesView extends JFrame{
     public JTextField getCampoBusqueda() { return buscador; }
     public JComboBox<String> getComboCategorias() { return seleccionadorCategorias; }
     public JTable getTablaLibros() { return tablaLibros; }
-
 }

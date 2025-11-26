@@ -1,12 +1,14 @@
 package biblioteca.view;
 
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 
 public class reservasEstudianteView extends JFrame {
 
     private JTable tablaReservas;
     private JButton botonCancelarReserva;
+    private JButton botonVolver;
 
     public reservasEstudianteView() {
         configurarVentana();
@@ -25,19 +27,47 @@ public class reservasEstudianteView extends JFrame {
 
     private void inicializarComponentes() {
         //Panel
+        Color colorFondo = new Color(33,33,33);
         JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setBackground(new Color(64, 64, 64));
+        panelPrincipal.setBackground(colorFondo);
         panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+
+        //Boton Volver
+        botonVolver = new JButton("←");
+        botonVolver.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        botonVolver.setForeground(Color.WHITE);
+        botonVolver.setBackground(colorFondo);
+        botonVolver.setFocusPainted(false);
+        botonVolver.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
 
         //Titulo
         JLabel titulo = new JLabel("Mis Reservas");
         titulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         titulo.setForeground(Color.WHITE);
 
+        //Panel que contiene flecha y título centrado
+        JPanel panelHeader = new JPanel(new GridBagLayout());
+        panelHeader.setBackground(colorFondo);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridy = 0;
+
+        //Flecha izquierda
+        gbc.gridx = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        panelHeader.add(botonVolver, gbc);
+
+        //Título centrado
+        gbc.gridx = 1;
+        gbc.weightx = 1;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panelHeader.add(titulo, gbc);
+        add(panelHeader, BorderLayout.NORTH);
+
         //Tabla con mis Reservas
-        Color colorTabla = new Color(103,103,103);
+        Color colorTabla = new Color(60,60,60);
         String[] columnas = {"ID", "Libro", "Fecha Reserva", "Estado"};
         Object[][] datos = {};
 
@@ -48,9 +78,15 @@ public class reservasEstudianteView extends JFrame {
         tablaReservas.setSelectionBackground(new Color(75, 110, 175)); // selección azul suave
         tablaReservas.setSelectionForeground(Color.WHITE);
 
-        JScrollPane scrollTabla = new JScrollPane(tablaReservas);
-        scrollTabla.setPreferredSize(new Dimension(500, 300));
-        scrollTabla.getViewport().setBackground(colorTabla);
+        JTableHeader header = tablaReservas.getTableHeader();
+        header.setBackground(new Color(80, 80, 80));
+        header.setForeground(Color.WHITE);
+        header.setFont(new Font("Segoe UI", Font.BOLD, 16));
+
+        JScrollPane scroll = new JScrollPane(tablaReservas);
+        scroll.setPreferredSize(new Dimension(500, 300));
+        scroll.getViewport().setBackground(colorTabla);
+        scroll.setBorder(BorderFactory.createLineBorder(new Color(90, 90, 90), 1));
 
         //Boton para cancelar reservacion
         botonCancelarReserva = new JButton("Cancelar Reserva Seleccionada");
@@ -60,13 +96,11 @@ public class reservasEstudianteView extends JFrame {
         botonCancelarReserva.setFocusPainted(false);
 
         add(panelPrincipal, BorderLayout.CENTER);
-        panelPrincipal.add(titulo);
         panelPrincipal.add(Box.createVerticalStrut(15));
-        panelPrincipal.add(scrollTabla);
+        panelPrincipal.add(scroll);
         panelPrincipal.add(Box.createVerticalStrut(20));
         panelPrincipal.add(botonCancelarReserva);
     }
-
     public JTable getTablaReservas() {return tablaReservas;}
     public JButton getBotonCancelarReserva() {return botonCancelarReserva;}
 }
