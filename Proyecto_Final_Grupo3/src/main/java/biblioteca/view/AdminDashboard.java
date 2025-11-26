@@ -2,8 +2,6 @@ package biblioteca.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class AdminDashboard extends JFrame {
     private JButton btnReservas, btnPrestamos, btnUsuarios, btnLibros, btnCategorias, btnMultas;
@@ -40,26 +38,7 @@ public class AdminDashboard extends JFrame {
         btnCategorias.setFont(botonFont);
         btnMultas.setFont(botonFont);
 
-        // Action listeners para navegacion entre vistas
-        btnReservas.addActionListener(e -> {
-            new biblioteca.view.GestionReservas().setVisible(true);
-            this.dispose();
-        });
-
-        btnPrestamos.addActionListener(e -> {
-            new biblioteca.view.GestionPrestamos().setVisible(true);
-            this.dispose();
-        });
-
-        btnUsuarios.addActionListener(e -> {
-            new biblioteca.view.GestionUsuarios().setVisible(true);
-            this.dispose();
-        });
-
-        btnLibros.addActionListener(e -> {
-            new biblioteca.view.GestionLibros().setVisible(true);
-            this.dispose();
-        });
+        // GETS para acceder a los botones desde fuera
 
         // Agregar botones al panel
         mainPanel.add(btnReservas);
@@ -71,4 +50,12 @@ public class AdminDashboard extends JFrame {
 
         add(mainPanel);
     }
+
+    // GETS para los botones
+    public JButton getBtnReservas() { return btnReservas; }
+    public JButton getBtnPrestamos() { return btnPrestamos; }
+    public JButton getBtnUsuarios() { return btnUsuarios; }
+    public JButton getBtnLibros() { return btnLibros; }
+    public JButton getBtnCategorias() { return btnCategorias; }
+    public JButton getBtnMultas() { return btnMultas; }
 }

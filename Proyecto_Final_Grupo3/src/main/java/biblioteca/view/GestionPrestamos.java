@@ -2,12 +2,10 @@ package biblioteca.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GestionPrestamos extends JFrame {
     private JTable tablaPrestamos;
-    private JButton btnNuevoPrestamo, btnRegistrarDevolucion, btnVerVencidos, btnRegresar;
+    private JButton btnNuevoPrestamo, btnRegistrarDevolucion, btnVerVencidos;
 
     public GestionPrestamos() {
         setTitle("Gestion de Prestamos - Biblioteca");
@@ -46,29 +44,18 @@ public class GestionPrestamos extends JFrame {
         btnNuevoPrestamo = new JButton("Nuevo Prestamo");
         btnRegistrarDevolucion = new JButton("Registrar Devolucion");
         btnVerVencidos = new JButton("Ver Prestamos Vencidos");
-        btnRegresar = new JButton("Regresar al Dashboard");
-
-        // Action listeners de demostracion
-        btnNuevoPrestamo.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Nuevo prestamo (Demo)"));
-
-        btnRegistrarDevolucion.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Devolucion registrada (Demo)"));
-
-        btnVerVencidos.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Mostrando prestamos vencidos (Demo)"));
-
-        btnRegresar.addActionListener(e -> {
-            new AdminDashboard().setVisible(true);
-            this.dispose();
-        });
 
         panelBotones.add(btnNuevoPrestamo);
         panelBotones.add(btnRegistrarDevolucion);
         panelBotones.add(btnVerVencidos);
-        panelBotones.add(btnRegresar);
 
         panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
         add(panelPrincipal);
     }
+
+    // GETS para los componentes
+    public JButton getBtnNuevoPrestamo() { return btnNuevoPrestamo; }
+    public JButton getBtnRegistrarDevolucion() { return btnRegistrarDevolucion; }
+    public JButton getBtnVerVencidos() { return btnVerVencidos; }
+    public JTable getTablaPrestamos() { return tablaPrestamos; }
 }

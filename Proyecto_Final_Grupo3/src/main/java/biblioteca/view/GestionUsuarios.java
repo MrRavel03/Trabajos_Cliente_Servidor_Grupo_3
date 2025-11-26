@@ -2,15 +2,11 @@ package biblioteca.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-//
 
 public class GestionUsuarios extends JFrame {
     private JTextField txtNombre, txtEmail, txtTelefono;
     private JComboBox<String> comboTipo;
-    private JButton btnGuardar, btnEditar, btnEliminar, btnRegresar;
+    private JButton btnGuardar, btnEditar, btnEliminar;
     private JTable tablaUsuarios;
 
     public GestionUsuarios() {
@@ -72,23 +68,6 @@ public class GestionUsuarios extends JFrame {
         tablaUsuarios = new JTable(datosPrueba, columnas);
         JScrollPane scrollTabla = new JScrollPane(tablaUsuarios);
 
-        // Boton regresar
-        btnRegresar = new JButton("Regresar al Dashboard");
-        btnRegresar.addActionListener(e -> {
-            new biblioteca.view.AdminDashboard().setVisible(true);
-            this.dispose();
-        });
-
-        // Action listeners de demostracion
-        btnGuardar.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Usuario guardado (Demo)"));
-
-        btnEditar.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Usuario editado (Demo)"));
-
-        btnEliminar.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Usuario eliminado (Demo)"));
-
         // Agregar componentes
         JPanel panelSuperior = new JPanel(new BorderLayout());
         panelSuperior.add(panelFormulario, BorderLayout.NORTH);
@@ -96,8 +75,17 @@ public class GestionUsuarios extends JFrame {
 
         panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
         panelPrincipal.add(scrollTabla, BorderLayout.CENTER);
-        panelPrincipal.add(btnRegresar, BorderLayout.SOUTH);
 
         add(panelPrincipal);
     }
+
+    // GETS para los componentes
+    public JButton getBtnGuardar() { return btnGuardar; }
+    public JButton getBtnEditar() { return btnEditar; }
+    public JButton getBtnEliminar() { return btnEliminar; }
+    public JTextField getTxtNombre() { return txtNombre; }
+    public JTextField getTxtEmail() { return txtEmail; }
+    public JTextField getTxtTelefono() { return txtTelefono; }
+    public JComboBox<String> getComboTipo() { return comboTipo; }
+    public JTable getTablaUsuarios() { return tablaUsuarios; }
 }

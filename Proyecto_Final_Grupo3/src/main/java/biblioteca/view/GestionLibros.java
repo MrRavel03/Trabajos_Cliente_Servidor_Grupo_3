@@ -2,13 +2,10 @@ package biblioteca.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GestionLibros extends JFrame {
     private JTextField txtTitulo, txtAutor, txtAnio, txtISBN;
-    private JButton btnAgregar, btnEditar, btnEliminar, btnLimpiar, btnRegresar;
-    private JTextArea areaResultados;
+    private JButton btnAgregar, btnEditar, btnEliminar, btnLimpiar;
     private JTable tablaLibros;
 
     public GestionLibros() {
@@ -74,35 +71,21 @@ public class GestionLibros extends JFrame {
         tablaLibros = new JTable(datosPrueba, columnas);
         JScrollPane scrollTabla = new JScrollPane(tablaLibros);
 
-        // Boton regresar
-        btnRegresar = new JButton("Regresar al Dashboard");
-        btnRegresar.addActionListener(e -> {
-            new AdminDashboard().setVisible(true);
-            this.dispose();
-        });
-
-        // Action listeners de demostracion
-        btnAgregar.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Libro agregado (Demo)"));
-
-        btnEditar.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Libro editado (Demo)"));
-
-        btnEliminar.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Libro eliminado (Demo)"));
-
-        btnLimpiar.addActionListener(e -> {
-            txtTitulo.setText("");
-            txtAutor.setText("");
-            txtAnio.setText("");
-            txtISBN.setText("");
-        });
-
         // Agregar componentes al panel principal
         panelPrincipal.add(panelFormulario, BorderLayout.NORTH);
         panelPrincipal.add(scrollTabla, BorderLayout.CENTER);
-        panelPrincipal.add(btnRegresar, BorderLayout.SOUTH);
 
         add(panelPrincipal);
     }
+
+    // GETS para los componentes
+    public JButton getBtnAgregar() { return btnAgregar; }
+    public JButton getBtnEditar() { return btnEditar; }
+    public JButton getBtnEliminar() { return btnEliminar; }
+    public JButton getBtnLimpiar() { return btnLimpiar; }
+    public JTextField getTxtTitulo() { return txtTitulo; }
+    public JTextField getTxtAutor() { return txtAutor; }
+    public JTextField getTxtAnio() { return txtAnio; }
+    public JTextField getTxtISBN() { return txtISBN; }
+    public JTable getTablaLibros() { return tablaLibros; }
 }

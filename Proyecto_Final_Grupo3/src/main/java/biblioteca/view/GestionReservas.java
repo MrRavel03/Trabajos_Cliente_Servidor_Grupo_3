@@ -2,12 +2,10 @@ package biblioteca.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GestionReservas extends JFrame {
     private JTable tablaReservas;
-    private JButton btnAceptar, btnRechazar, btnDevolver, btnRegresar;
+    private JButton btnAceptar, btnRechazar, btnDevolver;
 
     public GestionReservas() {
         setTitle("Gestion de Reservas - Biblioteca");
@@ -15,7 +13,6 @@ public class GestionReservas extends JFrame {
         setLocationRelativeTo(null);
 
         inicializarComponentes();
-        cargarDatosPrueba();
     }
 
     private void inicializarComponentes() {
@@ -47,34 +44,18 @@ public class GestionReservas extends JFrame {
         btnAceptar = new JButton("Aceptar Reserva");
         btnRechazar = new JButton("Rechazar Reserva");
         btnDevolver = new JButton("Marcar como Devuelto");
-        btnRegresar = new JButton("Regresar al Dashboard");
-
-        // Action listeners para demostracion
-        btnAceptar.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Reserva aceptada exitosamente (Demo)"));
-
-        btnRechazar.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Reserva rechazada (Demo)"));
-
-        btnDevolver.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Libro marcado como devuelto (Demo)"));
-
-        btnRegresar.addActionListener(e -> {
-            new AdminDashboard().setVisible(true);
-            this.dispose();
-        });
 
         panelBotones.add(btnAceptar);
         panelBotones.add(btnRechazar);
         panelBotones.add(btnDevolver);
-        panelBotones.add(btnRegresar);
 
         panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
         add(panelPrincipal);
     }
 
-    private void cargarDatosPrueba() {
-        // Metodo para cargar datos de demostracion
-        // En version final se conectaria con la base de datos
-    }
+    // GETS para los componentes
+    public JButton getBtnAceptar() { return btnAceptar; }
+    public JButton getBtnRechazar() { return btnRechazar; }
+    public JButton getBtnDevolver() { return btnDevolver; }
+    public JTable getTablaReservas() { return tablaReservas; }
 }
