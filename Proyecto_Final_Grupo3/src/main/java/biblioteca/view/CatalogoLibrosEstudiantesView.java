@@ -63,11 +63,4 @@ public class CatalogoLibrosEstudiantesView extends JFrame{
     public JTextField getCampoBusqueda() { return buscador; }
     public JComboBox<String> getComboCategorias() { return seleccionadorCategorias; }
     public JTable getTablaLibros() { return tablaLibros; }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            CatalogoLibrosEstudiantesView vista = new CatalogoLibrosEstudiantesView();
-            vista.setVisible(true);
-        });
-    }
 }
