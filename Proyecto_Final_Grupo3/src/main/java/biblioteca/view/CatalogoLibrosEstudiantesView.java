@@ -4,31 +4,37 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CatalogoLibrosEstudiantesView extends JFrame{
-    private JPanel panelSuperior;
     private JTextField buscador;
-    private JComboBox seleccionadorCategorias;
+    private JComboBox<String> seleccionadorCategorias;
     private JTable tablaLibros;
-    private JScrollPane scrollTablaLibros;
 
     public CatalogoLibrosEstudiantesView() {
+        configurarVentana();
+        inicializarComponentes();
+    }
 
-        setTitle("Catálogo de Libros");
-        setSize(720, 480);
+    public void configurarVentana(){
+        setTitle("Catalogo de Libros");
+        setSize(800,600);
+        setMinimumSize(new Dimension(400, 500));
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(null);
-
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLayout(new BorderLayout());
+    }
+    public void inicializarComponentes(){
         //Barra de Arriba
-        panelSuperior = new JPanel();
-        panelSuperior.setBounds(0,0,720,60);
+        JPanel panelSuperior = new JPanel();
         panelSuperior.setBackground(new Color(0, 0, 0, 160));
+        panelSuperior.setPreferredSize(new Dimension(800,60));
         panelSuperior.setLayout(null);
-        add(panelSuperior);
+        add(panelSuperior, BorderLayout.NORTH);
+
 
         //Buscador
         buscador = new JTextField();
         buscador.setBounds(20, 15, 200, 30);
         panelSuperior.add(buscador);
+
 
         //Categorias
         seleccionadorCategorias = new JComboBox<>();
@@ -40,16 +46,16 @@ public class CatalogoLibrosEstudiantesView extends JFrame{
         seleccionadorCategorias.addItem("Historia");
         panelSuperior.add(seleccionadorCategorias);
 
+
         //Libros
         String[] columnas = {"Portada","Titulo","Autor","Categoria","Estado"};
         Object[][] libros = new Object[0][5];
         tablaLibros = new JTable(libros, columnas);
         tablaLibros.setRowHeight(50);
 
-        scrollTablaLibros =new JScrollPane(tablaLibros);
+        JScrollPane scrollTablaLibros = new JScrollPane(tablaLibros);
         scrollTablaLibros.setBounds(20, 80, 660, 360);
-        add(scrollTablaLibros);
-
+        add(scrollTablaLibros, BorderLayout.CENTER);
 
         setVisible(true);
     }
@@ -57,4 +63,11 @@ public class CatalogoLibrosEstudiantesView extends JFrame{
     public JTextField getCampoBusqueda() { return buscador; }
     public JComboBox<String> getComboCategorias() { return seleccionadorCategorias; }
     public JTable getTablaLibros() { return tablaLibros; }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            CatalogoLibrosEstudiantesView vista = new CatalogoLibrosEstudiantesView();
+            vista.setVisible(true);
+        });
+    }
 }
