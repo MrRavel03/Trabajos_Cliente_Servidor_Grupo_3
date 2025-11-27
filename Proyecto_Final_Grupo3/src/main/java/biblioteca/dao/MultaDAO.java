@@ -106,7 +106,7 @@ public class MultaDAO {
 
     private void insertarMulta(Connection con, int idUsuario, int idPrestamo, double monto) throws SQLException{
 
-        String sql = "INSERT INTO MULTA (ID_USUARIO, MONTO, FECHA_GENERACION, ID_ESTADO) " +
+        String sql = "INSERT INTO MULTA (ID_USUARIO, ID_PRESTAMO, MONTO, FECHA_GENERACION, ID_ESTADO) " +
                 "VALUES (?,?,?,CURRENT_DATE, 3)";
 
         try (PreparedStatement ps = con.prepareStatement(sql)){
