@@ -5,6 +5,7 @@ import biblioteca.model.Usuario;
 import biblioteca.view.AdminDashboard;
 import biblioteca.view.CatalogoLibrosEstudiantesView;
 import biblioteca.view.LoginView;
+import biblioteca.view.RegistroUsuarioView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +19,8 @@ public class LoginController implements ActionListener {
         this.vista = vista;
         this.modelo = modelo;
 
-        this.vista.setIngresarListener(this);
+        this.vista.setIngresarListener(this); // este mismo
+        this.vista.setRegristrarseListener(e -> abrirRegistro()); // hay que inicializar el RegistroController
     }
 
     public void iniciar(){
@@ -70,5 +72,11 @@ public class LoginController implements ActionListener {
             vista.mostrarError("Error: Su rol no tiene permisos asignados.");
             vista.setVisible(true);
         }
+    }
+
+    private void abrirRegistro(){
+
+        RegistroUsuarioView vistaRegistro = new RegistroUsuarioView();
+        new RegistroController(vistaRegistro, modelo);
     }
 }

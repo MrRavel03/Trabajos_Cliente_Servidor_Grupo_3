@@ -11,6 +11,7 @@ public class LoginView extends JFrame{
     private JTextField txtEmail;
     private JPasswordField txtPassword;
     private JButton btnIngresar;
+    private JButton btnRegristrarse;
     private JLabel lblMensajeError;
 
     public LoginView() {
@@ -77,6 +78,9 @@ public class LoginView extends JFrame{
         // para que al dar enter funcione como el boton de ingresar
         this.getRootPane().setDefaultButton(btnIngresar);
 
+        btnRegristrarse = new JButton("¿No tienes cuenta? Registrate aquí");
+        estilizarBotonLink(btnRegristrarse);
+
         // --- Agregar al panel ---
         panelLogin.add(lblTitulo);
         panelLogin.add(Box.createVerticalStrut(10));
@@ -96,6 +100,8 @@ public class LoginView extends JFrame{
         panelLogin.add(lblMensajeError);
         panelLogin.add(Box.createVerticalStrut(15));
         panelLogin.add(btnIngresar);
+        panelLogin.add(Box.createVerticalStrut(15));
+        panelLogin.add(btnRegristrarse);
 
         panelFondo.add(panelLogin);
     }
@@ -119,11 +125,21 @@ public class LoginView extends JFrame{
 
     private void estilizarBotonPrincipal(JButton btn) {
 
-        btn.setMaximumSize(new Dimension(320, 45));
+        btn.setMaximumSize(new Dimension(300, 45));
         btn.setBackground(new Color(52, 152, 219));
         btn.setForeground(Color.WHITE);
         btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btn.setFocusPainted(false);
+        btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    private void estilizarBotonLink(JButton btn) {
+
+        btn.setContentAreaFilled(false);
+        btn.setBorderPainted(false);
+        btn.setForeground(new Color(100,180,255));
+        btn.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         btn.setAlignmentX(Component.CENTER_ALIGNMENT);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
@@ -144,5 +160,9 @@ public class LoginView extends JFrame{
 
     public void setIngresarListener(ActionListener listener) {
         btnIngresar.addActionListener(listener);
+    }
+
+    public void setRegristrarseListener(ActionListener listener) {
+        btnRegristrarse.addActionListener(listener);
     }
 }
