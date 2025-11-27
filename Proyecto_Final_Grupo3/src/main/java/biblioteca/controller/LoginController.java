@@ -2,10 +2,7 @@ package biblioteca.controller;
 
 import biblioteca.dao.UsuarioDAO;
 import biblioteca.model.Usuario;
-import biblioteca.view.AdminDashboard;
-import biblioteca.view.CatalogoLibrosEstudiantesView;
-import biblioteca.view.LoginView;
-import biblioteca.view.RegistroUsuarioView;
+import biblioteca.view.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -79,4 +76,5 @@ public class LoginController implements ActionListener {
         RegistroUsuarioView vistaRegistro = new RegistroUsuarioView();
         new RegistroController(vistaRegistro, modelo);
     }
+
 }
