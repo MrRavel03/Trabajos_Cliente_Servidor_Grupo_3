@@ -4,13 +4,13 @@ import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 
-public class reservasEstudianteView extends JFrame {
+public class ReservasEstudianteView extends JFrame {
 
     private JTable tablaReservas;
     private JButton botonCancelarReserva;
     private JButton botonVolver;
 
-    public reservasEstudianteView() {
+    public ReservasEstudianteView() {
         configurarVentana();
         inicializarComponentes();
         setVisible(true);
