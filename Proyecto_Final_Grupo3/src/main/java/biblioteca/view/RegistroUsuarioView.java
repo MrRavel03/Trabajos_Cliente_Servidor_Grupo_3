@@ -26,18 +26,21 @@ public class RegistroUsuarioView extends JFrame {
     private void inicializarComponentes(){
 
         JPanel panelFondo = new JPanel(new GridBagLayout());
-        panelFondo.setBackground(new Color (43,45,48));
+        panelFondo.setBackground(new Color(240, 242, 245));
         setContentPane(panelFondo);
 
         JPanel panelForm = new JPanel();
         panelForm.setLayout(new BoxLayout(panelForm, BoxLayout.Y_AXIS));
-        panelForm.setBackground(new Color(60, 63, 65));
-        panelForm.setBorder(new EmptyBorder(40, 60, 40, 60));
+        panelForm.setBackground(Color.WHITE);
+        panelForm.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                new EmptyBorder(40, 60, 40, 60)
+        ));
 
         // Crear Cuenta - titulo
         JLabel lblTitulo = new JLabel("Crear Cuenta");
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 24)); // fuente
-        lblTitulo.setForeground(Color.WHITE);
+        lblTitulo.setForeground(new Color(33, 33, 33));
         lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT); // Centrar el texto en el eje X
 
         // campo de nombre
@@ -74,7 +77,7 @@ public class RegistroUsuarioView extends JFrame {
         btnCancelar = new JButton("Cancelar / Volver");
         btnCancelar.setContentAreaFilled(false);
         btnCancelar.setBorderPainted(false);
-        btnCancelar.setForeground(new Color(189, 195, 199));
+        btnCancelar.setForeground(new Color(100, 100, 100));
         btnCancelar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
@@ -106,7 +109,7 @@ public class RegistroUsuarioView extends JFrame {
 
     private void estilizarEtiqueta(JLabel lbl){
 
-        lbl.setForeground(Color.WHITE);
+        lbl.setForeground(new Color(33, 33, 33));
         lbl.setFont(new Font ("Segoe UI", Font.BOLD, 12));
         lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
@@ -117,6 +120,9 @@ public class RegistroUsuarioView extends JFrame {
         campo.setPreferredSize(new Dimension(320, 40));
         campo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         campo.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        campo.setBackground(new Color(250, 250, 250));
+        campo.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
     }
 
     // Getters

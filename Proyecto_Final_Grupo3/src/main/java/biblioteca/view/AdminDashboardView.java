@@ -30,18 +30,22 @@ public class AdminDashboardView extends JFrame {
     private void inicializarComponentes() {
         // Panel principal con grid para botones
         JPanel panelPrincipal = new JPanel(new BorderLayout());
-        panelPrincipal.setBackground(new Color(43, 45, 48));
+        panelPrincipal.setBackground(new Color(240, 242, 245));
+
+        // --- Encabezado Azul ---
+        JPanel panelHeader = new JPanel();
+        panelHeader.setBackground(new Color(52, 152, 219));
+        panelHeader.setBorder(new EmptyBorder(25, 20, 25, 20));
 
         // Encabezado/ titulo
-        JLabel lblTitulo = new JLabel("Menú Principal", SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        JLabel lblTitulo = new JLabel("Panel de Control Bibliotecario");
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
         lblTitulo.setForeground(Color.WHITE);
-        lblTitulo.setBorder(new EmptyBorder(20, 0, 20, 0));
-        panelPrincipal.add(lblTitulo, BorderLayout.NORTH);
+        panelHeader.add(lblTitulo);
 
         // Panel de botones
         JPanel panelBotones = new JPanel(new GridLayout(2, 3, 20, 20)); // 2 filas, 3 columnas
-        panelBotones.setBackground(new Color(43, 45, 48));
+        panelBotones.setBackground(new Color(240, 242, 245));
         panelBotones.setBorder(new EmptyBorder(20, 40, 40, 40));
 
         // Creacion de botones para cada modulo
@@ -60,6 +64,7 @@ public class AdminDashboardView extends JFrame {
         panelBotones.add(btnMultas);
         panelBotones.add(btnCerrarSesion);
 
+        panelPrincipal.add(panelHeader, BorderLayout.NORTH);
         panelPrincipal.add(panelBotones, BorderLayout.CENTER);
         setContentPane(panelPrincipal);
     }
@@ -69,8 +74,8 @@ public class AdminDashboardView extends JFrame {
         JButton btn = new JButton(texto);
 
         btn.setFont(new Font("Segeo UI", Font.BOLD, 18));
-        btn.setBackground(new Color(149, 165, 166));
-        btn.setForeground(Color.WHITE);
+        btn.setBackground(new Color(205, 205, 205));
+        btn.setForeground(new Color(85, 85, 85));
         btn.setFocusPainted(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         return btn;

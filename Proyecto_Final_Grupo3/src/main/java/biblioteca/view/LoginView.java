@@ -31,26 +31,26 @@ public class LoginView extends JFrame{
 
         // Panel del fondo, Gridbaglayout para centrar automaticamente los componentes
         JPanel panelFondo = new JPanel(new GridBagLayout());
-        panelFondo.setBackground(new Color(43, 45, 48));
+        panelFondo.setBackground(new Color(240, 242, 245));
         setContentPane(panelFondo);
 
         // Hacemos una tarjeta para el panel del login
         JPanel panelLogin = new JPanel();
         // se apilan los elementos verticalmente uno de debajo del otro
         panelLogin.setLayout (new BoxLayout(panelLogin, BoxLayout.Y_AXIS));
-        panelLogin.setBackground(new Color(60, 63, 65));
+        panelLogin.setBackground(Color.WHITE);
         panelLogin.setBorder(new EmptyBorder(50, 60, 50, 60)); // margen imaginario
 
         // Biblioteca Digital - titulo
         JLabel lblTitulo = new JLabel("Biblioteca Digital");
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 28)); // fuente
-        lblTitulo.setForeground(Color.WHITE);
+        lblTitulo.setForeground(new Color(33, 33, 33));
         lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT); // Centrar el texto en el eje X
 
         // Subtítulo
         JLabel lblSubtitulo = new JLabel("Acceso Exclusivo");
         lblSubtitulo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lblSubtitulo.setForeground(new Color(170, 170, 170));
+        lblSubtitulo.setForeground(new Color(33, 33, 33));
         lblSubtitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // campo de usuario
@@ -110,7 +110,7 @@ public class LoginView extends JFrame{
 
     private void estilizarEtiqueta(JLabel lbl){
 
-        lbl.setForeground(Color.WHITE);
+        lbl.setForeground(new Color(33, 33, 33));
         lbl.setFont(new Font ("Segoe UI", Font.BOLD, 12));
         lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
@@ -121,6 +121,7 @@ public class LoginView extends JFrame{
         campo.setPreferredSize(new Dimension(320, 40));
         campo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         campo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        campo.setBackground(new Color(250, 250, 250));
     }
 
     private void estilizarBotonPrincipal(JButton btn) {
