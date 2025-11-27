@@ -123,7 +123,7 @@ public class MultaDAO {
 
     private PrestamoInfo obtenerInfoPrestamo(Connection con, int idPrestamo) throws SQLException{
 
-        String sql = "SELECT ID_USUARIO, FECHA_SALIDA, FECHA_DEVOLUCION FROM PRESTADO WHERE ID = ?";
+        String sql = "SELECT ID_USUARIO, FECHA_SALIDA, FECHA_DEVOLUCION FROM PRESTAMO WHERE ID = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)){
 

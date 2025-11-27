@@ -10,7 +10,9 @@ CREATE TABLE ESTADO (
 
 INSERT INTO ESTADO (ID, DESCRIPCION) VALUES
 (1, 'ACTIVO'),
-(2, 'INACTIVO');
+(2, 'INACTIVO'),
+(3, 'PENDIENTE'), 
+(4, 'PAGADA');   
 
 CREATE TABLE USUARIO (
 	ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -68,26 +70,41 @@ CREATE TABLE MULTA(
 );
 
 
+-- USUARIOS
 INSERT INTO USUARIO (NOMBRE, EMAIL, PASSWORD, ROL, ID_ESTADO) VALUES
-('Admin Bibliotecario', 'admin@biblio.com', '1234', 'BIBLIOTECARIO', 1),
-('Gabriel Osorio', 'gosorio@estudiante.com', '1234', 'ESTUDIANTE', 1),
-('Usuario bloqueado', 'bloqueado@estudiante.com', '1234', 'ESTUDIANTE', 2);
+('Admin Bibliotecario', 'admin@biblio.com', '1234', 'BIBLIOTECARIO', 1), -- ID 1
+('Gabriel Osorio', 'gosorio@estudiante.com', '1234', 'ESTUDIANTE', 1),    -- ID 2
+('Usuario Bloqueado', 'bloqueado@estudiante.com', '1234', 'ESTUDIANTE', 2); -- ID 3
 
+-- LIBROS
 INSERT INTO LIBRO (TITULO, AUTOR, CATEGORIA, DISPONIBLE, ID_ESTADO) VALUES
-('Java para principiantes', 'Gabriel Osorio', 'Tecnologia', FALSE, 1),
-('Cien años de soledad', 'Gabriel Garcia Marquez', 'Novela', FALSE, 1),
-('Libro viejo', 'Anonimo', 'Historia', FALSE, 2);
+('Java para Principiantes', 'Gabriel Osorio', 'Tecnologia', FALSE, 1),  -- ID 1 (Prestado)
+('Cien Años de Soledad', 'Gabriel Garcia Marquez', 'Novela', FALSE, 1), -- ID 2 (Prestado)
+('Harry Potter', 'J.K. Rowling', 'Fantasia', FALSE, 1),                 -- ID 3 (Reservado)
+('Libro Viejo y Dañado', 'Anonimo', 'Historia', FALSE, 2),              -- ID 4 (Inactivo/Basura)
+('Calculo I', 'James Stewart', 'Matematicas', TRUE, 1);                 -- ID 5 (Disponible)
 
+-- PRESTAMOS
+-- Gabriel Osorio tiene prestados los libros 1 y 2
 INSERT INTO PRESTAMO (ID_USUARIO, ID_LIBRO, FECHA_SALIDA, FECHA_DEVOLUCION, ID_ESTADO) VALUES
-(2, 2, "2025-11-10","2025-11-30",1 ),
-(2, 1, "2025-11-10","2025-11-30",1 );
+(2, 1, '2025-11-10', '2025-11-30', 1), -- Prestamo Activo Libro 1
+(2, 2, '2025-11-10', '2025-11-30', 1); -- Prestamo Activo Libro 2
 
+-- RESERVAS
+-- El Admin reservó el libro 3 (Harry Potter), por eso arriba está en FALSE
 INSERT INTO RESERVA (ID_USUARIO, ID_LIBRO, FECHA_RESERVA, ID_ESTADO) VALUES
-(2,2, CURRENT_DATE, 1);
+(1, 3, CURRENT_DATE, 1);
+
+-- MULTAS (Ejemplo Opcional)
+-- Supongamos que hubo un prestamo anterior que generó multa
+-- Insertamos un prestamo ya devuelto (ID_ESTADO 2) para asociarle una multa
+INSERT INTO PRESTAMO (ID_USUARIO, ID_LIBRO, FECHA_SALIDA, FECHA_DEVOLUCION, ID_ESTADO) VALUES
+(2, 5, '2025-10-01', '2025-10-20', 2); -- Prestamo ID 3 (Ya devuelto tarde)
+
+INSERT INTO MULTA (ID_USUARIO, ID_PRESTAMO, MONTO, ID_ESTADO) VALUES
+(2, 3, 1500.00, 3); -- Multa de 1500 colones pendiente para Gabriel
 
 
-
-SELECT * FROM RESERVA;
 
 
 

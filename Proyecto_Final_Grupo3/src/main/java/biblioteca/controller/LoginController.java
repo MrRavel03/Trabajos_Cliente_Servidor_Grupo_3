@@ -58,7 +58,8 @@ public class LoginController implements ActionListener {
 
         if (rol.equals("BIBLIOTECARIO") || rol.equals("ADMINISTRADOR")) {
 
-            new AdminDashboard().setVisible(true);
+            AdminDashboardView dashboardView = new AdminDashboardView();
+            new AdminDashboardController(dashboardView);
 
         } else if (rol.equals("ESTUDIANTE")) {
 
