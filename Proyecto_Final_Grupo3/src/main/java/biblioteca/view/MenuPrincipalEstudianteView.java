@@ -5,6 +5,8 @@ import java.awt.*;
 
 public class MenuPrincipalEstudianteView extends JFrame {
 
+    private JLabel nombreUsuario;
+    private JLabel perfil;
     private JButton botonNotificaciones;
     private JButton botonCatalogo;
     private JButton botonReservas;
@@ -52,12 +54,12 @@ public class MenuPrincipalEstudianteView extends JFrame {
         botonNotificaciones.setContentAreaFilled(false);
 
         //Nombre del Usuario
-        JLabel nombreUsuario = new JLabel("usuario1");
+        nombreUsuario = new JLabel("...");
         nombreUsuario.setForeground(Color.WHITE);
         nombreUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 
         //Foto de perfil
-        JLabel perfil = new JLabel();
+        perfil = new JLabel();
         perfil.setPreferredSize(new Dimension(35, 35));
         perfil.setOpaque(true);
         perfil.setBackground(Color.LIGHT_GRAY);
@@ -124,9 +126,12 @@ public class MenuPrincipalEstudianteView extends JFrame {
     }
 
     //Getters
+    public JLabel getAvatar() {return perfil;}
+    public JLabel getNombreUsuario() {return nombreUsuario;}
     public JButton getBotonNotificaciones() { return botonNotificaciones; }
     public JButton getBotonCatalogo() { return botonCatalogo; }
     public JButton getBotonReservas() { return botonReservas; }
     public JButton getBotonPrestamos() { return botonPrestamos; }
     public JButton getBotonMultas() { return botonMultas; }
+
 }
