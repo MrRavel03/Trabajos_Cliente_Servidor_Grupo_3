@@ -76,7 +76,7 @@ INSERT INTO USUARIO (NOMBRE, EMAIL, PASSWORD, ROL, ID_ESTADO) VALUES
 ('Gabriel Osorio', 'gosorio@estudiante.com', '1234', 'ESTUDIANTE', 1),    -- ID 2
 ('Usuario Bloqueado', 'bloqueado@estudiante.com', '1234', 'ESTUDIANTE', 2), -- ID 3
 ('Estudiante Prueba', 'e', 'e', 'ESTUDIANTE', 1),
-('Admin biblioteca', 'a', 'a', 'BIBLIOTECARIO', 1),
+('Admin biblioteca', 'a', 'a', 'BIBLIOTECARIO', 1);
 
 -- LIBROS
 INSERT INTO LIBRO (TITULO, AUTOR, CATEGORIA, DISPONIBLE, ID_ESTADO) VALUES
@@ -88,9 +88,9 @@ INSERT INTO LIBRO (TITULO, AUTOR, CATEGORIA, DISPONIBLE, ID_ESTADO) VALUES
 
 -- PRESTAMOS
 -- Gabriel Osorio tiene prestados los libros 1 y 2
-INSERT INTO PRESTAMO (ID_USUARIO, ID_LIBRO, FECHA_SALIDA, FECHA_DEVOLUCION, ID_ESTADO) VALUES
-(2, 1, '2025-11-10', '2025-11-30', 1), -- Prestamo Activo Libro 1
-(2, 2, '2025-11-10', '2025-11-30', 1); -- Prestamo Activo Libro 2
+INSERT INTO PRESTAMO (ID_USUARIO, ID_LIBRO, FECHA_SALIDA, ID_ESTADO) VALUES
+(2, 1, '2025-11-10',  1), -- Prestamo Activo Libro 1
+(2, 2, '2025-11-10',  1); -- Prestamo Activo Libro 2
 
 -- RESERVAS
 -- El Admin reservó el libro 3 (Harry Potter), por eso arriba está en FALSE
