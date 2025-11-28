@@ -5,6 +5,7 @@ import biblioteca.model.Usuario;
 import biblioteca.view.*;
 import biblioteca.view.admin.AdminDashboardView;
 import biblioteca.view.estudiantes.CatalogoLibrosEstudiantesView;
+import biblioteca.view.estudiantes.MenuPrincipalEstudianteView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,8 +66,8 @@ public class LoginController implements ActionListener {
 
         } else if (rol.equals("ESTUDIANTE")) {
 
-            CatalogoLibrosEstudiantesView catalogoVista = new CatalogoLibrosEstudiantesView();
-            new CatalogoController(catalogoVista, usuario.getId());
+            MenuPrincipalEstudianteView menuPrincipalVista = new MenuPrincipalEstudianteView();
+            new MenuEstudianteController(menuPrincipalVista, usuario);
 
         } else {
 

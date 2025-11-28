@@ -23,8 +23,8 @@ public class MenuPrincipalEstudianteView extends JFrame {
 
     private void configurarVentana() {
         setTitle("Menú Principal");
-        setSize(1000, 650);
-        setMinimumSize(new Dimension(900, 600));
+        setSize(1000, 630);
+        setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -120,7 +120,7 @@ public class MenuPrincipalEstudianteView extends JFrame {
 
         try {
             ImageIcon icon = new ImageIcon("src/main/resources/estanteria.jpg");
-            Image img = icon.getImage().getScaledInstance(600, 400, Image.SCALE_SMOOTH);
+            Image img = icon.getImage().getScaledInstance(700, 500, Image.SCALE_SMOOTH);
             imagenCentral.setIcon(new ImageIcon(img));
         } catch (Exception e) {
             imagenCentral.setText("Bienvenido a la Biblioteca");

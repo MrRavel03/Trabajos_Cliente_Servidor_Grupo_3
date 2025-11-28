@@ -74,7 +74,9 @@ CREATE TABLE MULTA(
 INSERT INTO USUARIO (NOMBRE, EMAIL, PASSWORD, ROL, ID_ESTADO) VALUES
 ('Admin Bibliotecario', 'admin@biblio.com', '1234', 'BIBLIOTECARIO', 1), -- ID 1
 ('Gabriel Osorio', 'gosorio@estudiante.com', '1234', 'ESTUDIANTE', 1),    -- ID 2
-('Usuario Bloqueado', 'bloqueado@estudiante.com', '1234', 'ESTUDIANTE', 2); -- ID 3
+('Usuario Bloqueado', 'bloqueado@estudiante.com', '1234', 'ESTUDIANTE', 2), -- ID 3
+('Estudiante Prueba', 'e', 'e', 'ESTUDIANTE', 1),
+('Admin biblioteca', 'a', 'a', 'BIBLIOTECARIO', 1),
 
 -- LIBROS
 INSERT INTO LIBRO (TITULO, AUTOR, CATEGORIA, DISPONIBLE, ID_ESTADO) VALUES
@@ -103,7 +105,7 @@ INSERT INTO PRESTAMO (ID_USUARIO, ID_LIBRO, FECHA_SALIDA, FECHA_DEVOLUCION, ID_E
 
 INSERT INTO MULTA (ID_USUARIO, ID_PRESTAMO, MONTO, ID_ESTADO) VALUES
 (2, 3, 1500.00, 3); -- Multa de 1500 colones pendiente para Gabriel
-
+ 
 
 
 
