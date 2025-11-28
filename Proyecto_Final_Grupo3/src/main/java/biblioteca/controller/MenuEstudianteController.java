@@ -69,6 +69,7 @@ public class MenuEstudianteController {
 
     private void cerrarSesion(){
 
+        vista.dispose();
         LoginView vistaLogin = new LoginView();
         UsuarioDAO modeloUsuario = new UsuarioDAO();
         LoginController loginCtrl = new LoginController(vistaLogin, modeloUsuario);
