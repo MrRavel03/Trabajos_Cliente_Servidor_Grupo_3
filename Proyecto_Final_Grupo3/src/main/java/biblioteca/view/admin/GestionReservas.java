@@ -1,4 +1,4 @@
-package biblioteca.view;
+package biblioteca.view.admin;
 
 import javax.swing.*;
 import java.awt.*;

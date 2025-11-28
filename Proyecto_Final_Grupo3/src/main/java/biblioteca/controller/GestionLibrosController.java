@@ -2,7 +2,7 @@ package biblioteca.controller;
 
 import biblioteca.dao.LibroDAO;
 import biblioteca.model.Libro;
-import biblioteca.view.GestionLibrosView;
+import biblioteca.view.admin.GestionLibrosView;
 
 import javax.swing.*;
 import java.util.List;

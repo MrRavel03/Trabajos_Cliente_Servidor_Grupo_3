@@ -3,6 +3,8 @@ package biblioteca.controller;
 import biblioteca.dao.UsuarioDAO;
 import biblioteca.model.Usuario;
 import biblioteca.view.*;
+import biblioteca.view.admin.AdminDashboardView;
+import biblioteca.view.estudiantes.CatalogoLibrosEstudiantesView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

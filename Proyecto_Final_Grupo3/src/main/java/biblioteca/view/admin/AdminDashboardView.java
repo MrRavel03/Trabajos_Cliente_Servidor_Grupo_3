@@ -1,4 +1,4 @@
-package biblioteca.view;
+package biblioteca.view.admin;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -22,20 +22,22 @@ public class AdminDashboardView extends JFrame {
 
     private void configurarVentana(){
         setTitle("Panel Administrativo - Biblioteca");
-        setSize(800, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar toda la app
+        setSize(900, 600);
+        setMinimumSize(new Dimension(800, 500));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
 
     private void inicializarComponentes() {
         // Panel principal con grid para botones
         JPanel panelPrincipal = new JPanel(new BorderLayout());
-        panelPrincipal.setBackground(new Color(240, 242, 245));
+        panelPrincipal.setBackground(new Color(245, 247, 250));
 
         // --- Encabezado Azul ---
         JPanel panelHeader = new JPanel();
         panelHeader.setBackground(new Color(52, 152, 219));
-        panelHeader.setBorder(new EmptyBorder(25, 20, 25, 20));
+        panelHeader.setPreferredSize(new Dimension(800, 80));
+        panelHeader.setLayout(new GridBagLayout());
 
         // Encabezado/ titulo
         JLabel lblTitulo = new JLabel("Panel de Control Bibliotecario");
@@ -45,7 +47,7 @@ public class AdminDashboardView extends JFrame {
 
         // Panel de botones
         JPanel panelBotones = new JPanel(new GridLayout(2, 3, 20, 20)); // 2 filas, 3 columnas
-        panelBotones.setBackground(new Color(240, 242, 245));
+        panelBotones.setBackground(new Color(245, 247, 250));
         panelBotones.setBorder(new EmptyBorder(20, 40, 40, 40));
 
         // Creacion de botones para cada modulo
@@ -81,7 +83,7 @@ public class AdminDashboardView extends JFrame {
         return btn;
     }
 
-    // --- MÉTODOS LISTENERS (Para el Controlador) ---
+    // listeners
     public void setPrestamosListener(ActionListener l) {
         btnPrestamos.addActionListener(l);
     }

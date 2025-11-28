@@ -1,4 +1,4 @@
-package biblioteca.view;
+package biblioteca.view.estudiantes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

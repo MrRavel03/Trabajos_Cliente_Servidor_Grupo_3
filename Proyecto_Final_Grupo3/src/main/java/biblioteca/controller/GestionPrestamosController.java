@@ -4,7 +4,7 @@ package biblioteca.controller;
 import biblioteca.dao.MultaDAO;
 import biblioteca.dao.PrestamoDAO;
 import biblioteca.model.Prestamo;
-import biblioteca.view.GestionPrestamosView;
+import biblioteca.view.admin.GestionPrestamosView;
 
 import javax.swing.*;
 import java.util.List;

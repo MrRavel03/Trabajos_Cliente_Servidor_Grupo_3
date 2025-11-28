@@ -1,9 +1,9 @@
 package biblioteca.controller;
 
 import biblioteca.dao.UsuarioDAO;
-import biblioteca.view.AdminDashboardView;
-import biblioteca.view.GestionLibrosView;
-import biblioteca.view.GestionPrestamosView;
+import biblioteca.view.admin.AdminDashboardView;
+import biblioteca.view.admin.GestionLibrosView;
+import biblioteca.view.admin.GestionPrestamosView;
 import biblioteca.view.LoginView;
 
 public class AdminDashboardController {

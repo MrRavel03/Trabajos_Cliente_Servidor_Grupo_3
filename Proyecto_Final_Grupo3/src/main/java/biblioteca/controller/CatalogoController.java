@@ -3,11 +3,9 @@ package biblioteca.controller;
 import biblioteca.dao.LibroDAO;
 import biblioteca.dao.ReservaDAO;
 import biblioteca.model.Libro;
-import biblioteca.view.CatalogoLibrosEstudiantesView;
+import biblioteca.view.estudiantes.CatalogoLibrosEstudiantesView;
 
 import javax.swing.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class CatalogoController {
