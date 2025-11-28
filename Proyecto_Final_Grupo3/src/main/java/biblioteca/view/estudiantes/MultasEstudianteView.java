@@ -1,104 +1,100 @@
 package biblioteca.view.estudiantes;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class MultasEstudianteView extends JFrame {
 
     private JTable tablaMultas;
+    private DefaultTableModel modeloTabla;
     private JButton botonVolver;
 
     public MultasEstudianteView() {
         configurarVentana();
         inicializarComponentes();
     }
+
     public void configurarVentana(){
         setTitle("Mis Multas");
-        setSize(800,600);
-        setMinimumSize(new Dimension(400, 500));
+        setSize(900,600);
+        setMinimumSize(new Dimension(500, 500));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
+        getContentPane().setBackground(Color.WHITE);
     }
 
     private void inicializarComponentes() {
 
         //Panel Principal
-        Color colorFondo = new Color(33,33,33);
-        JPanel panelPrincipal = new JPanel(new BorderLayout(0, 20));
-        panelPrincipal.setBackground(colorFondo);
-        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JPanel panelHeader = new JPanel(new BorderLayout());
+        panelHeader.setBackground(Color.WHITE);
+        panelHeader.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
 
         //Botón para Volver a la página anterior
-        botonVolver = new JButton("←");
-        botonVolver.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        botonVolver.setForeground(Color.WHITE);
-        botonVolver.setBackground(colorFondo);
+        botonVolver = new JButton("← Volver");
+        botonVolver.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        botonVolver.setForeground(new Color(100, 100, 100));
+        botonVolver.setContentAreaFilled(false);
+        botonVolver.setBorderPainted(false);
         botonVolver.setFocusPainted(false);
-        botonVolver.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        botonVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
         //Título
-        JLabel titulo = new JLabel("Multas Pendientes");
-        titulo.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        titulo.setForeground(Color.WHITE);
+        JLabel titulo = new JLabel("Mis Multas");
+        titulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        titulo.setForeground(new Color(33, 33, 33));
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
 
+        panelHeader.add(botonVolver, BorderLayout.WEST);
+        panelHeader.add(titulo, BorderLayout.CENTER);
+        panelHeader.add(new JLabel("                       "), BorderLayout.EAST);
 
-        //Panel Cabecera
-        JPanel panelCabecera = new JPanel(new GridBagLayout());
-        panelCabecera.setBackground(colorFondo);
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridy = 0;
-
-        //Flecha (columna 0)
-        gbc.gridx = 0;
-        gbc.anchor = GridBagConstraints.WEST;
-        panelCabecera.add(botonVolver, gbc);
-
-
-        //Título (columna 1)
-        gbc.gridx = 1;
-        gbc.weightx = 1;
-        gbc.anchor = GridBagConstraints.CENTER;
-        panelCabecera.add(titulo, gbc);
-
+        add(panelHeader, BorderLayout.NORTH);
 
         //Definiendo la Tabla
-        String[] columnas = {"ID", "Usuario", "Libro", "Monto", "Fecha", "Estado"};
+        String[] columnas = {"ID", "Libro", "Monto", "Fecha Generación", "Estado"};
 
-        tablaMultas = new JTable(new String[0][columnas.length], columnas);
+        modeloTabla = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
-        tablaMultas.setRowHeight(28);
-        tablaMultas.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        tablaMultas.setForeground(Color.WHITE);
-        tablaMultas.setBackground(new Color(60, 60, 60));
-        tablaMultas.setGridColor(Color.DARK_GRAY);
+        tablaMultas = new JTable(modeloTabla);
+        tablaMultas.setRowHeight(30);
+        tablaMultas.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
-        //Definiando el estilo de los headers de las columnas
-        JTableHeader header = tablaMultas.getTableHeader();
-        header.setBackground(new Color(80, 80, 80));
-        header.setForeground(Color.WHITE);
-        header.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        tablaMultas.setGridColor(new Color(230, 230, 230));
+        tablaMultas.setShowGrid(true);
+        tablaMultas.setBackground(Color.WHITE);
+        tablaMultas.setForeground(Color.BLACK);
+        tablaMultas.setSelectionBackground(new Color(255, 235, 235));
+        tablaMultas.setSelectionForeground(new Color(192, 57, 43));
+
+        // Encabezado
+        tablaMultas.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tablaMultas.getTableHeader().setBackground(new Color(245, 247, 250));
+        tablaMultas.getTableHeader().setForeground(new Color(33, 33, 33));
 
         JScrollPane scroll = new JScrollPane(tablaMultas);
-        scroll.getViewport().setBackground(new Color(60, 60, 60));
-        scroll.setBorder(BorderFactory.createLineBorder(new Color(90, 90, 90), 1));
+        scroll.getViewport().setBackground(Color.WHITE);
+        scroll.setBorder(BorderFactory.createEmptyBorder(10, 20, 20, 20));
 
-
-        //agregando el panel de cabecera al panel principal (boton de volver y título)
-        panelPrincipal.add(panelCabecera, BorderLayout.NORTH);
-
-        //agregando al panel principal la tabla con Scroll
-        panelPrincipal.add(scroll, BorderLayout.CENTER);
-        add(panelPrincipal);
+        add(scroll, BorderLayout.CENTER);
     }
 
-    //Get de la tabla
-    public JTable getTablaMultas() {return tablaMultas;}
+    public DefaultTableModel getModeloTabla() {
+        return modeloTabla;
+    }
 
-    //Get del Botón de vuelta
-    public JButton getBotonVolver() {return botonVolver;}
+    public void setVolverListener(ActionListener l) {
+        botonVolver.addActionListener(l);
+    }
 }

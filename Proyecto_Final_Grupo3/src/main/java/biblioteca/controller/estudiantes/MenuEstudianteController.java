@@ -26,7 +26,7 @@ public class MenuEstudianteController {
 
         this.vista.setIrPrestamosListener(e -> abrirPrestamos());
 
-
+        this.vista.setIrMultasListener(e -> abrirMultas());
 
         this.vista.setCerrarSesionListener(e -> cerrarSesion());
 
@@ -63,9 +63,9 @@ public class MenuEstudianteController {
     }
 
     private void abrirMultas() {
-        // TODO: En el futuro, conectar con MultasController
+
         MultasEstudianteView vistaMultas = new MultasEstudianteView();
-        vistaMultas.setVisible(true);
+        new MisMultasController(vistaMultas, usuario.getId());
     }
 
     private void cerrarSesion(){
