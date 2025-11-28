@@ -14,6 +14,37 @@ public class LibroDAO {
 
     // Funciones publicas de lectura
 
+    public List<String> listarCategoriasDisponibles(){
+
+        List<String> categorias = new ArrayList<>();
+
+        String sql = "SELECT DISTINCT L.CATEGORIA " +
+                "FROM LIBRO L " +
+                "INNER JOIN ESTADO E ON L.ID_ESTADO = E.ID " +
+                "WHERE E.DESCRIPCION = 'ACTIVO' " +
+                "ORDER BY L.CATEGORIA ASC";
+
+        try(Connection con = ConexionDB.conectar();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()){
+
+            while (rs.next()){
+
+                String categoria = rs.getString("CATEGORIA");
+
+                if (categoria != null && !categoria.isEmpty()){
+
+                    categorias.add(categoria);
+                }
+            }
+
+        } catch (SQLException e){
+            System.err.println("Error al obtener categorias: " + e.getMessage());
+        }
+
+        return categorias;
+    }
+
     public List<String> obtenerReporteMasPrestados() {
         List<String> reporte = new ArrayList<>();
 

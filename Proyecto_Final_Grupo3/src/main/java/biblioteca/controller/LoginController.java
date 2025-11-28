@@ -63,7 +63,8 @@ public class LoginController implements ActionListener {
 
         } else if (rol.equals("ESTUDIANTE")) {
 
-            new CatalogoLibrosEstudiantesView().setVisible(true);
+            CatalogoLibrosEstudiantesView catalogoVista = new CatalogoLibrosEstudiantesView();
+            new CatalogoController(catalogoVista, usuario.getId());
 
         } else {
 
