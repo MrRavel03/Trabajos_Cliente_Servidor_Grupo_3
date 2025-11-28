@@ -1,5 +1,6 @@
-package biblioteca.controller;
+package biblioteca.controller.estudiantes;
 
+import biblioteca.controller.LoginController;
 import biblioteca.dao.UsuarioDAO;
 import biblioteca.model.Usuario;
 import biblioteca.view.LoginView;
@@ -23,7 +24,7 @@ public class MenuEstudianteController {
 
         this.vista.setIrCatalogoListener(e -> abrirCatalogo());
 
-        //todo
+        this.vista.setIrPrestamosListener(e -> abrirPrestamos());
 
 
 
@@ -56,9 +57,9 @@ public class MenuEstudianteController {
     }
 
     private void abrirPrestamos() {
-        // TODO: En el futuro, conectar con PrestamosController
+
         PrestamosEstudianteView vistaPrestamos = new PrestamosEstudianteView();
-        vistaPrestamos.setVisible(true);
+        new MisPrestamosController(vistaPrestamos, usuario.getId());
     }
 
     private void abrirMultas() {

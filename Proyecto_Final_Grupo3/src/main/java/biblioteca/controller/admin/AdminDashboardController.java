@@ -1,5 +1,6 @@
-package biblioteca.controller;
+package biblioteca.controller.admin;
 
+import biblioteca.controller.LoginController;
 import biblioteca.dao.UsuarioDAO;
 import biblioteca.view.admin.AdminDashboardView;
 import biblioteca.view.admin.GestionLibrosView;

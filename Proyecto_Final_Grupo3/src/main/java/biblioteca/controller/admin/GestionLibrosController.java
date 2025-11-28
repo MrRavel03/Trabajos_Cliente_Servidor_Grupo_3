@@ -1,4 +1,4 @@
-package biblioteca.controller;
+package biblioteca.controller.admin;
 
 import biblioteca.dao.LibroDAO;
 import biblioteca.model.Libro;

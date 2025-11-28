@@ -1,4 +1,4 @@
-package biblioteca.controller;
+package biblioteca.controller.estudiantes;
 
 import biblioteca.dao.LibroDAO;
 import biblioteca.dao.ReservaDAO;
