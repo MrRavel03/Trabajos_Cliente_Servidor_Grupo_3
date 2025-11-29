@@ -52,7 +52,7 @@ public class PrestamosEstudianteView extends JFrame {
 
         panelHeader.add(botonVolver, BorderLayout.WEST);
         panelHeader.add(titulo, BorderLayout.CENTER);
-        JLabel dummy = new JLabel("                       ");
+        JLabel dummy = new JLabel("                          ");
         panelHeader.add(dummy, BorderLayout.EAST);
 
         add(panelHeader, BorderLayout.NORTH);

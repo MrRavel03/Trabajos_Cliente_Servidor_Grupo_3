@@ -33,6 +33,8 @@ public class CatalogoController {
 
         this.vista.setReservarListener(e -> reservarLibroSeleccionado());
 
+        this.vista.setVolverListener(e -> vista.dispose());
+
         this.vista.setVisible(true);
     }
 

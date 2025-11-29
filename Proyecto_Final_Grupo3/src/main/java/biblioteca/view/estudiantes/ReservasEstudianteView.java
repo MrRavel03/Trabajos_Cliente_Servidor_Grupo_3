@@ -52,7 +52,7 @@ public class ReservasEstudianteView extends JFrame {
 
         panelHeader.add(botonVolver, BorderLayout.WEST);
         panelHeader.add(titulo, BorderLayout.CENTER);
-        panelHeader.add(new JLabel("        "), BorderLayout.EAST); // Espaciador
+        panelHeader.add(new JLabel("                           "), BorderLayout.EAST);
 
         add(panelHeader, BorderLayout.NORTH);
 
@@ -81,6 +81,8 @@ public class ReservasEstudianteView extends JFrame {
         JScrollPane scroll = new JScrollPane(tablaReservas);
         scroll.getViewport().setBackground(Color.WHITE);
         scroll.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+        add(scroll, BorderLayout.CENTER);
 
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
         panelInferior.setBackground(Color.WHITE);

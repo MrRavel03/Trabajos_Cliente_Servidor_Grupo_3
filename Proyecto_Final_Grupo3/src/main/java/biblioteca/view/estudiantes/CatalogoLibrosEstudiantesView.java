@@ -12,6 +12,7 @@ public class CatalogoLibrosEstudiantesView extends JFrame{
     private JTable tablaLibros;
     private DefaultTableModel modeloTabla;
     private JButton btnReservar;
+    private JButton btnVolver;
 
     public CatalogoLibrosEstudiantesView() {
         configurarVentana();
@@ -36,21 +37,29 @@ public class CatalogoLibrosEstudiantesView extends JFrame{
         panelSuperior.setPreferredSize(new Dimension(800, 60));
         panelSuperior.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(200, 200, 200)));
 
+        // Volver
+        btnVolver = new JButton("← Volver");
+        btnVolver.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btnVolver.setForeground(new Color(100, 100, 100));
+        btnVolver.setContentAreaFilled(false);
+        btnVolver.setBorderPainted(false);
+        btnVolver.setFocusPainted(false);
+        btnVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         // Etiqueta
         JLabel lblBuscar = new JLabel("Buscar:");
 
         lblBuscar.setForeground(new Color(33, 33, 33));
         lblBuscar.setFont(new Font("Segoe UI", Font.BOLD, 14));
 
-
         //Buscador
         txtBuscador = new JTextField(20);
-
 
         //Categorias
         comboCategorias = new JComboBox<>();
         comboCategorias.setBackground(Color.WHITE);
 
+        panelSuperior.add(btnVolver);
         panelSuperior.add(lblBuscar);
         panelSuperior.add(txtBuscador);
         panelSuperior.add(comboCategorias);
@@ -134,6 +143,10 @@ public class CatalogoLibrosEstudiantesView extends JFrame{
 
     public void setReservarListener(ActionListener l) {
         btnReservar.addActionListener(l);
+    }
+
+    public void setVolverListener(ActionListener l) {
+        btnVolver.addActionListener(l);
     }
 
 

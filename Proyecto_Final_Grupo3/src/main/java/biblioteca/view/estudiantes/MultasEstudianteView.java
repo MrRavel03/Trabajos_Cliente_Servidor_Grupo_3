@@ -53,7 +53,7 @@ public class MultasEstudianteView extends JFrame {
 
         panelHeader.add(botonVolver, BorderLayout.WEST);
         panelHeader.add(titulo, BorderLayout.CENTER);
-        panelHeader.add(new JLabel("                       "), BorderLayout.EAST);
+        panelHeader.add(new JLabel("                         "), BorderLayout.EAST);
 
         add(panelHeader, BorderLayout.NORTH);
 

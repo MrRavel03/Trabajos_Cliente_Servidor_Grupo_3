@@ -26,6 +26,8 @@ public class MenuEstudianteController {
 
         this.vista.setIrPrestamosListener(e -> abrirPrestamos());
 
+        this.vista.setIrReservasListener(e -> abrirReservas());
+
         this.vista.setIrMultasListener(e -> abrirMultas());
 
         this.vista.setCerrarSesionListener(e -> cerrarSesion());
@@ -51,9 +53,9 @@ public class MenuEstudianteController {
     }
 
     private void abrirReservas() {
-        // TODO: En el futuro, conectar con ReservasController
+
         ReservasEstudianteView vistaReservas = new ReservasEstudianteView();
-        vistaReservas.setVisible(true);
+        new ReservasController(vistaReservas, usuario.getId());
     }
 
     private void abrirPrestamos() {
