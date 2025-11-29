@@ -6,6 +6,7 @@ import biblioteca.view.admin.AdminDashboardView;
 import biblioteca.view.admin.GestionLibrosView;
 import biblioteca.view.admin.GestionPrestamosView;
 import biblioteca.view.LoginView;
+import biblioteca.view.admin.GestionUsuariosView;
 
 public class AdminDashboardController {
 
@@ -18,10 +19,10 @@ public class AdminDashboardController {
         this.vista.setPrestamosListener(e -> abrirGestionPrestamos());
         this.vista.setCerrarSesionListener(e -> cerrarSesion());
         this.vista.setLibrosListener(e -> abrirGestionLibros());
+        this.vista.setUsuariosListener(e -> abrirGestionUsuarios());
 
         // TODO
         this.vista.setReservasListener(e -> System.out.println("Abriendo Reservas..."));
-        this.vista.setUsuariosListener(e -> System.out.println("Abriendo Usuarios..."));
 
         this.vista.setVisible(true);
     }
@@ -42,5 +43,10 @@ public class AdminDashboardController {
 
         GestionLibrosView vistaLibros = new GestionLibrosView();
         new GestionLibrosController(vistaLibros);
+    }
+
+    private void abrirGestionUsuarios() {
+        GestionUsuariosView vistaUsuarios = new GestionUsuariosView();
+        new GestionUsuariosController(vistaUsuarios);
     }
 }
