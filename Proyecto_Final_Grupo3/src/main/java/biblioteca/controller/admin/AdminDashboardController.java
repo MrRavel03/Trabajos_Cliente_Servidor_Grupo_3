@@ -18,6 +18,7 @@ public class AdminDashboardController {
         this.vista.setLibrosListener(e -> abrirGestionLibros());
         this.vista.setUsuariosListener(e -> abrirGestionUsuarios());
         this.vista.setReservasListener(e -> abrirGestionReservas());
+        this.vista.setMultasListener(e -> abrirGestionMultas());
 
         this.vista.setVisible(true);
     }
@@ -38,6 +39,12 @@ public class AdminDashboardController {
 
         vista.dispose();
         new LoginController(new LoginView(), new UsuarioDAO()).iniciar();
+    }
+
+    private void abrirGestionMultas() {
+
+        biblioteca.view.admin.GestionMultasView vistaMultas = new biblioteca.view.admin.GestionMultasView();
+        new biblioteca.controller.admin.GestionMultasController(vistaMultas);
     }
 
     private void abrirGestionLibros(){

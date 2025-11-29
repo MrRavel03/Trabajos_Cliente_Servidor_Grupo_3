@@ -62,6 +62,22 @@ public class MultaDAO {
         }
     }
 
+    public boolean registrarPagoMulta(int idMulta) {
+        String sql = "UPDATE MULTA SET ID_ESTADO = 4 WHERE ID = ?"; // 4 es PAGADA en tu SQL
+
+        try (Connection con = ConexionDB.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idMulta);
+            int filas = ps.executeUpdate();
+            return filas > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error al registrar pago: " + e.getMessage());
+            return false;
+        }
+    }
+
 
     // Funciones publicas de lectura
 
@@ -101,6 +117,43 @@ public class MultaDAO {
         return lista;
 
     }
+
+    public List<Multa> listarTodasLasMultas(){
+
+        List<Multa> lista = new ArrayList<>();
+
+        String sql = "SELECT M.ID, M.MONTO, M.FECHA_GENERACION, " +
+                "U.NOMBRE AS NOMBRE_USUARIO, " +
+                "L.TITULO AS TITULO_LIBRO, " +
+                "E.DESCRIPCION AS ESTADO " +
+                "FROM MULTA M " +
+                "INNER JOIN USUARIO U ON M.ID_USUARIO = U.ID " +
+                "INNER JOIN PRESTAMO P ON M.ID_PRESTAMO = P.ID " +
+                "INNER JOIN LIBRO L ON P.ID_LIBRO = L.ID " +
+                "INNER JOIN ESTADO E ON M.ID_ESTADO = E.ID " +
+                "ORDER BY M.FECHA_GENERACION DESC";
+
+        try (Connection con = ConexionDB.conectar();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Multa m = new Multa();
+                m.setId(rs.getInt("ID"));
+                m.setNombreUsuario(rs.getString("NOMBRE_USUARIO")); // Importante para el admin
+                m.setTituloLibro(rs.getString("TITULO_LIBRO"));
+                m.setMonto(rs.getDouble("MONTO"));
+                m.setFechaGeneracion(rs.getDate("FECHA_GENERACION"));
+                m.setEstado(rs.getString("ESTADO"));
+                lista.add(m);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al listar todas las multas: " + e.getMessage());
+        }
+        return lista;
+    }
+
+
 
     // Funciones privada de escritura
 
