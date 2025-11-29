@@ -194,9 +194,10 @@ public class ReservaDAO {
 
         List<Reserva> lista = new ArrayList<>();
 
+        // CAMBIO: Agregamos U.ID y L.ID a la consulta
         String sql = "SELECT R.ID, R.FECHA_RESERVA, " +
-                "U.NOMBRE, " +
-                "L.TITULO, " +
+                "U.ID AS ID_USUARIO, U.NOMBRE, " +
+                "L.ID AS ID_LIBRO, L.TITULO, " +
                 "E.DESCRIPCION " +
                 "FROM RESERVA R " +
                 "INNER JOIN USUARIO U ON R.ID_USUARIO = U.ID " +
@@ -214,8 +215,13 @@ public class ReservaDAO {
 
                 r.setId(rs.getInt("ID"));
                 r.setFechaReserva(rs.getDate("FECHA_RESERVA"));
+
+                r.setIdUsuario(rs.getInt("ID_USUARIO"));
                 r.setNombreUsuario(rs.getString("NOMBRE"));
+
+                r.setIdLibro(rs.getInt("ID_LIBRO"));
                 r.setTituloLibro(rs.getString("TITULO"));
+
                 r.setEstado(rs.getString("DESCRIPCION"));
 
                 lista.add(r);

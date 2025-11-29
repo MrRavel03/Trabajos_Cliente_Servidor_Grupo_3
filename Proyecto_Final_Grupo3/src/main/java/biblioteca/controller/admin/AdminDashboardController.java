@@ -2,11 +2,8 @@ package biblioteca.controller.admin;
 
 import biblioteca.controller.LoginController;
 import biblioteca.dao.UsuarioDAO;
-import biblioteca.view.admin.AdminDashboardView;
-import biblioteca.view.admin.GestionLibrosView;
-import biblioteca.view.admin.GestionPrestamosView;
+import biblioteca.view.admin.*;
 import biblioteca.view.LoginView;
-import biblioteca.view.admin.GestionUsuariosView;
 
 public class AdminDashboardController {
 
@@ -20,9 +17,7 @@ public class AdminDashboardController {
         this.vista.setCerrarSesionListener(e -> cerrarSesion());
         this.vista.setLibrosListener(e -> abrirGestionLibros());
         this.vista.setUsuariosListener(e -> abrirGestionUsuarios());
-
-        // TODO
-        this.vista.setReservasListener(e -> System.out.println("Abriendo Reservas..."));
+        this.vista.setReservasListener(e -> abrirGestionReservas());
 
         this.vista.setVisible(true);
     }
@@ -31,6 +26,12 @@ public class AdminDashboardController {
 
         GestionPrestamosView vistaPrestamos = new GestionPrestamosView();
         new GestionPrestamosController(vistaPrestamos);
+    }
+
+    private void abrirGestionReservas(){
+
+        GestionReservasView vistaReservas = new GestionReservasView();
+        new GestionReservasController(vistaReservas);
     }
 
     private void cerrarSesion(){
