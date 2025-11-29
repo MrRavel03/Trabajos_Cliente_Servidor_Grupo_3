@@ -1,106 +1,117 @@
 package biblioteca.view.estudiantes;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class ReservasEstudianteView extends JFrame {
 
     private JTable tablaReservas;
     private JButton botonCancelarReserva;
     private JButton botonVolver;
+    private DefaultTableModel modeloTabla;
 
     public ReservasEstudianteView() {
         configurarVentana();
         inicializarComponentes();
-        setVisible(true);
     }
 
     private void configurarVentana() {
-        setTitle("Mis Reservas");
-        setSize(800,600);
-        setMinimumSize(new Dimension(400, 500));
+        setTitle("Mis Reservas Activas");
+        setSize(900, 600);
+        setMinimumSize(new Dimension(500, 500));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
+        getContentPane().setBackground(Color.WHITE);
     }
 
     private void inicializarComponentes() {
-        //Panel
-        Color colorFondo = new Color(33,33,33);
-        JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setBackground(colorFondo);
-        panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
-        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
+        //Header
+        JPanel panelHeader = new JPanel(new BorderLayout());
+        panelHeader.setBackground(Color.WHITE);
+        panelHeader.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
         //Boton Volver
-        botonVolver = new JButton("←");
-        botonVolver.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        botonVolver.setForeground(Color.WHITE);
-        botonVolver.setBackground(colorFondo);
+        botonVolver = new JButton("← Volver");
+        botonVolver.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        botonVolver.setForeground(new Color(100, 100, 100));
+        botonVolver.setContentAreaFilled(false);
+        botonVolver.setBorderPainted(false);
         botonVolver.setFocusPainted(false);
-        botonVolver.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        botonVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        // Título
+        JLabel titulo = new JLabel("Mis Reservas Pendientes");
+        titulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        titulo.setForeground(new Color(33, 33, 33));
+        titulo.setHorizontalAlignment(SwingConstants.CENTER);
 
-        //Titulo
-        JLabel titulo = new JLabel("Mis Reservas");
-        titulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        titulo.setForeground(Color.WHITE);
+        panelHeader.add(botonVolver, BorderLayout.WEST);
+        panelHeader.add(titulo, BorderLayout.CENTER);
+        panelHeader.add(new JLabel("        "), BorderLayout.EAST); // Espaciador
 
-        //Panel que contiene flecha y título centrado
-        JPanel panelHeader = new JPanel(new GridBagLayout());
-        panelHeader.setBackground(colorFondo);
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridy = 0;
-
-        //Flecha izquierda
-        gbc.gridx = 0;
-        gbc.anchor = GridBagConstraints.WEST;
-        panelHeader.add(botonVolver, gbc);
-
-        //Título centrado
-        gbc.gridx = 1;
-        gbc.weightx = 1;
-        gbc.anchor = GridBagConstraints.CENTER;
-        panelHeader.add(titulo, gbc);
         add(panelHeader, BorderLayout.NORTH);
 
-        //Tabla con mis Reservas
-        Color colorTabla = new Color(60,60,60);
+        // --- TABLA ---
         String[] columnas = {"ID", "Libro", "Fecha Reserva", "Estado"};
-        Object[][] datos = {};
 
-        tablaReservas = new JTable(datos, columnas);
-        tablaReservas.setRowHeight(40);
-        tablaReservas.setBackground(colorTabla);
-        tablaReservas.setForeground(Color.WHITE);
-        tablaReservas.setSelectionBackground(new Color(75, 110, 175)); // selección azul suave
-        tablaReservas.setSelectionForeground(Color.WHITE);
+        modeloTabla = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
-        JTableHeader header = tablaReservas.getTableHeader();
-        header.setBackground(new Color(80, 80, 80));
-        header.setForeground(Color.WHITE);
-        header.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        tablaReservas = new JTable(modeloTabla);
+        tablaReservas.setRowHeight(35);
+        tablaReservas.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+
+        // Estilos
+        tablaReservas.setGridColor(new Color(230, 230, 230));
+        tablaReservas.setShowGrid(true);
+        tablaReservas.setBackground(Color.WHITE);
+        tablaReservas.setForeground(Color.BLACK);
+        tablaReservas.setSelectionBackground(new Color(255, 245, 230));
+        tablaReservas.setSelectionForeground(new Color(230, 126, 34));
 
         JScrollPane scroll = new JScrollPane(tablaReservas);
-        scroll.setPreferredSize(new Dimension(500, 300));
-        scroll.getViewport().setBackground(colorTabla);
-        scroll.setBorder(BorderFactory.createLineBorder(new Color(90, 90, 90), 1));
+        scroll.getViewport().setBackground(Color.WHITE);
+        scroll.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        //Boton para cancelar reservacion
+        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+        panelInferior.setBackground(Color.WHITE);
+
         botonCancelarReserva = new JButton("Cancelar Reserva Seleccionada");
-        botonCancelarReserva.setAlignmentX(Component.CENTER_ALIGNMENT);
-        botonCancelarReserva.setBackground(new Color(236, 91, 75));
+        botonCancelarReserva.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        botonCancelarReserva.setBackground(new Color(231, 76, 60));
         botonCancelarReserva.setForeground(Color.WHITE);
         botonCancelarReserva.setFocusPainted(false);
+        botonCancelarReserva.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        botonCancelarReserva.setPreferredSize(new Dimension(280, 45));
 
-        add(panelPrincipal, BorderLayout.CENTER);
-        panelPrincipal.add(Box.createVerticalStrut(15));
-        panelPrincipal.add(scroll);
-        panelPrincipal.add(Box.createVerticalStrut(20));
-        panelPrincipal.add(botonCancelarReserva);
+        panelInferior.add(botonCancelarReserva);
+        add(panelInferior, BorderLayout.SOUTH);
     }
-    public JTable getTablaReservas() {return tablaReservas;}
-    public JButton getBotonCancelarReserva() {return botonCancelarReserva;}
+
+    // getters
+    public JTable getTablaReservas() {
+        return tablaReservas;
+    }
+
+    public DefaultTableModel getModeloTabla() {
+        return modeloTabla;
+    }
+
+    // Listeners
+    public void setCancelarListener(ActionListener l) {
+        botonCancelarReserva.addActionListener(l);
+    }
+
+    public void setVolverListener(ActionListener l) {
+        botonVolver.addActionListener(l);
+    }
 }
