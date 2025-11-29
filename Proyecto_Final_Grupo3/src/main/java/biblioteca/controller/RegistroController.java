@@ -2,6 +2,7 @@ package biblioteca.controller;
 
 import biblioteca.dao.UsuarioDAO;
 import biblioteca.model.Usuario;
+import biblioteca.view.LoginView;
 import biblioteca.view.RegistroUsuarioView;
 
 import javax.swing.*;
@@ -58,6 +59,10 @@ public class RegistroController {
                     JOptionPane.INFORMATION_MESSAGE
             );
             vista.dispose();
+
+            //abrimos de nuevo
+            new LoginController(new LoginView(), new UsuarioDAO()).iniciar();
+
         } else {
 
             JOptionPane.showMessageDialog(

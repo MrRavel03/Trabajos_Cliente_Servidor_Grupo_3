@@ -78,6 +78,7 @@ public class LoginController implements ActionListener {
     }
 
     private void abrirRegistro(){
+        vista.dispose();
 
         RegistroUsuarioView vistaRegistro = new RegistroUsuarioView();
         new RegistroController(vistaRegistro, modelo);
