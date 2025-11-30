@@ -84,40 +84,74 @@ public class UsuarioDAO {
     // Funciones publicas de escritura
 
     public boolean actualizarUsuario(Usuario u) {
-        String sql;
-        boolean actualizarPass = false;
+        Connection conTemp = ConexionDB.conectar();
+        if (conTemp == null) return false;
 
-        if (u.getPassword() != null && !u.getPassword().isEmpty()) {
-            // Si trae contraseña nueva, la actualizamos
-            sql = "UPDATE USUARIO SET NOMBRE=?, EMAIL=?, ROL=?, PASSWORD=? WHERE ID=?";
-            actualizarPass = true;
-        } else {
-            // Si no trae, dejamos la que tiene (no tocamos ese campo)
-            sql = "UPDATE USUARIO SET NOMBRE=?, EMAIL=?, ROL=? WHERE ID=?";
-        }
+        try (Connection con = conTemp) {
+            con.setAutoCommit(false);
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+            try {
 
+                if ("BIBLIOTECARIO".equals(u.getRol())) {
 
-            ps.setString(1, u.getNombre());
-            ps.setString(2, u.getEmail());
-            ps.setString(3, u.getRol());
+                    String sqlLiberar = "UPDATE LIBRO SET DISPONIBLE = TRUE " +
+                            "WHERE ID IN (SELECT ID_LIBRO FROM RESERVA WHERE ID_USUARIO = ? AND ID_ESTADO = 1)";
+                    try (PreparedStatement psLib = con.prepareStatement(sqlLiberar)) {
+                        psLib.setInt(1, u.getId());
+                        psLib.executeUpdate();
+                    }
 
-            if (actualizarPass) {
+                    String sqlCancelar = "UPDATE RESERVA SET ID_ESTADO = 2 WHERE ID_USUARIO = ? AND ID_ESTADO = 1";
+                    try (PreparedStatement psRes = con.prepareStatement(sqlCancelar)) {
+                        psRes.setInt(1, u.getId());
+                        psRes.executeUpdate();
+                    }
 
-                ps.setString(4, u.getPassword());
-                ps.setInt(5, u.getId());
-            } else {
+                    System.out.println(">> Limpieza de reservas realizada para el nuevo bibliotecario ID: " + u.getId());
+                }
 
-                ps.setInt(4, u.getId());
+                String sql;
+                boolean actualizarPass = false;
+
+                if (u.getPassword() != null && !u.getPassword().isEmpty()) {
+                    // Si trae contraseña nueva, la actualizamos
+                    sql = "UPDATE USUARIO SET NOMBRE=?, EMAIL=?, ROL=?, PASSWORD=? WHERE ID=?";
+                    actualizarPass = true;
+                } else {
+                    // Si no trae, dejamos la que tiene
+                    sql = "UPDATE USUARIO SET NOMBRE=?, EMAIL=?, ROL=? WHERE ID=?";
+                }
+
+                try (PreparedStatement ps = con.prepareStatement(sql)) {
+                    ps.setString(1, u.getNombre());
+                    ps.setString(2, u.getEmail());
+                    ps.setString(3, u.getRol());
+
+                    if (actualizarPass) {
+                        ps.setString(4, u.getPassword());
+                        ps.setInt(5, u.getId());
+                    } else {
+                        ps.setInt(4, u.getId());
+                    }
+
+                    int filas = ps.executeUpdate();
+
+                    if (filas > 0) {
+                        con.commit();
+                        return true;
+                    } else {
+                        con.rollback();
+                        return false;
+                    }
+                }
+
+            } catch (SQLException e) {
+                con.rollback();
+                System.err.println("Error en transacción actualizar usuario: " + e.getMessage());
+                return false;
             }
-
-            int filas = ps.executeUpdate();
-            return filas > 0;
-
         } catch (SQLException e) {
-            System.err.println("Error al actualizar usuario: " + e.getMessage());
+            System.err.println("Error de conexión: " + e.getMessage());
             return false;
         }
     }
