@@ -115,6 +115,7 @@ public class GestionUsuariosController {
         String nombre = vista.getNombre();
         String email = vista.getEmail();
         String rol = vista.getRolSeleccionado();
+        String password = vista.getPassword();
 
         if (nombre.isEmpty() || email.isEmpty()) {
             JOptionPane.showMessageDialog(vista, "El nombre y correo no pueden estar vacíos.", "Error", JOptionPane.WARNING_MESSAGE);
@@ -126,6 +127,10 @@ public class GestionUsuariosController {
         u.setNombre(nombre);
         u.setEmail(email);
         u.setRol(rol);
+
+        if(password != null){
+            u.setPassword(password);
+        }
 
         if (ClienteTCP.getInstance().actualizarUsuario(u)) {
             JOptionPane.showMessageDialog(vista, "Usuario actualizado.");

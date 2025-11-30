@@ -84,19 +84,38 @@ public class UsuarioDAO {
     // Funciones publicas de escritura
 
     public boolean actualizarUsuario(Usuario u) {
-        String sql = "UPDATE USUARIO SET NOMBRE=?, EMAIL=?, ROL=? WHERE ID=?";
-        // Nota: No actualizamos password aquí para simplificar, o podrías agregarlo si no está vacío
+        String sql;
+        boolean actualizarPass = false;
+
+        if (u.getPassword() != null && !u.getPassword().isEmpty()) {
+            // Si trae contraseña nueva, la actualizamos
+            sql = "UPDATE USUARIO SET NOMBRE=?, EMAIL=?, ROL=?, PASSWORD=? WHERE ID=?";
+            actualizarPass = true;
+        } else {
+            // Si no trae, dejamos la que tiene (no tocamos ese campo)
+            sql = "UPDATE USUARIO SET NOMBRE=?, EMAIL=?, ROL=? WHERE ID=?";
+        }
 
         try (Connection con = ConexionDB.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
+
             ps.setString(1, u.getNombre());
             ps.setString(2, u.getEmail());
             ps.setString(3, u.getRol());
-            ps.setInt(4, u.getId());
+
+            if (actualizarPass) {
+
+                ps.setString(4, u.getPassword());
+                ps.setInt(5, u.getId());
+            } else {
+
+                ps.setInt(4, u.getId());
+            }
 
             int filas = ps.executeUpdate();
             return filas > 0;
+
         } catch (SQLException e) {
             System.err.println("Error al actualizar usuario: " + e.getMessage());
             return false;
