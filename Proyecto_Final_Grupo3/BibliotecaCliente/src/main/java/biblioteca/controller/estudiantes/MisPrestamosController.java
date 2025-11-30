@@ -1,6 +1,6 @@
 package biblioteca.controller.estudiantes;
 
-import biblioteca.dao.PrestamoDAO;
+import biblioteca.cliente.ClienteTCP;
 import biblioteca.model.Prestamo;
 import biblioteca.view.estudiantes.PrestamosEstudianteView;
 
@@ -10,14 +10,12 @@ import java.util.List;
 public class MisPrestamosController {
 
     private final PrestamosEstudianteView vista;
-    private final PrestamoDAO prestamoDAO;
     private final int idUsuario;
 
     public MisPrestamosController(PrestamosEstudianteView vista, int idUsuario){
 
         this.vista = vista;
         this.idUsuario = idUsuario;
-        this.prestamoDAO = new PrestamoDAO();
 
         cargarTabla();
 
@@ -31,7 +29,7 @@ public class MisPrestamosController {
         DefaultTableModel modelo = vista.getModeloTabla();
         modelo.setRowCount(0);
 
-        List<Prestamo> lista = prestamoDAO.listarHistorialPorUsuario(idUsuario);
+        List<Prestamo> lista = ClienteTCP.getInstance().listarHistorialPorUsuario(idUsuario);
 
         for (Prestamo p : lista){
 

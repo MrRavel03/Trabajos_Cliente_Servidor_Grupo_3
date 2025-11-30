@@ -1,7 +1,6 @@
 package biblioteca.controller.admin;
 
-import biblioteca.dao.PrestamoDAO;
-import biblioteca.dao.ReservaDAO;
+import biblioteca.cliente.ClienteTCP;
 import biblioteca.model.Reserva;
 import biblioteca.view.admin.GestionReservasView;
 
@@ -12,13 +11,8 @@ import java.util.List;
 public class GestionReservasController {
 
     private final GestionReservasView vista;
-    private final ReservaDAO reservaDAO;
-    private final PrestamoDAO prestamoDAO;
-
     public GestionReservasController(GestionReservasView vista) {
         this.vista = vista;
-        this.reservaDAO = new ReservaDAO();
-        this.prestamoDAO = new PrestamoDAO();
 
         cargarTabla();
 
@@ -32,7 +26,7 @@ public class GestionReservasController {
         DefaultTableModel modelo = vista.getModeloTabla();
         modelo.setRowCount(0);
 
-        List<Reserva> lista = reservaDAO.listarReservasActivas();
+        List<Reserva> lista = ClienteTCP.getInstance().listarReservasActivas();
 
         for (Reserva r : lista) {
             modelo.addRow(new Object[]{
@@ -58,11 +52,11 @@ public class GestionReservasController {
         int idLibro = (int) vista.getModeloTabla().getValueAt(fila, 2);
         int idUsuario = (int) vista.getModeloTabla().getValueAt(fila, 5);
 
-        boolean reservaLiberada = reservaDAO.cancelarReserva(idReserva);
+        boolean reservaLiberada = ClienteTCP.getInstance().cancelarReserva(idReserva);
 
         if (reservaLiberada) {
 
-            if (prestamoDAO.registrarPrestamo(idUsuario, idLibro)) {
+            if (ClienteTCP.getInstance().registrarPrestamo(idUsuario, idLibro)) {
 
                 JOptionPane.showMessageDialog(vista, "Préstamo registrado exitosamente.");
                 cargarTabla();
@@ -87,7 +81,7 @@ public class GestionReservasController {
 
         int idReserva = (int) vista.getModeloTabla().getValueAt(fila, 0);
 
-        if (reservaDAO.cancelarReserva(idReserva)) {
+        if (ClienteTCP.getInstance().cancelarReserva(idReserva)) {
             JOptionPane.showMessageDialog(vista, "Reserva cancelada.");
             cargarTabla();
         } else {

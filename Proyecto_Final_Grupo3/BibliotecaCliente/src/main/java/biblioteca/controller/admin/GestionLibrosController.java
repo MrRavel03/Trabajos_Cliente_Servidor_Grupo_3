@@ -1,6 +1,6 @@
 package biblioteca.controller.admin;
 
-import biblioteca.dao.LibroDAO;
+import biblioteca.cliente.ClienteTCP;
 import biblioteca.model.Libro;
 import biblioteca.view.admin.GestionLibrosView;
 
@@ -10,12 +10,10 @@ import java.util.List;
 public class GestionLibrosController {
 
     private final GestionLibrosView vista;
-    private final LibroDAO LibroDAO;
 
     public GestionLibrosController (GestionLibrosView vista){
 
         this.vista = vista;
-        this.LibroDAO = new LibroDAO();
 
         this.vista.setAgregarListener( e -> registrarLibro());
         this.vista.setEditarListener(System.out::println);
@@ -31,7 +29,7 @@ public class GestionLibrosController {
 
         vista.getModeloTabla().setRowCount(0);
 
-        List<Libro> libros = LibroDAO.listarLibros();
+        List<Libro> libros = ClienteTCP.getInstance().listarLibros();
 
         for(Libro l : libros){
             Object[] fila = {
@@ -66,7 +64,7 @@ public class GestionLibrosController {
         nl.setAutor(autor);
         nl.setCategoria(categoria);
 
-        if (LibroDAO.registrarLibro(nl)) {
+        if (ClienteTCP.getInstance().registrarLibro(nl)) {
 
             JOptionPane.showMessageDialog(vista, "Libro registrado exitosamente.");
             vista.limpiarFormulario();

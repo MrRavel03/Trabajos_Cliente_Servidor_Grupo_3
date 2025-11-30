@@ -1,6 +1,6 @@
 package biblioteca.controller.estudiantes;
 
-import biblioteca.dao.MultaDAO;
+import biblioteca.cliente.ClienteTCP;
 import biblioteca.model.Multa;
 import biblioteca.view.estudiantes.MultasEstudianteView;
 
@@ -10,13 +10,11 @@ import java.util.List;
 public class MisMultasController {
 
     private final MultasEstudianteView vista;
-    private final MultaDAO multaDAO;
     private final int idUsuario;
 
     public MisMultasController(MultasEstudianteView vista, int idUsuario) {
         this.vista = vista;
         this.idUsuario = idUsuario;
-        this.multaDAO = new MultaDAO();
 
         cargarMultas();
 
@@ -29,7 +27,7 @@ public class MisMultasController {
         DefaultTableModel modelo = vista.getModeloTabla();
         modelo.setRowCount(0);
 
-        List<Multa> lista = multaDAO.listarMultasPendientes(idUsuario);
+        List<Multa> lista = ClienteTCP.getInstance().listarMultasPendientes(idUsuario);
 
         for (Multa m : lista) {
             modelo.addRow(new Object[]{

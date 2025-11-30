@@ -1,7 +1,6 @@
 package biblioteca.controller.estudiantes;
 
-import biblioteca.dao.LibroDAO;
-import biblioteca.dao.ReservaDAO;
+import biblioteca.cliente.ClienteTCP;
 import biblioteca.model.Libro;
 import biblioteca.view.estudiantes.CatalogoLibrosEstudiantesView;
 
@@ -11,18 +10,14 @@ import java.util.List;
 public class CatalogoController {
 
     private final CatalogoLibrosEstudiantesView vista;
-    private final LibroDAO libroDAO;
-    private final ReservaDAO reservaDAO;
     private final int idUsuarioActual;
 
     public CatalogoController(CatalogoLibrosEstudiantesView vista, int idUsuario){
 
         this.vista = vista;
         this.idUsuarioActual = idUsuario;
-        this.libroDAO = new LibroDAO();
-        this.reservaDAO = new ReservaDAO();
 
-        List<String> categoriasDisponibles = libroDAO.listarCategoriasDisponibles();
+        List<String> categoriasDisponibles = ClienteTCP.getInstance().listarCategoriasDisponibles();
         vista.cargarCategoria(categoriasDisponibles);
 
         cargarLibros("");
@@ -57,9 +52,9 @@ public class CatalogoController {
         List<Libro> lista;
 
         if (busqueda == null || busqueda.trim().isEmpty()) {
-            lista = libroDAO.listarLibros();
+            lista = ClienteTCP.getInstance().listarLibros();
         } else {
-            lista = libroDAO.buscarLibros(busqueda);
+            lista = ClienteTCP.getInstance().buscarLibros(busqueda);
         }
 
         for (Libro l : lista) {
@@ -91,7 +86,7 @@ public class CatalogoController {
         String titulo = (String) vista.getModeloTabla().getValueAt(fila, 1);
         String estado = (String) vista.getModeloTabla().getValueAt(fila, 4);
 
-        boolean resultado = reservaDAO.registrarReserva(idUsuarioActual, idLibro);
+        boolean resultado = ClienteTCP.getInstance().registrarReserva(idUsuarioActual, idLibro);
 
         if (resultado) {
 

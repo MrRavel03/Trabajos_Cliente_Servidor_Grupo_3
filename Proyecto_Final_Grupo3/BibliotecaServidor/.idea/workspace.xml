@@ -30,16 +30,32 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.MainServer.executor": "Run",
+    "Application.Server.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/MrRavel/Documents/GitHub/Trabajos_Cliente_Servidor_Grupo_3/Proyecto_Final_Grupo3/BibliotecaServidor",
+    "last_opened_file_path": "C:/Users/MrRavel/Documents/GitHub/Trabajos_Cliente_Servidor_Grupo_3/Proyecto_Final_Grupo3/BibliotecaServidor/src/main/java/biblioteca",
     "onboarding.tips.debug.path": "C:/Users/MrRavel/Documents/GitHub/Trabajos_Cliente_Servidor_Grupo_3/Proyecto_Final_Grupo3/BibliotecaServidor/src/main/java/org/example/Main.java"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\MrRavel\Documents\GitHub\Trabajos_Cliente_Servidor_Grupo_3\Proyecto_Final_Grupo3\BibliotecaServidor\src\main\java\biblioteca" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="MainServer" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="biblioteca.server.Server" />
+      <module name="BibliotecaServidor" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="40c1e214-4ca5-46ad-ab38-d6d46839b356" name="Changes" comment="" />

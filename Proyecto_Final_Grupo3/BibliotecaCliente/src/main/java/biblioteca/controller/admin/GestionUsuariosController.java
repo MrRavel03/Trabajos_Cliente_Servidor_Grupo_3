@@ -1,6 +1,6 @@
 package biblioteca.controller.admin;
 
-import biblioteca.dao.UsuarioDAO;
+import biblioteca.cliente.ClienteTCP;
 import biblioteca.model.Usuario;
 import biblioteca.view.admin.GestionUsuariosView;
 
@@ -13,12 +13,10 @@ import java.util.List;
 public class GestionUsuariosController {
 
     private final GestionUsuariosView vista;
-    private final UsuarioDAO usuarioDAO;
 
     public GestionUsuariosController (GestionUsuariosView vista){
 
         this.vista = vista;
-        this.usuarioDAO = new UsuarioDAO();
 
         this.vista.setGuardarListener(e -> guardarUsuario());
         this.vista.setEditarListener(e -> editarUsuario());
@@ -42,7 +40,7 @@ public class GestionUsuariosController {
         DefaultTableModel modelo = vista.getModeloTabla();
         modelo.setRowCount(0);
 
-        List<Usuario> usuarios = usuarioDAO.listarUsuarios();
+        List<Usuario> usuarios = ClienteTCP.getInstance().listarUsuarios();
 
         for (Usuario u : usuarios) {
             modelo.addRow(new Object[]{
@@ -73,7 +71,7 @@ public class GestionUsuariosController {
         u.setPassword(password);
         u.setRol(rol);
 
-        if (usuarioDAO.registrarUsuario(u)) {
+        if (ClienteTCP.getInstance().registrarUsuario(u)) {
             JOptionPane.showMessageDialog(vista, "Usuario registrado.");
             vista.limpiarFormulario();
             cargarTabla();
@@ -93,7 +91,7 @@ public class GestionUsuariosController {
 
         int idUsuario = (int) vista.getModeloTabla().getValueAt(fila, 0);
 
-        if (usuarioDAO.eliminarUsuario(idUsuario)) {
+        if (ClienteTCP.getInstance().eliminarUsuario(idUsuario)) {
             JOptionPane.showMessageDialog(vista, "Usuario eliminado exitosamente.");
             vista.limpiarFormulario();
             cargarTabla();
@@ -129,7 +127,7 @@ public class GestionUsuariosController {
         u.setEmail(email);
         u.setRol(rol);
 
-        if (usuarioDAO.actualizarUsuario(u)) {
+        if (ClienteTCP.getInstance().actualizarUsuario(u)) {
             JOptionPane.showMessageDialog(vista, "Usuario actualizado.");
             vista.limpiarFormulario();
             cargarTabla();

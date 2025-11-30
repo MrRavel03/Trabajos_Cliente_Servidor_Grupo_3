@@ -1,6 +1,6 @@
 package biblioteca.controller;
 
-import biblioteca.dao.UsuarioDAO;
+import biblioteca.cliente.ClienteTCP;
 import biblioteca.model.Usuario;
 import biblioteca.view.LoginView;
 import biblioteca.view.RegistroUsuarioView;
@@ -10,11 +10,9 @@ import javax.swing.*;
 public class RegistroController {
 
     private RegistroUsuarioView vista;
-    private UsuarioDAO modelo;
 
-    public RegistroController(RegistroUsuarioView vista, UsuarioDAO modelo){
+    public RegistroController(RegistroUsuarioView vista){
         this.vista = vista;
-        this.modelo = modelo;
 
         this.vista.setRegistrarListener(e -> registrarUsuario());
         this.vista.setCancelarListener(e -> vista.dispose());
@@ -48,7 +46,7 @@ public class RegistroController {
         u.setRol("ESTUDIANTE");
         u.setEstado("ACTIVO");
 
-        boolean resultado = modelo.registrarUsuario(u);
+        boolean resultado = ClienteTCP.getInstance().registrarUsuario(u);
 
         if (resultado) {
 
@@ -61,7 +59,7 @@ public class RegistroController {
             vista.dispose();
 
             //abrimos de nuevo
-            new LoginController(new LoginView(), new UsuarioDAO()).iniciar();
+            new LoginController(new LoginView()).iniciar();
 
         } else {
 

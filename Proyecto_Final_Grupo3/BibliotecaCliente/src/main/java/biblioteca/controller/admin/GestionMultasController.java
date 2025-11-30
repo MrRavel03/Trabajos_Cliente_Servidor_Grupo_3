@@ -1,6 +1,6 @@
 package biblioteca.controller.admin;
 
-import biblioteca.dao.MultaDAO;
+import biblioteca.cliente.ClienteTCP;
 import biblioteca.model.Multa;
 import biblioteca.view.admin.GestionMultasView;
 
@@ -11,12 +11,10 @@ import java.util.List;
 public class GestionMultasController {
 
     private final GestionMultasView vista;
-    private final MultaDAO multaDAO;
 
     public GestionMultasController(GestionMultasView vista){
 
         this.vista = vista;
-        this.multaDAO = new MultaDAO();
 
         cargarTabla();
 
@@ -30,7 +28,7 @@ public class GestionMultasController {
         DefaultTableModel modelo = vista.getModeloTabla();
         modelo.setRowCount(0);
 
-        List<Multa> lista = multaDAO.listarTodasLasMultas();
+        List<Multa> lista = ClienteTCP.getInstance().listarTodasLasMultas();
 
         for (Multa m : lista) {
             modelo.addRow(new Object[]{
@@ -60,7 +58,7 @@ public class GestionMultasController {
 
         int idMulta = (int) vista.getModeloTabla().getValueAt(fila, 0);
 
-        if (multaDAO.registrarPagoMulta(idMulta)) {
+        if (ClienteTCP.getInstance().registrarPagoMulta(idMulta)) {
             JOptionPane.showMessageDialog(vista, "Pago registrado. La multa ha sido cancelada.");
             cargarTabla();
         } else {

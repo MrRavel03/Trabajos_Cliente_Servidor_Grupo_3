@@ -233,13 +233,23 @@ public class ClientHandler implements Runnable{
         int idPrestamo = (int) in.readObject();
         int idLibro = (int) in.readObject();
 
-        boolean resultado = prestamoDAO.registrarDevolucion(idPrestamo, idLibro);
+        boolean devolucionExitosa = prestamoDAO.registrarDevolucion(idPrestamo, idLibro);
 
-        if (resultado) {
-            multaDAO.procesarPosibleMulta(idPrestamo);
+        int codigoRespuesta = 0; // Por defecto: Error
+
+        if (devolucionExitosa) {
+            // 2. Si se devolvió, calculamos la multa en el servidor
+            boolean hayMulta = multaDAO.procesarPosibleMulta(idPrestamo);
+
+            if (hayMulta) {
+                codigoRespuesta = 2; // Éxito + Multa
+            } else {
+                codigoRespuesta = 1; // Éxito limpio
+            }
         }
 
-        out.writeObject(resultado);
+        // 3. Enviamos el código al cliente
+        out.writeObject(codigoRespuesta);
         out.flush();
     }
 

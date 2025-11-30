@@ -1,7 +1,6 @@
 package biblioteca.controller.admin;
 
 import biblioteca.controller.LoginController;
-import biblioteca.dao.UsuarioDAO;
 import biblioteca.view.admin.*;
 import biblioteca.view.LoginView;
 
@@ -38,7 +37,7 @@ public class AdminDashboardController {
     private void cerrarSesion(){
 
         vista.dispose();
-        new LoginController(new LoginView(), new UsuarioDAO()).iniciar();
+        new LoginController(new LoginView()).iniciar();
     }
 
     private void abrirGestionMultas() {

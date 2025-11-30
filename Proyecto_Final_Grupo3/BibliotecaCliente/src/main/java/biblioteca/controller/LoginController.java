@@ -1,27 +1,22 @@
 package biblioteca.controller;
 
+import biblioteca.cliente.ClienteTCP;
 import biblioteca.controller.admin.AdminDashboardController;
 import biblioteca.controller.estudiantes.MenuEstudianteController;
-import biblioteca.dao.UsuarioDAO;
 import biblioteca.model.Usuario;
 import biblioteca.view.*;
 import biblioteca.view.admin.AdminDashboardView;
 import biblioteca.view.estudiantes.MenuPrincipalEstudianteView;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-public class LoginController implements ActionListener {
+public class LoginController {
 
     private final LoginView vista;
-    private final UsuarioDAO modelo;
 
-    public LoginController(LoginView vista, UsuarioDAO modelo) {
+    public LoginController(LoginView vista) {
         this.vista = vista;
-        this.modelo = modelo;
 
-        this.vista.setIngresarListener(this); // este mismo
-        this.vista.setRegristrarseListener(e -> abrirRegistro()); // hay que inicializar el RegistroController
+        this.vista.setIngresarListener(e -> validarUsuario());
+        this.vista.setRegristrarseListener(e -> abrirRegistro());
     }
 
     public void iniciar(){
@@ -30,8 +25,7 @@ public class LoginController implements ActionListener {
         vista.setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e){
+    public void validarUsuario(){
 
         String email = vista.getEmail();
         String password = vista.getPassword();
@@ -41,8 +35,8 @@ public class LoginController implements ActionListener {
             return;
         }
 
-        Usuario usuario = modelo.validarLogin(email, password);
-
+        // Utilizamos ClienteTCP el cual es nuestra puerta
+        Usuario usuario = ClienteTCP.getInstance().validarLogin(email, password);
 
         if (usuario != null) {
 
@@ -81,7 +75,7 @@ public class LoginController implements ActionListener {
         vista.dispose();
 
         RegistroUsuarioView vistaRegistro = new RegistroUsuarioView();
-        new RegistroController(vistaRegistro, modelo);
+        new RegistroController(vistaRegistro);
     }
 
 }

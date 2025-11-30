@@ -54,7 +54,7 @@ public class ClienteTCP {
 
     // Usuarios
 
-    public Usuario valildarLogin(String email, String password){
+    public Usuario validarLogin(String email, String password){
 
         try {
             out.writeObject("LOGIN");
@@ -68,7 +68,7 @@ public class ClienteTCP {
 
             return (Usuario) in.readObject();
         } catch (Exception e){
-            System.err.println("Error al validar login en el ClienteTCP: " + e.getMessage() );
+            System.err.println("Error al validarlogin en el ClienteTCP: " + e.getMessage() );
             return null;
         }
     }
@@ -217,16 +217,18 @@ public class ClienteTCP {
         }
     }
 
-    public boolean registrarDevolucion(int idPrestamo, int idLibro) {
+    public int registrarDevolucion(int idPrestamo, int idLibro) {
         try {
             out.writeObject("REGISTRAR_DEVOLUCION");
             out.writeObject(idPrestamo);
             out.writeObject(idLibro);
             out.flush();
-            return (boolean) in.readObject();
+
+            return (int) in.readObject();
+
         } catch (Exception e) {
-            System.err.println("Error en registrarDevolucion del ClienteTCP: " + e.getMessage());
-            return false;
+            System.err.println("Error en registrarDevolucion: " + e.getMessage());
+            return 0; // Error basicamente
         }
     }
 

@@ -1,7 +1,6 @@
 package biblioteca.controller.estudiantes;
 
 import biblioteca.controller.LoginController;
-import biblioteca.dao.UsuarioDAO;
 import biblioteca.model.Usuario;
 import biblioteca.view.LoginView;
 import biblioteca.view.estudiantes.*;
@@ -74,8 +73,7 @@ public class MenuEstudianteController {
 
         vista.dispose();
         LoginView vistaLogin = new LoginView();
-        UsuarioDAO modeloUsuario = new UsuarioDAO();
-        LoginController loginCtrl = new LoginController(vistaLogin, modeloUsuario);
+        LoginController loginCtrl = new LoginController(vistaLogin);
         loginCtrl.iniciar();
     }
 }
