@@ -123,16 +123,48 @@ public class UsuarioDAO {
     }
 
     public boolean eliminarUsuario(int idUsuario) {
-        String sql = "UPDATE USUARIO SET ID_ESTADO = 2 WHERE ID = ?"; // 2 = INACTIVO
+        Connection conTemp = ConexionDB.conectar();
+        if (conTemp == null) return false;
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = conTemp) {
+            con.setAutoCommit(false);
 
-            ps.setInt(1, idUsuario);
-            int filas = ps.executeUpdate();
-            return filas > 0;
+            try {
+
+                String sqlLiberarLibros = "UPDATE LIBRO SET DISPONIBLE = TRUE " +
+                        "WHERE ID IN (SELECT ID_LIBRO FROM RESERVA WHERE ID_USUARIO = ? AND ID_ESTADO = 1)";
+
+                try (PreparedStatement psLib = con.prepareStatement(sqlLiberarLibros)) {
+                    psLib.setInt(1, idUsuario);
+                    psLib.executeUpdate();
+                }
+
+
+                String sqlCancelarReservas = "UPDATE RESERVA SET ID_ESTADO = 2 " +
+                        "WHERE ID_USUARIO = ? AND ID_ESTADO = 1";
+
+                try (PreparedStatement psRes = con.prepareStatement(sqlCancelarReservas)) {
+                    psRes.setInt(1, idUsuario);
+                    psRes.executeUpdate();
+                }
+
+                // PASO 3: Ahora sí, "Borrar" al usuario (Soft Delete)
+                String sqlDeleteUser = "UPDATE USUARIO SET ID_ESTADO = 2 WHERE ID = ?";
+                try (PreparedStatement psUser = con.prepareStatement(sqlDeleteUser)) {
+                    psUser.setInt(1, idUsuario);
+                    psUser.executeUpdate();
+                }
+
+                con.commit();
+                return true;
+
+            } catch (SQLException e) {
+                con.rollback();
+                System.err.println("Error transacción eliminar usuario: " + e.getMessage());
+                return false;
+            }
         } catch (SQLException e) {
-            System.err.println("Error al eliminar usuario: " + e.getMessage());
+            System.err.println("Error conexión: " + e.getMessage());
             return false;
         }
     }

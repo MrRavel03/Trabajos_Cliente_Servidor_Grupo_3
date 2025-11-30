@@ -8,6 +8,7 @@ import biblioteca.model.Usuario;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.invoke.CallSite;
 import java.net.Socket;
 import java.util.List;
 
@@ -77,6 +78,8 @@ public class ClientHandler implements Runnable{
             case "LISTAR_LIBROS":           manejarListarLibros(); break;
             case "BUSCAR_LIBROS":           manejarBuscarLibros(); break;
             case "REGISTRAR_LIBRO":         manejarRegistrarLibro(); break;
+            case "ELIMINAR_LIBRO":          manejarEliminarLibro(); break;
+            case "ACTUALIZAR_LIBRO":        manejarActualizarLibro(); break;
             case "CATEGORIAS_LIBROS":       manejarCategorias(); break;
             case "REPORTE_MAS_PRESTADOS":   manejarReporteLibros(); break;
 
@@ -186,6 +189,26 @@ public class ClientHandler implements Runnable{
         out.flush();
 
     }
+
+    private void manejarEliminarLibro() throws IOException, ClassNotFoundException {
+        int idLibro = (int) in.readObject();
+
+        boolean exito = libroDAO.eliminarLibro(idLibro);
+
+        out.writeObject(exito);
+        out.flush();
+    }
+
+    private void manejarActualizarLibro() throws IOException, ClassNotFoundException {
+        Libro libro = (Libro) in.readObject();
+
+        boolean exito = libroDAO.actualizarLibro(libro);
+
+        out.writeObject(exito);
+        out.flush();
+    }
+
+
 
     private void manejarCategorias() throws IOException{
 

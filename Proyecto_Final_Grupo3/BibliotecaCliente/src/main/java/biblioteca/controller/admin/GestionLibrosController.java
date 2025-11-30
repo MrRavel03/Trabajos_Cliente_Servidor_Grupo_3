@@ -5,6 +5,8 @@ import biblioteca.model.Libro;
 import biblioteca.view.admin.GestionLibrosView;
 
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class GestionLibrosController {
@@ -44,6 +46,42 @@ public class GestionLibrosController {
         }
     }
 
+    private void editarLibro() {
+        int fila = vista.getTablaLibros().getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(vista, "Seleccione un libro para editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String titulo = vista.getTitulo();
+        String autor = vista.getAutor();
+        String categoria = vista.getCategoria();
+
+        if (titulo.isEmpty() || autor.isEmpty()) {
+            JOptionPane.showMessageDialog(vista, "El título y autor son obligatorios.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idLibro = (int) vista.getModeloTabla().getValueAt(fila, 0);
+
+        Libro libroEditado = new Libro();
+        libroEditado.setId(idLibro);
+        libroEditado.setTitulo(titulo);
+        libroEditado.setAutor(autor);
+        libroEditado.setCategoria(categoria);
+
+
+        if (ClienteTCP.getInstance().actualizarLibro(libroEditado)) {
+             JOptionPane.showMessageDialog(vista, "Libro actualizado.");
+             vista.limpiarFormulario();
+             cargarTabla();
+        } else {
+             JOptionPane.showMessageDialog(vista, "Error al actualizar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        JOptionPane.showMessageDialog(vista, "Función editar pendiente de implementar en Servidor/DAO.");
+    }
+
     private void registrarLibro(){
 
         String titulo = vista.getTitulo();
@@ -77,6 +115,32 @@ public class GestionLibrosController {
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
+        }
+    }
+
+    private void eliminarLibro() {
+        int fila = vista.getTablaLibros().getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(vista, "Seleccione un libro para eliminar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idLibro = (int) vista.getModeloTabla().getValueAt(fila, 0);
+        String titulo = (String) vista.getModeloTabla().getValueAt(fila, 1);
+
+        int confirm = JOptionPane.showConfirmDialog(vista,
+                "¿Seguro que desea eliminar el libro: '" + titulo + "'?\nSe cancelarán las reservas asociadas.",
+                "Confirmar Eliminación",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            if (ClienteTCP.getInstance().eliminarLibro(idLibro)) {
+                 JOptionPane.showMessageDialog(vista, "Libro eliminado correctamente.");
+                 cargarTabla();
+            } else {
+                 JOptionPane.showMessageDialog(vista, "Error al eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            JOptionPane.showMessageDialog(vista, "Función eliminar pendiente de implementar en Servidor/DAO.");
         }
     }
 }

@@ -171,4 +171,59 @@ public class LibroDAO {
             return false;
         }
     }
+
+    public boolean eliminarLibro(int idLibro) {
+        Connection conTemp = ConexionDB.conectar();
+        if (conTemp == null) return false;
+
+        try (Connection con = conTemp) {
+            con.setAutoCommit(false);
+
+            try {
+
+                String sqlCancelarReservas = "UPDATE RESERVA SET ID_ESTADO = 2 " +
+                        "WHERE ID_LIBRO = ? AND ID_ESTADO = 1";
+
+                try (PreparedStatement psRes = con.prepareStatement(sqlCancelarReservas)) {
+                    psRes.setInt(1, idLibro);
+                    psRes.executeUpdate();
+                }
+
+                // 2. Inactivar el Libro
+                String sqlDeleteLibro = "UPDATE LIBRO SET ID_ESTADO = 2, DISPONIBLE = FALSE WHERE ID = ?";
+                try (PreparedStatement psLib = con.prepareStatement(sqlDeleteLibro)) {
+                    psLib.setInt(1, idLibro);
+                    psLib.executeUpdate();
+                }
+
+                con.commit();
+                return true;
+
+            } catch (SQLException e) {
+                con.rollback();
+                System.err.println("Error eliminando libro: " + e.getMessage());
+                return false;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error conexión: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean actualizarLibro(Libro l) {
+        String sql = "UPDATE LIBRO SET TITULO=?, AUTOR=?, CATEGORIA=? WHERE ID=?";
+        try (Connection con = ConexionDB.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, l.getTitulo());
+            ps.setString(2, l.getAutor());
+            ps.setString(3, l.getCategoria());
+            ps.setInt(4, l.getId());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar libro: " + e.getMessage());
+            return false;
+        }
+    }
 }

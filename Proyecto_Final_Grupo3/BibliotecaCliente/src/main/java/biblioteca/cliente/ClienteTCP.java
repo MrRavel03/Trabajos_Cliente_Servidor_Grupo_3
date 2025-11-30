@@ -157,6 +157,30 @@ public class ClienteTCP {
         }
     }
 
+    public boolean eliminarLibro(int idLibro) {
+        try {
+            out.writeObject("ELIMINAR_LIBRO");
+            out.writeObject(idLibro);
+            out.flush();
+            return (boolean) in.readObject();
+        } catch (Exception e) {
+            System.err.println("Error en eliminarLibro del ClienteTCP: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean actualizarLibro(Libro libro) {
+        try {
+            out.writeObject("ACTUALIZAR_LIBRO");
+            out.writeObject(libro);
+            out.flush();
+            return (boolean) in.readObject();
+        } catch (Exception e) {
+            System.err.println("Error en actualizarLibro del ClienteTCP: " + e.getMessage());
+            return false;
+        }
+    }
+
     public List<String> listarCategoriasDisponibles() {
         try {
             out.writeObject("CATEGORIAS_LIBROS");
