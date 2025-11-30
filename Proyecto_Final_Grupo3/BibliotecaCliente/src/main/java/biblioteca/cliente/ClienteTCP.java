@@ -120,9 +120,7 @@ public class ClienteTCP {
         }
     }
 
-    // ==========================================================================
-    // MÉTODOS DE LIBROS
-    // ==========================================================================
+    // Libros
 
     public List<Libro> listarLibros() {
         try {
@@ -181,9 +179,7 @@ public class ClienteTCP {
         }
     }
 
-    // ==========================================================================
-    // MÉTODOS DE PRÉSTAMOS
-    // ==========================================================================
+    // Prestamos
 
     public List<Prestamo> listarPrestamosActivos() {
         try {
@@ -234,9 +230,7 @@ public class ClienteTCP {
         }
     }
 
-    // ==========================================================================
-    // MÉTODOS DE RESERVAS
-    // ==========================================================================
+    // Reservas
 
     public List<Reserva> listarReservasActivas() {
         try {
@@ -286,9 +280,7 @@ public class ClienteTCP {
         }
     }
 
-    // ==========================================================================
-    // MÉTODOS DE MULTAS
-    // ==========================================================================
+    // Multas
 
     public List<Multa> listarMultasPendientes(int idUsuario) {
         try {
