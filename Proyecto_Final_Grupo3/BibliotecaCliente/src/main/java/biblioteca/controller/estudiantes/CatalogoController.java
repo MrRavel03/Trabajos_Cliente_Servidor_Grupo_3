@@ -24,7 +24,7 @@ public class CatalogoController {
 
         this.vista.setBusquedaListener(e -> filtrarLibros());
 
-        this.vista.setBusquedaListener(e -> filtrarLibros());
+        this.vista.setFiltroCategoriaListener(e ->filtrarLibros());
 
         this.vista.setReservarListener(e -> reservarLibroSeleccionado());
 

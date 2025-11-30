@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class GestionLibrosView extends JFrame {
 
     private JTextField txtTitulo, txtAutor, txtCategoria;
-    private JButton btnAgregar, btnEditar, btnEliminar, btnLimpiar;
+    private JButton btnAgregar, btnEditar, btnEliminar, btnLimpiar, btnRegresar;
     private JTable tablaLibros;
     private DefaultTableModel modeloTabla;
 
@@ -16,6 +16,7 @@ public class GestionLibrosView extends JFrame {
         setTitle("Gestion de Libros - Biblioteca");
         setSize(1000, 600);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         inicializarComponentes();
     }
@@ -48,11 +49,13 @@ public class GestionLibrosView extends JFrame {
         btnEditar = new JButton("Editar");
         btnEliminar = new JButton("Eliminar");
         btnLimpiar = new JButton("Limpiar");
+        btnRegresar = new JButton("Regresar");
 
         panelBotonesForm.add(btnAgregar);
         panelBotonesForm.add(btnEditar);
         panelBotonesForm.add(btnEliminar);
         panelBotonesForm.add(btnLimpiar);
+        panelBotonesForm.add(btnRegresar);
 
         JPanel panelNorte = new JPanel(new BorderLayout());
         panelNorte.add(panelFormulario, BorderLayout.CENTER);
@@ -130,4 +133,18 @@ public class GestionLibrosView extends JFrame {
         btnLimpiar.addActionListener(l);
     }
 
+    public void setRegresarListener(ActionListener l) { btnRegresar.addActionListener(l); }
+    //sets
+
+    public void setTitulo(String titulo) {
+        txtTitulo.setText(titulo);
+    }
+
+    public void setAutor(String autor) {
+        txtAutor.setText(autor);
+    }
+
+    public void setCategoria(String categoria) {
+        txtCategoria.setText(categoria);
+    }
 }

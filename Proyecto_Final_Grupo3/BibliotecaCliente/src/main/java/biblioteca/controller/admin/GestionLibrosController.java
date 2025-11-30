@@ -5,6 +5,7 @@ import biblioteca.model.Libro;
 import biblioteca.view.admin.GestionLibrosView;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -18,9 +19,17 @@ public class GestionLibrosController {
         this.vista = vista;
 
         this.vista.setAgregarListener( e -> registrarLibro());
-        this.vista.setEditarListener(System.out::println);
-        this.vista.setEliminarListener(System.out::println);
+        this.vista.setEditarListener(e -> editarLibro());
+        this.vista.setEliminarListener(e -> eliminarLibro());
         this.vista.setLimpiarListener(e -> vista.limpiarFormulario());
+        this.vista.setRegresarListener(e -> vista.dispose());
+
+        this.vista.getTablaLibros().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                llenarFormularioDesdeTabla();
+            }
+        });
 
         cargarTabla();
 
@@ -141,6 +150,17 @@ public class GestionLibrosController {
                  JOptionPane.showMessageDialog(vista, "Error al eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
             }
             JOptionPane.showMessageDialog(vista, "Función eliminar pendiente de implementar en Servidor/DAO.");
+        }
+    }
+
+    private void llenarFormularioDesdeTabla() {
+        int fila = vista.getTablaLibros().getSelectedRow();
+        if (fila != -1) {
+            DefaultTableModel m = vista.getModeloTabla();
+
+             vista.setTitulo((String) m.getValueAt(fila, 1));
+             vista.setAutor((String) m.getValueAt(fila, 2));
+             vista.setCategoria((String) m.getValueAt(fila, 3));
         }
     }
 }

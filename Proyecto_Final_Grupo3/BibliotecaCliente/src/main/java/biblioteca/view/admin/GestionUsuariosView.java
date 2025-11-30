@@ -10,7 +10,7 @@ public class GestionUsuariosView extends JFrame {
     private JTextField txtNombre, txtEmail, txtTelefono;
     private JPasswordField txtPassword;
     private JComboBox<String> comboTipo;
-    private JButton btnGuardar, btnEditar, btnEliminar, btnLimpiar;
+    private JButton btnGuardar, btnEditar, btnEliminar, btnLimpiar, btnRegresar;
     private JTable tablaUsuarios;
     private DefaultTableModel modeloTabla;
 
@@ -64,11 +64,13 @@ public class GestionUsuariosView extends JFrame {
         btnEditar = crearBoton("Editar", new Color(52, 152, 219));
         btnEliminar = crearBoton("Eliminar", new Color(231, 76, 60));
         btnLimpiar = crearBoton("Limpiar", Color.GRAY);
+        btnRegresar = crearBoton("Regresar", new Color(149, 165, 166));
 
         panelBotones.add(btnGuardar);
         panelBotones.add(btnEditar);
         panelBotones.add(btnEliminar);
         panelBotones.add(btnLimpiar);
+        panelBotones.add(btnRegresar);
 
         // Agrupamos Formulario y Botones en el Norte
         JPanel panelNorte = new JPanel(new BorderLayout());
@@ -134,5 +136,5 @@ public class GestionUsuariosView extends JFrame {
     public void setEditarListener(ActionListener l) { btnEditar.addActionListener(l); }
     public void setEliminarListener(ActionListener l) { btnEliminar.addActionListener(l); }
     public void setLimpiarListener(ActionListener l) { btnLimpiar.addActionListener(l); }
-
+    public void setRegresarListener(ActionListener l) { btnRegresar.addActionListener(l); }
 }

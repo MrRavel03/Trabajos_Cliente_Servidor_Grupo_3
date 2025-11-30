@@ -18,6 +18,7 @@ public class GestionReservasController {
 
         this.vista.setEntregarListener(e -> entregarLibro());
         this.vista.setCancelarListener(e -> cancelarReserva());
+        this.vista.setRegresarListener(e -> vista.dispose());
 
         this.vista.setVisible(true);
     }

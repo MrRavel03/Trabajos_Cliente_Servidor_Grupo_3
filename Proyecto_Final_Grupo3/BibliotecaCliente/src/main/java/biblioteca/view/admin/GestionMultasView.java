@@ -66,7 +66,7 @@ public class GestionMultasView extends JFrame {
         btnRegistrarPago = new JButton("Registrar Pago (Pagada)");
         estilizarBoton(btnRegistrarPago, new Color(46, 204, 113));
 
-        btnCerrar = new JButton("Cerrar");
+        btnCerrar = new JButton("Regresar");
         estilizarBoton(btnCerrar, new Color(149, 165, 166));
 
         panelSur.add(btnRegistrarPago);

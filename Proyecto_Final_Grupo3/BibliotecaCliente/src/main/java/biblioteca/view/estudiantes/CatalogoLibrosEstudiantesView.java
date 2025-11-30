@@ -13,6 +13,7 @@ public class CatalogoLibrosEstudiantesView extends JFrame{
     private DefaultTableModel modeloTabla;
     private JButton btnReservar;
     private JButton btnVolver;
+    private JButton btnBuscar;
 
     public CatalogoLibrosEstudiantesView() {
         configurarVentana();
@@ -53,7 +54,16 @@ public class CatalogoLibrosEstudiantesView extends JFrame{
         lblBuscar.setFont(new Font("Segoe UI", Font.BOLD, 14));
 
         //Buscador
-        txtBuscador = new JTextField(20);
+        txtBuscador = new JTextField(15); // Reduje un poco el ancho para que quepa el botón
+
+        // Botón Buscar ---
+        btnBuscar = new JButton("Buscar");
+        btnBuscar.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btnBuscar.setBackground(new Color(52, 152, 219)); // Azul
+        btnBuscar.setForeground(Color.WHITE);
+        btnBuscar.setFocusPainted(false);
+        btnBuscar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnBuscar.setPreferredSize(new Dimension(80, 30)); // Tamaño compacto
 
         //Categorias
         comboCategorias = new JComboBox<>();
@@ -63,6 +73,7 @@ public class CatalogoLibrosEstudiantesView extends JFrame{
         panelSuperior.add(lblBuscar);
         panelSuperior.add(txtBuscador);
         panelSuperior.add(comboCategorias);
+        panelSuperior.add(btnBuscar);
 
         add(panelSuperior, BorderLayout.NORTH);
 
@@ -135,6 +146,8 @@ public class CatalogoLibrosEstudiantesView extends JFrame{
 
     public void setBusquedaListener(ActionListener l) {
         txtBuscador.addActionListener(l);
+        btnBuscar.addActionListener(l);
+
     }
 
     public void setFiltroCategoriaListener(ActionListener l) {

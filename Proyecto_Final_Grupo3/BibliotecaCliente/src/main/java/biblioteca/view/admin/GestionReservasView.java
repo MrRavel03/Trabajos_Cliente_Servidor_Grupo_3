@@ -11,6 +11,7 @@ public class GestionReservasView extends JFrame {
     private DefaultTableModel modeloTabla;
     private JButton btnEntregarLibro;
     private JButton btnCancelarReserva;
+    private JButton btnRegresar;
 
     public GestionReservasView() {
         setTitle("Gestión de Reservas - Biblioteca");
@@ -64,9 +65,11 @@ public class GestionReservasView extends JFrame {
 
         btnEntregarLibro = crearBoton("Entregar Libro (Crear Préstamo)", new Color(46, 204, 113));
         btnCancelarReserva = crearBoton("Cancelar Reserva", new Color(231, 76, 60));
+        btnRegresar = crearBoton("Regresar", new Color(149, 165, 166));
 
         panelBotones.add(btnEntregarLibro);
         panelBotones.add(btnCancelarReserva);
+        panelBotones.add(btnRegresar);
 
         panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
 
@@ -80,7 +83,7 @@ public class GestionReservasView extends JFrame {
         btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
         btn.setFocusPainted(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btn.setPreferredSize(new Dimension(250, 40));
+        btn.setPreferredSize(new Dimension(200, 40));
         return btn;
     }
 
@@ -90,4 +93,5 @@ public class GestionReservasView extends JFrame {
 
     public void setEntregarListener(ActionListener l) { btnEntregarLibro.addActionListener(l); }
     public void setCancelarListener(ActionListener l) { btnCancelarReserva.addActionListener(l); }
+    public void setRegresarListener(ActionListener l) { btnRegresar.addActionListener(l); }
 }

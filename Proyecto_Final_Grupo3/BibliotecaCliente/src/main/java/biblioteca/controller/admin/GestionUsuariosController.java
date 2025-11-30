@@ -22,6 +22,7 @@ public class GestionUsuariosController {
         this.vista.setEditarListener(e -> editarUsuario());
         this.vista.setEliminarListener(e -> eliminarUsuario());
         this.vista.setLimpiarListener(e -> vista.limpiarFormulario());
+        this.vista.setRegresarListener(e -> vista.dispose());
 
         // para poder editar la tabla directamente
         this.vista.getTablaUsuarios().addMouseListener(new MouseAdapter() {
