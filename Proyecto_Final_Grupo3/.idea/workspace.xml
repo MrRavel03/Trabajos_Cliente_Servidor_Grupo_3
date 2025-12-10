@@ -5,58 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f74e2bec-a6de-488f-8a13-ef58964c45e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Base de datos proyecto.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/config/ConexionDB.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/config/Configuracion.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/LoginController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/RegistroController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/admin/AdminDashboardController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/admin/GestionLibrosController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/admin/GestionMultasController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/admin/GestionPrestamosController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/admin/GestionReservasController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/admin/GestionUsuariosController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/estudiantes/CatalogoController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/estudiantes/MenuEstudianteController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/estudiantes/MisMultasController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/estudiantes/MisPrestamosController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/controller/estudiantes/ReservasController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/dao/LibroDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/dao/MultaDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/dao/PrestamoDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/dao/ReservaDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/dao/UsuarioDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/main/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/model/Libro.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/model/Multa.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/model/Prestamo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/model/PrestamoInfo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/model/Reserva.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/model/Usuario.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/LoginView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/RegistroUsuarioView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/admin/AdminDashboardView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/admin/GestionLibrosView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/admin/GestionMultasView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/admin/GestionPrestamosView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/admin/GestionReservasView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/admin/GestionUsuariosView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/estudiantes/CatalogoLibrosEstudiantesView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/estudiantes/DetalleLibroEstudianteView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/estudiantes/MenuPrincipalEstudianteView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/estudiantes/MultasEstudianteView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/estudiantes/PrestamosEstudianteView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/biblioteca/view/estudiantes/ReservasEstudianteView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/campana-notificaciones.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/estanteria.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,15 +35,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "Application.VisualizadorVistas.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/MrRavel/Documents/GitHub/Trabajos_Cliente_Servidor_Grupo_3/Proyecto_Final_Grupo3/BibliotecaServidor/src/main/java/biblioteca/server",
+    "last_opened_file_path": "C:/Users/Familia/Documents/GitHub/Trabajos_Cliente_Servidor_Grupo_3/Proyecto_Final_Grupo3",
     "onboarding.tips.debug.path": "C:/Users/gosor/Documents/GitHub/Trabajos_Cliente_Servidor_Grupo_3/Proyecto_Final_Grupo3/src/main/java/org/example/Main.java",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
